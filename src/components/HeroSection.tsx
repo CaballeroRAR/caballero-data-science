@@ -1,15 +1,14 @@
 import { Button } from "@/components/ui/button";
-
 const HeroSection = () => {
   const scrollToContact = () => {
     const element = document.getElementById("contact");
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({
+        behavior: "smooth"
+      });
     }
   };
-
-  return (
-    <section className="min-h-screen relative flex items-center grid-pattern overflow-hidden">
+  return <section className="min-h-screen relative flex items-center grid-pattern overflow-hidden">
       {/* Geometric decorations */}
       <div className="absolute top-20 right-10 w-40 h-40 border border-foreground/20 rotate-45 opacity-0 animate-fade-in animation-delay-500" />
       <div className="absolute bottom-40 left-10 w-24 h-24 border border-foreground/20 opacity-0 animate-fade-in animation-delay-400" />
@@ -23,12 +22,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-6 lg:px-12 pt-20">
         <div className="max-w-5xl">
           {/* Top line with coordinates */}
-          <div className="flex items-center gap-4 mb-8 opacity-0 animate-fade-up">
-            <div className="w-16 h-px bg-foreground origin-left animate-draw-line" />
-            <span className="font-mono text-xs text-muted-foreground tracking-widest">
-              52.5200° N, 13.4050° E
-            </span>
-          </div>
+          
 
           {/* Main headline */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display leading-[0.9] mb-8">
@@ -54,25 +48,30 @@ const HeroSection = () => {
             <Button variant="default" size="lg" onClick={scrollToContact}>
               Get in Touch
             </Button>
-            <Button variant="architectural" size="lg" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
+            <Button variant="architectural" size="lg" onClick={() => document.getElementById("projects")?.scrollIntoView({
+            behavior: "smooth"
+          })}>
               View Projects
             </Button>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-8 mt-20 pt-8 border-t border-foreground/20 max-w-lg opacity-0 animate-fade-up animation-delay-500">
-            {[
-              { value: "8+", label: "Years Experience" },
-              { value: "50+", label: "Projects" },
-              { value: "15M+", label: "Data Points Processed" },
-            ].map((stat) => (
-              <div key={stat.label}>
+            {[{
+            value: "8+",
+            label: "Years Experience"
+          }, {
+            value: "50+",
+            label: "Projects"
+          }, {
+            value: "15M+",
+            label: "Data Points Processed"
+          }].map(stat => <div key={stat.label}>
                 <div className="font-display text-3xl md:text-4xl">{stat.value}</div>
                 <div className="font-mono text-xs text-muted-foreground mt-1 uppercase tracking-wider">
                   {stat.label}
                 </div>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </div>
@@ -83,8 +82,6 @@ const HeroSection = () => {
         SCROLL TO EXPLORE
         <span className="inline-block w-4 h-px bg-foreground ml-3 animate-pulse" />
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
