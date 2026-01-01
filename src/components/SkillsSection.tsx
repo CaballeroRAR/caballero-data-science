@@ -1,12 +1,12 @@
 const skills = [
-  { name: "Python", level: 95 },
-  { name: "Machine Learning", level: 92 },
-  { name: "SQL & Data Engineering", level: 90 },
-  { name: "Statistical Analysis", level: 88 },
-  { name: "Deep Learning", level: 85 },
-  { name: "Data Visualization", level: 87 },
-  { name: "MLOps & Deployment", level: 82 },
-  { name: "Cloud Platforms (AWS/GCP)", level: 80 },
+  { name: "Python", category: "Language" },
+  { name: "Machine Learning", category: "Core" },
+  { name: "SQL & Data Engineering", category: "Data" },
+  { name: "Statistical Analysis", category: "Core" },
+  { name: "Deep Learning", category: "Core" },
+  { name: "Data Visualization", category: "Data" },
+  { name: "MLOps & Deployment", category: "Ops" },
+  { name: "Cloud Platforms", category: "Ops" },
 ];
 
 const tools = [
@@ -42,29 +42,24 @@ const SkillsSection = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-          {/* Skills bars */}
+          {/* Skills grid - architectural approach */}
           <div>
             <h2 className="text-3xl md:text-4xl font-display mb-12">
               Core Competencies
             </h2>
-            <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-px bg-foreground/20">
               {skills.map((skill, index) => (
-                <div key={skill.name} className="group">
-                  <div className="flex justify-between mb-2">
-                    <span className="font-body text-sm">{skill.name}</span>
-                    <span className="font-mono text-xs text-muted-foreground">
-                      {skill.level}%
-                    </span>
-                  </div>
-                  <div className="h-1 bg-muted relative overflow-hidden">
-                    <div
-                      className="absolute inset-y-0 left-0 bg-foreground transition-all duration-1000 ease-out"
-                      style={{
-                        width: `${skill.level}%`,
-                        transitionDelay: `${index * 100}ms`,
-                      }}
-                    />
-                  </div>
+                <div
+                  key={skill.name}
+                  className="bg-background p-6 hover:bg-foreground hover:text-background transition-colors duration-300 group cursor-default"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <span className="font-mono text-[10px] text-muted-foreground group-hover:text-background/60 uppercase tracking-widest block mb-2">
+                    {skill.category}
+                  </span>
+                  <span className="font-body text-sm block">
+                    {skill.name}
+                  </span>
                 </div>
               ))}
             </div>
@@ -76,7 +71,7 @@ const SkillsSection = () => {
               Tools & Technologies
             </h2>
             <div className="grid grid-cols-3 gap-4">
-              {tools.map((tool, index) => (
+              {tools.map((tool) => (
                 <div
                   key={tool}
                   className="aspect-square border border-foreground/20 flex items-center justify-center p-4 hover:bg-foreground hover:text-background transition-colors duration-300 group cursor-default"
