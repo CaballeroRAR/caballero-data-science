@@ -39,20 +39,20 @@ const ProjectsSection = () => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
 
   return (
-    <section id="projects" className="py-32 bg-foreground text-background relative">
+    <section id="projects" className="py-32 bg-background text-foreground relative">
       {/* Blueprint number */}
-      <div className="absolute right-8 top-32 font-mono text-8xl text-background/10 hidden lg:block">
+      <div className="absolute right-8 top-32 font-mono text-8xl text-foreground/10 hidden lg:block">
         03
       </div>
 
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section header */}
         <div className="flex items-center gap-4 mb-16">
-          <span className="font-mono text-xs text-background/60 tracking-widest uppercase">
+          <span className="font-mono text-xs text-foreground/60 tracking-widest uppercase">
             Selected Work
           </span>
-          <div className="flex-1 h-px bg-background/20" />
-          <span className="font-mono text-xs text-background/60">
+          <div className="flex-1 h-px bg-foreground/20" />
+          <span className="font-mono text-xs text-foreground/60">
             {projects.length} PROJECTS
           </span>
         </div>
@@ -62,14 +62,14 @@ const ProjectsSection = () => {
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="group border-t border-background/20 py-8 cursor-pointer transition-all duration-300"
+              className="group border-t border-foreground/20 py-8 cursor-pointer transition-all duration-300"
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
             >
               <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
                 {/* Number */}
                 <div className="lg:col-span-1">
-                  <span className="font-mono text-sm text-background/40">
+                  <span className="font-mono text-sm text-foreground/40">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>
@@ -79,7 +79,7 @@ const ProjectsSection = () => {
                   <h3 className="font-display text-2xl md:text-3xl mb-2 group-hover:translate-x-2 transition-transform duration-300">
                     {project.title}
                   </h3>
-                  <span className="font-mono text-xs text-background/60 uppercase tracking-wider">
+                  <span className="font-mono text-xs text-foreground/60 uppercase tracking-wider">
                     {project.category}
                   </span>
                 </div>
@@ -87,7 +87,7 @@ const ProjectsSection = () => {
                 {/* Description */}
                 <div className="lg:col-span-4">
                   <p
-                    className={`font-body text-sm text-background/70 transition-opacity duration-300 ${
+                    className={`font-body text-sm text-foreground/70 transition-opacity duration-300 ${
                       hoveredProject === project.id ? "opacity-100" : "opacity-60"
                     }`}
                   >
@@ -97,7 +97,7 @@ const ProjectsSection = () => {
 
                 {/* Year */}
                 <div className="lg:col-span-2 text-right">
-                  <span className="font-mono text-sm text-background/40">
+                  <span className="font-mono text-sm text-foreground/40">
                     {project.year}
                   </span>
                 </div>
@@ -112,8 +112,8 @@ const ProjectsSection = () => {
                 <div className="lg:col-start-2 lg:col-span-10 flex flex-wrap gap-6">
                   {project.metrics.map((metric) => (
                     <div key={metric} className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-background/60" />
-                      <span className="font-mono text-xs text-background/80">{metric}</span>
+                      <span className="w-1.5 h-1.5 bg-foreground/60" />
+                      <span className="font-mono text-xs text-foreground/80">{metric}</span>
                     </div>
                   ))}
                 </div>
@@ -123,7 +123,7 @@ const ProjectsSection = () => {
         </div>
 
         {/* Bottom border */}
-        <div className="border-t border-background/20 mt-1" />
+        <div className="border-t border-foreground/20 mt-1" />
       </div>
     </section>
   );
