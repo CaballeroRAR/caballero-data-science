@@ -3,35 +3,12 @@ import { useState } from "react";
 const projects = [
   {
     id: 1,
-    title: "Neural Network for Urban Planning",
-    category: "Deep Learning",
-    description: "Predictive model for city infrastructure optimization using satellite imagery and demographic data.",
-    metrics: ["97.3% Accuracy", "2.4M Predictions", "12 Cities"],
+    title: "A/B Testing, UI Change",
+    category: "Statistical Analysis",
+    description: "Designed a hypothesis test with tailored α=0.10 for a low-risk UI experiment, prioritizing sensitivity over false positive risk. The test revealed a dramatic conversion increase from 19.9% to over 61%.",
+    skills: ["Python", "Statsmodels", "Jupyter Notebook", "Statistical Testing", "Power Analysis"],
+    link: "https://lnkd.in/gpcmjuuW",
     year: "2024",
-  },
-  {
-    id: 2,
-    title: "Real-Time Fraud Detection System",
-    category: "ML Engineering",
-    description: "End-to-end pipeline processing millions of transactions with sub-100ms latency.",
-    metrics: ["99.9% Uptime", "5M+ Daily Transactions", "< 100ms Latency"],
-    year: "2023",
-  },
-  {
-    id: 3,
-    title: "Climate Data Analysis Platform",
-    category: "Data Engineering",
-    description: "Scalable platform for analyzing 50 years of global climate data for research institutions.",
-    metrics: ["500TB Data", "15+ Research Papers", "3 Continents"],
-    year: "2023",
-  },
-  {
-    id: 4,
-    title: "Recommendation Engine Architecture",
-    category: "System Design",
-    description: "Designed recommendation system serving 10M users with personalized content delivery.",
-    metrics: ["10M Users", "40% Engagement Lift", "Real-time Updates"],
-    year: "2022",
   },
 ];
 
@@ -103,19 +80,29 @@ const ProjectsSection = () => {
                 </div>
               </div>
 
-              {/* Metrics - shown on hover */}
+              {/* Skills - shown on hover */}
               <div
                 className={`grid lg:grid-cols-12 gap-6 lg:gap-8 mt-6 overflow-hidden transition-all duration-300 ${
                   hoveredProject === project.id ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
                 }`}
               >
-                <div className="lg:col-start-2 lg:col-span-10 flex flex-wrap gap-6">
-                  {project.metrics.map((metric) => (
-                    <div key={metric} className="flex items-center gap-2">
+                <div className="lg:col-start-2 lg:col-span-10 flex flex-wrap gap-3">
+                  {project.skills.map((skill) => (
+                    <div key={skill} className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-foreground/60" />
-                      <span className="font-mono text-xs text-foreground/80">{metric}</span>
+                      <span className="font-mono text-xs text-foreground/80">{skill}</span>
                     </div>
                   ))}
+                  {project.link && (
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="font-mono text-xs text-foreground/60 hover:text-foreground underline underline-offset-2 ml-4"
+                    >
+                      View Project →
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
