@@ -9,6 +9,11 @@ const projects = [
     skills: ["Python", "Statsmodels", "Jupyter Notebook", "Statistical Testing", "Power Analysis"],
     link: "https://lnkd.in/gpcmjuuW",
     year: "2025",
+    gallery: [
+      { id: 1, placeholder: "Hypothesis Design" },
+      { id: 2, placeholder: "Power Analysis" },
+      { id: 3, placeholder: "Results Visualization" },
+    ],
   },
   {
     id: 2,
@@ -18,8 +23,13 @@ const projects = [
     skills: ["Regression Modeling", "Feature Engineering", "Ensemble Methods", "Scikit-learn", "Custom Metrics (sMAPE)"],
     link: "https://lnkd.in/eZMdm3_V",
     year: "2025",
+    gallery: [
+      { id: 1, placeholder: "Data Pipeline" },
+      { id: 2, placeholder: "Model Performance" },
+      { id: 3, placeholder: "Feature Importance" },
+    ],
   },
-    {
+  {
     id: 3,
     title: "Employee Salary Analysis",
     category: "Statistical Analysis",
@@ -27,6 +37,11 @@ const projects = [
     skills: ["Exploratory Data Analysis (EDA)", "Data Visualization", "Statistical Analysis", "Business Analytics", "Data Cleaning"],
     link: "https://lnkd.in/eaUVU9yg",
     year: "2025",
+    gallery: [
+      { id: 1, placeholder: "EDA Overview" },
+      { id: 2, placeholder: "Salary Distribution" },
+      { id: 3, placeholder: "Key Insights" },
+    ],
   },
 ];
 
@@ -98,29 +113,58 @@ const ProjectsSection = () => {
                 </div>
               </div>
 
-              {/* Skills - shown on hover */}
+              {/* Skills & Gallery - shown on hover */}
               <div
-                className={`grid lg:grid-cols-12 gap-6 lg:gap-8 mt-6 overflow-hidden transition-all duration-300 ${
-                  hoveredProject === project.id ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
+                className={`grid lg:grid-cols-12 gap-6 lg:gap-8 mt-6 overflow-hidden transition-all duration-500 ${
+                  hoveredProject === project.id ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
                 }`}
               >
-                <div className="lg:col-start-2 lg:col-span-10 flex flex-wrap gap-3">
-                  {project.skills.map((skill) => (
-                    <div key={skill} className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-foreground/60" />
-                      <span className="font-mono text-xs text-foreground/80">{skill}</span>
-                    </div>
-                  ))}
-                  {project.link && (
-                    <a 
-                      href={project.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="font-mono text-xs text-foreground/60 hover:text-foreground underline underline-offset-2 ml-4"
-                    >
-                      View Project →
-                    </a>
-                  )}
+                <div className="lg:col-start-2 lg:col-span-10 space-y-4">
+                  {/* Skills */}
+                  <div className="flex flex-wrap gap-3">
+                    {project.skills.map((skill) => (
+                      <div key={skill} className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-foreground/60" />
+                        <span className="font-mono text-xs text-foreground/80">{skill}</span>
+                      </div>
+                    ))}
+                    {project.link && (
+                      <a 
+                        href={project.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="font-mono text-xs text-foreground/60 hover:text-foreground underline underline-offset-2 ml-4"
+                      >
+                        View Project →
+                      </a>
+                    )}
+                  </div>
+
+                  {/* Gallery */}
+                  <div className="flex gap-3 mt-4">
+                    {project.gallery.map((item, idx) => (
+                      <div
+                        key={item.id}
+                        className="relative w-32 h-20 bg-muted border border-foreground/20 overflow-hidden group/gallery"
+                        style={{ animationDelay: `${idx * 100}ms` }}
+                      >
+                        {/* Placeholder content */}
+                        <div className="absolute inset-0 grid-pattern-dense opacity-30" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="font-mono text-[10px] text-foreground/50 text-center px-2">
+                            {item.placeholder}
+                          </span>
+                        </div>
+                        {/* Hover overlay */}
+                        <div className="absolute inset-0 bg-foreground/10 opacity-0 group-hover/gallery:opacity-100 transition-opacity duration-200" />
+                        {/* Frame corners */}
+                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-foreground/40" />
+                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-foreground/40" />
+                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-foreground/40" />
+                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-foreground/40" />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
