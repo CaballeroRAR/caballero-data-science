@@ -52,32 +52,34 @@ const AboutSection = () => {
             </div>
 
             <h2 className="text-4xl md:text-5xl font-display mb-8 leading-tight">
-              Where Data Meets
+              Data Scientist
               <br />
-              Design Thinking
+              Based in Mexico
             </h2>
 
             <div className="space-y-6 font-body text-muted-foreground leading-relaxed">
               <p>
-                With a background that bridges quantitative analysis and architectural thinking, 
-                I approach data science as a form of structural engineering—building robust 
-                systems that can support decision-making at scale.
+                Data Scientist with experience in predictive and time series modeling, 
+                ETL pipeline development in Google Cloud, and design of scalable interactive 
+                dashboards.
               </p>
               <p>
-                My methodology draws from architectural principles: every model must have a 
-                solid foundation, clear load-bearing logic, and an elegant interface between 
-                complexity and usability.
+                Specialized in Python (Pandas, NumPy, Scikit-learn, Statsmodels, and TensorFlow), 
+                SQL, and visualization tools (Power BI), applying advanced Machine Learning 
+                techniques, data analytics, and statistics to generate actionable insights 
+                and optimize decision-making.
               </p>
               <p>
-                Previously at leading tech firms in Berlin and San Francisco, I now focus on 
-                consulting for organizations that value precision, clarity, and sustainable 
-                data infrastructure.
+                Recognized for clear and structured communication, analytical thinking, 
+                complex problem-solving, innovation, self-management, and proactivity. 
+                Effective collaborator in hybrid and changing environments, with constant 
+                curiosity and a focus on continuous improvement.
               </p>
             </div>
 
             {/* Expertise tags */}
             <div className="mt-12 flex flex-wrap gap-3">
-              {["Machine Learning", "Data Architecture", "Statistical Modeling", "MLOps", "Python", "SQL"].map((tag) => (
+              {["Python", "SQL", "Machine Learning", "Power BI", "Google Cloud", "TensorFlow"].map((tag) => (
                 <span
                   key={tag}
                   className="px-4 py-2 border border-foreground/30 font-mono text-xs uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors duration-300"
