@@ -28,7 +28,7 @@ const softSkills = [
   "Collaboration",
   "Continuous Learning",
   "Adaptability",
-  "Entrepreneurial Mindset",
+  "Atention to Detail",
 ];
 
 const SkillsSection = () => {

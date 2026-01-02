@@ -39,8 +39,8 @@ const HeroSection = () => {
 
           {/* Subtitle */}
           <p className="font-body text-lg md:text-xl text-muted-foreground max-w-xl mb-12 opacity-0 animate-fade-up animation-delay-400">
-            Building data structures with the precision of architectural blueprints. 
-            Transforming complex datasets into elegant, functional solutions.
+            Building predictive models with the structured precision of an architect. 
+            Specializing in Machine Learning algorithms and Neural Networks to turn complex data into actionable insights—from optimizing industrial processes to driving strategic decisions.            
           </p>
 
           {/* CTA Buttons */}
@@ -59,13 +59,14 @@ const HeroSection = () => {
           <div className="grid grid-cols-3 gap-8 mt-20 pt-8 border-t border-foreground/20 max-w-lg opacity-0 animate-fade-up animation-delay-500">
             {[{
             value: "8+",
-            label: "Years Experience"
-          }, {
+            label: "Years Experience as Architect"
+          },{
+            value: "1+",
+            label: "Years Experience as Data Scientist"
+          }, 
+          {
             value: "50+",
             label: "Projects"
-          }, {
-            value: "15M+",
-            label: "Data Points Processed"
           }].map(stat => <div key={stat.label}>
                 <div className="font-display text-3xl md:text-4xl">{stat.value}</div>
                 <div className="font-mono text-xs text-muted-foreground mt-1 uppercase tracking-wider">

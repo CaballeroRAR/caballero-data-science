@@ -21,18 +21,18 @@ const ContactSection = () => {
           {/* Left - CTA */}
           <div>
             <h2 className="text-4xl md:text-6xl font-display mb-8 leading-tight">
-              Let's Build
+              Let's Find
               <br />
               Something
               <br />
               <span className="text-muted-foreground">Together</span>
             </h2>
             <p className="font-body text-lg text-muted-foreground max-w-md mb-8">
-              Whether you're looking to optimize your data infrastructure, 
-              build predictive models, or architect ML systems—I'd love to hear about your project.
+              Whether you need regression modeling for process optimization, forecasting solutions for demand planning,
+              or data-driven insights to support decision-making. I'd love to discuss how I can help.
             </p>
             <Button variant="default" size="lg" asChild>
-              <a href="mailto:hello@datascientist.com">
+              <a href="mailto:caballero.data.scientist@gmail.com">
                 Start a Conversation
               </a>
             </Button>
@@ -47,10 +47,10 @@ const ContactSection = () => {
                   Email
                 </div>
                 <a
-                  href="mailto:hello@datascientist.com"
+                  href="mailto:caballero.data.scientist@gmail.com"
                   className="font-body text-lg hover:text-muted-foreground transition-colors duration-200"
                 >
-                  hello@datascientist.com
+                  caballero.data.scientist@gmail.com
                 </a>
               </div>
 
@@ -59,7 +59,7 @@ const ContactSection = () => {
                 <div className="font-mono text-xs text-muted-foreground uppercase tracking-wider mb-2">
                   Based In
                 </div>
-                <div className="font-body text-lg">Berlin, Germany</div>
+                <div className="font-body text-lg">Mexico City, Mexico</div>
                 <div className="font-mono text-sm text-muted-foreground mt-1">
                   Available for remote work worldwide
                 </div>
@@ -71,13 +71,19 @@ const ContactSection = () => {
                   Connect
                 </div>
                 <div className="flex gap-4">
-                  {["LinkedIn", "GitHub", "Twitter"].map((social) => (
+                  {[
+                    { name: "LinkedIn", url: "https://www.linkedin.com/in/datacaballero" },
+                    { name: "GitHub", url: "https://github.com/CaballeroRAR" },
+                    { name: "Kaggle", url: "https://www.kaggle.com/datacaballero" }
+                  ].map((social) => (
                     <a
-                      key={social}
-                      href="#"
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="px-4 py-2 border border-foreground/30 font-mono text-xs uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors duration-300"
                     >
-                      {social}
+                      {social.name}
                     </a>
                   ))}
                 </div>

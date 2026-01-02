@@ -8,7 +8,25 @@ const projects = [
     description: "Designed a hypothesis test with tailored α=0.10 for a low-risk UI experiment, prioritizing sensitivity over false positive risk. The test revealed a dramatic conversion increase from 19.9% to over 61%.",
     skills: ["Python", "Statsmodels", "Jupyter Notebook", "Statistical Testing", "Power Analysis"],
     link: "https://lnkd.in/gpcmjuuW",
-    year: "2024",
+    year: "2025",
+  },
+  {
+    id: 2,
+    title: "Gold Recovery Prediction",
+    category: "Machine Learning",
+    description: "Developed an end-to-end regression pipeline to predict gold recovery rates and optimize industrial flotation processes. The model identifies optimal parameter ranges for reagent concentration and particle size to maximize extraction efficiency and reduce waste.",
+    skills: ["Regression Modeling", "Feature Engineering", "Ensemble Methods", "Scikit-learn", "Custom Metrics (sMAPE)"],
+    link: "https://lnkd.in/eZMdm3_V",
+    year: "2025",
+  },
+    {
+    id: 3,
+    title: "Employee Salary Analysis",
+    category: "Statistical Analysis",
+    description: "Conducted exploratory data analysis on compensation patterns to quantify the impact of experience, education, and role on salary structures. Delivered visual benchmarks and statistical insights to support HR strategy and talent acquisition planning.",
+    skills: ["Exploratory Data Analysis (EDA)", "Data Visualization", "Statistical Analysis", "Business Analytics", "Data Cleaning"],
+    link: "https://lnkd.in/eaUVU9yg",
+    year: "2025",
   },
 ];
 
