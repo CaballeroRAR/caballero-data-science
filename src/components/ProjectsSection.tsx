@@ -10,9 +10,9 @@ const projects = [
     link: "https://lnkd.in/gpcmjuuW",
     year: "2025",
     gallery: [
-      { id: 1, placeholder: "Hypothesis Design" },
-      { id: 2, placeholder: "Power Analysis" },
-      { id: 3, placeholder: "Results Visualization" },
+      { id: 1, placeholder: "Business Rationale | Parameter Selection ", image: "/img/business-context.png"},
+      { id: 2, placeholder: "Conversion Statistics", image: "/img/conversion-stat.png" },
+      { id: 3, placeholder: "Groups Visualization", image: "/img/abtesting.png" },
     ],
   },
   {
@@ -47,6 +47,7 @@ const projects = [
 
 const ProjectsSection = () => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
     <section id="projects" className="py-32 bg-background text-foreground relative">
@@ -145,8 +146,14 @@ const ProjectsSection = () => {
                     {project.gallery.map((item, idx) => (
                       <div
                         key={item.id}
-                        className="relative w-32 h-20 bg-muted border border-foreground/20 overflow-hidden group/gallery"
+                        className={`relative w-32 h-20 bg-muted border border-foreground/20 overflow-hidden group/gallery ${
+                          (item as any).image ? "cursor-pointer" : ""
+                        }`}
                         style={{ animationDelay: `${idx * 100}ms` }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if ((item as any).image) setSelectedImage((item as any).image);
+                        }}
                       >
                         {/* Placeholder content */}
                         <div className="absolute inset-0 grid-pattern-dense opacity-30" />
@@ -155,6 +162,13 @@ const ProjectsSection = () => {
                             {item.placeholder}
                           </span>
                         </div>
+                        {(item as any).image && (
+                          <img
+                            src={(item as any).image}
+                            alt={item.placeholder}
+                            className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover/gallery:opacity-100 transition-opacity duration-300"
+                          />
+                        )}
                         {/* Hover overlay */}
                         <div className="absolute inset-0 bg-foreground/10 opacity-0 group-hover/gallery:opacity-100 transition-opacity duration-200" />
                         {/* Frame corners */}
@@ -174,6 +188,25 @@ const ProjectsSection = () => {
         {/* Bottom border */}
         <div className="border-t border-foreground/20 mt-1" />
       </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-sm p-4 animate-fade-in"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-7xl max-h-[90vh] w-full flex items-center justify-center">
+            <img 
+              src={selectedImage} 
+              alt="Project detail" 
+              className="max-w-full max-h-[90vh] object-contain border border-foreground/20 shadow-2xl"
+            />
+            <button className="absolute top-4 right-4 md:-top-12 md:right-0 text-foreground hover:text-foreground/70 transition-colors">
+              <span className="font-mono text-sm uppercase tracking-widest">Close</span>
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
