@@ -1,27 +1,34 @@
 const skills = [
   { name: "Python", category: "Language" },
+  { name: "SQL", category: "Language" },
+  { name: "JSON", category: "Data" },
   { name: "Machine Learning", category: "Core" },
-  { name: "SQL & Data Engineering", category: "Data" },
-  { name: "Statistical Analysis", category: "Core" },
-  { name: "Deep Learning", category: "Core" },
-  { name: "Data Visualization", category: "Data" },
-  { name: "MLOps & Deployment", category: "Ops" },
-  { name: "Cloud Platforms", category: "Ops" },
+  { name: "Google Cloud", category: "Platform" },
+  { name: "Power BI", category: "Visualization" },
+  { name: "APIs", category: "Integration" },
+  { name: "GitHub", category: "Tools" },
 ];
 
 const tools = [
-  "TensorFlow",
-  "PyTorch",
   "Scikit-learn",
-  "Pandas",
-  "Apache Spark",
-  "Airflow",
-  "Docker",
-  "Kubernetes",
-  "PostgreSQL",
-  "MongoDB",
-  "Tableau",
-  "dbt",
+  "TensorFlow",
+  "NumPy",
+  "Seaborn",
+  "Jupyter Notebook",
+  "Power BI",
+];
+
+const softSkills = [
+  "Clear Communication",
+  "Critical Thinking",
+  "Problem Solving",
+  "Innovation & Creativity",
+  "Self-Management",
+  "Proactivity",
+  "Collaboration",
+  "Continuous Learning",
+  "Adaptability",
+  "Entrepreneurial Mindset",
 ];
 
 const SkillsSection = () => {
@@ -82,21 +89,24 @@ const SkillsSection = () => {
                 </div>
               ))}
             </div>
+          </div>
 
-            {/* Additional info */}
-            <div className="mt-12 p-6 border border-foreground/20 bg-surface-elevated">
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 border border-foreground flex items-center justify-center flex-shrink-0">
-                  <span className="font-mono text-xs">+</span>
+          {/* Soft Skills */}
+          <div className="lg:col-span-2 mt-12">
+            <h2 className="text-3xl md:text-4xl font-display mb-12">
+              Soft Skills
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              {softSkills.map((skill) => (
+                <div
+                  key={skill}
+                  className="p-4 border border-foreground/20 bg-surface-elevated hover:bg-foreground hover:text-background transition-colors duration-300 group cursor-default text-center"
+                >
+                  <span className="font-mono text-xs uppercase tracking-wider">
+                    {skill}
+                  </span>
                 </div>
-                <div>
-                  <h3 className="font-display text-lg mb-2">Continuous Learning</h3>
-                  <p className="font-body text-sm text-muted-foreground">
-                    Currently exploring advanced topics in generative AI, 
-                    large language models, and scalable ML infrastructure.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
