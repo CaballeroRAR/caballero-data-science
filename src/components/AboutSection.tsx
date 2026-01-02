@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User } from "lucide-react";
+import profilePhoto from "@/assets/profile-photo.png";
 
 const AboutSection = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -50,22 +50,17 @@ const AboutSection = () => {
                 </svg>
               </div>
 
-              {/* Hover: Profile picture placeholder */}
+              {/* Hover: Profile picture */}
               <div 
-                className={`absolute inset-0 transition-opacity duration-500 flex items-center justify-center ${
+                className={`absolute inset-0 transition-opacity duration-500 ${
                   isHovered ? "opacity-100" : "opacity-0"
                 }`}
               >
-                <div className="absolute inset-0 bg-gradient-to-b from-muted via-muted/80 to-muted" />
-                <div className="relative flex flex-col items-center gap-4">
-                  {/* Profile placeholder icon */}
-                  <div className="w-32 h-32 rounded-full border-2 border-foreground/30 flex items-center justify-center bg-background/50">
-                    <User className="w-16 h-16 text-foreground/40" />
-                  </div>
-                  <span className="font-mono text-xs text-foreground/50 tracking-wider uppercase">
-                    Your Photo Here
-                  </span>
-                </div>
+                <img 
+                  src={profilePhoto} 
+                  alt="Profile photo" 
+                  className="w-full h-full object-cover object-top"
+                />
                 {/* Frame corners */}
                 <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-foreground/40" />
                 <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-foreground/40" />
