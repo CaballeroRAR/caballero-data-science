@@ -8,7 +8,18 @@ const projects = [
     id: 1,
     title: "A/B Testing, UI Change",
     category: "Statistical Analysis",
-    description: "Designed a hypothesis test with tailored α=0.10 for a low-risk UI experiment, prioritizing sensitivity over false positive risk. The test revealed a dramatic conversion increase from 19.9% to over 61%.",
+    description: (
+      <div className="space-y-2">
+        <p>Recommend using α = 0.10 significance level (90% confidence) with our current sample of 10,000 users per variant. This strategy optimally balances statistical rigor with business agility, specifically addressing our concern about missing real improvements in a low-risk UI test.</p>
+        <ul className="list-disc pl-4 space-y-1">
+          <li><strong className="text-foreground/90">Test Type:</strong> Minor UI button tweak (low implementation cost)</li>
+          <li><strong className="text-foreground/90">Primary Risk Concern:</strong> Missing a real improvement &gt; Cost of false positive</li>
+          <li><strong className="text-foreground/90">Current Performance:</strong> 19.9% conversion rate (clicks)</li>
+          <li><strong className="text-foreground/90">Sample Available:</strong> 10,000 users per variant (20,000 total)</li>
+          <li><strong className="text-foreground/90">Business Goal:</strong> Increase non-client to client conversions</li>
+        </ul>
+      </div>
+    ),
     skills: ["Python", "Statsmodels", "Jupyter Notebook", "Statistical Testing", "Power Analysis"],
     link: "https://lnkd.in/gpcmjuuW",
     year: "2025",
@@ -100,13 +111,13 @@ const ProjectsSection = () => {
 
                 {/* Description */}
                 <div className="lg:col-span-4">
-                  <p
+                  <div
                     className={`font-body text-sm text-foreground/70 transition-opacity duration-300 ${
                       hoveredProject === project.id ? "opacity-100" : "opacity-60"
                     }`}
                   >
                     {project.description}
-                  </p>
+                  </div>
                 </div>
 
                 {/* Year */}
