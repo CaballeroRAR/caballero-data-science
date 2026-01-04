@@ -1,4 +1,7 @@
 import { useState } from "react";
+import businessContextImg from "@/assets/img/business-context.png";
+import conversionStatImg from "@/assets/img/conversion-stat.png";
+import abtestingImg from "@/assets/img/abtesting.png";
 
 const projects = [
   {
@@ -10,9 +13,9 @@ const projects = [
     link: "https://lnkd.in/gpcmjuuW",
     year: "2025",
     gallery: [
-      { id: 1, placeholder: "Business Rationale | Parameter Selection ", image: "caballero-data-science/src/assets/img/business-context.png"},
-      { id: 2, placeholder: "Conversion Statistics", image: "caballero-data-science/src/assets/img/conversion-stat.png" },
-      { id: 3, placeholder: "Groups Visualization", image: "caballero-data-science/src/assets/img/abtesting.png" },
+      { id: 1, placeholder: "Business Rationale | Parameter Selection", image: businessContextImg },
+      { id: 2, placeholder: "Conversion Statistics", image: conversionStatImg },
+      { id: 3, placeholder: "Groups Visualization", image: abtestingImg },
     ],
   },
   {
@@ -147,30 +150,44 @@ const ProjectsSection = () => {
                       <div
                         key={item.id}
                         className={`relative w-32 h-20 bg-muted border border-foreground/20 overflow-hidden group/gallery ${
-                          (item as any).image ? "cursor-pointer" : ""
+                          item.image ? "cursor-pointer" : ""
                         }`}
                         style={{ animationDelay: `${idx * 100}ms` }}
                         onClick={(e) => {
                           e.stopPropagation();
-                          if ((item as any).image) setSelectedImage((item as any).image);
+                          if (item.image) setSelectedImage(item.image);
                         }}
                       >
-                        {/* Placeholder content */}
-                        <div className="absolute inset-0 grid-pattern-dense opacity-30" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="font-mono text-[10px] text-foreground/50 text-center px-2">
-                            {item.placeholder}
-                          </span>
-                        </div>
-                        {(item as any).image && (
-                          <img
-                            src={(item as any).image}
-                            alt={item.placeholder}
-                            className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover/gallery:opacity-100 transition-opacity duration-300"
-                          />
+                        {/* Placeholder content - shown when no image */}
+                        {!item.image && (
+                          <>
+                            <div className="absolute inset-0 grid-pattern-dense opacity-30" />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className="font-mono text-[10px] text-foreground/50 text-center px-2">
+                                {item.placeholder}
+                              </span>
+                            </div>
+                          </>
                         )}
-                        {/* Hover overlay */}
-                        <div className="absolute inset-0 bg-foreground/10 opacity-0 group-hover/gallery:opacity-100 transition-opacity duration-200" />
+                        {/* Image with click-to-view text overlay */}
+                        {item.image && (
+                          <>
+                            <img
+                              src={item.image}
+                              alt={item.placeholder}
+                              className="absolute inset-0 w-full h-full object-cover"
+                            />
+                            {/* Click to view overlay */}
+                            <div className="absolute inset-0 bg-background/80 opacity-0 group-hover/gallery:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center">
+                              <span className="font-mono text-[10px] text-foreground/90 text-center px-2 mb-1">
+                                {item.placeholder}
+                              </span>
+                              <span className="font-mono text-[8px] text-foreground/60 uppercase tracking-wider">
+                                Click to view
+                              </span>
+                            </div>
+                          </>
+                        )}
                         {/* Frame corners */}
                         <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-foreground/40" />
                         <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-foreground/40" />
