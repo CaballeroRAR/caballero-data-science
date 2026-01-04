@@ -10,9 +10,9 @@ const projects = [
     link: "https://lnkd.in/gpcmjuuW",
     year: "2025",
     gallery: [
-      { id: 1, placeholder: "Business Rationale | Parameter Selection ", image: "/img/business-context.png"},
-      { id: 2, placeholder: "Conversion Statistics", image: "/img/conversion-stat.png" },
-      { id: 3, placeholder: "Groups Visualization", image: "/img/abtesting.png" },
+      { id: 1, placeholder: "Business Rationale | Parameter Selection ", image: "caballero-data-science/src/assets/img/business-context.png"},
+      { id: 2, placeholder: "Conversion Statistics", image: "caballero-data-science/src/assets/img/conversion-stat.png" },
+      { id: 3, placeholder: "Groups Visualization", image: "caballero-data-science/src/assets/img/abtesting.png" },
     ],
   },
   {
