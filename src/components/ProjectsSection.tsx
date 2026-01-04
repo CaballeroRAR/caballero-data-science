@@ -3,29 +3,37 @@ import businessContextImg from "@/assets/img/business-context.png";
 import conversionStatImg from "@/assets/img/conversion-stat.png";
 import abtestingImg from "@/assets/img/abtesting.png";
 
+import goldrecoveryEDAImg from "@/assets/img/gold-recovery-dataset.png";
+import concentrationperStageImg from "@/assets/img/distribucion-concentraciones-stage.png";
+
+
 const projects = [
   {
     id: 1,
     title: "A/B Testing, UI Change",
     category: "Statistical Analysis",
-    description: (
-      <div className="space-y-2">
-        <p>Recommend using α = 0.10 significance level (90% confidence) with our current sample of 10,000 users per variant. This strategy optimally balances statistical rigor with business agility, specifically addressing our concern about missing real improvements in a low-risk UI test.</p>
-        <ul className="list-disc pl-4 space-y-1">
-          <li><strong className="text-foreground/90">Test Type:</strong> Minor UI button tweak (low implementation cost)</li>
-          <li><strong className="text-foreground/90">Primary Risk Concern:</strong> Missing a real improvement &gt; Cost of false positive</li>
-          <li><strong className="text-foreground/90">Current Performance:</strong> 19.9% conversion rate (clicks)</li>
-          <li><strong className="text-foreground/90">Sample Available:</strong> 10,000 users per variant (20,000 total)</li>
-          <li><strong className="text-foreground/90">Business Goal:</strong> Increase non-client to client conversions</li>
-        </ul>
-      </div>
-    ),
+    description: "Designed a hypothesis test with tailored α=0.10 for a low-risk UI experiment, prioritizing sensitivity over false positive risk. The test revealed a dramatic conversion increase from 19.9% to over 61%.",
     skills: ["Python", "Statsmodels", "Jupyter Notebook", "Statistical Testing", "Power Analysis"],
     link: "https://lnkd.in/gpcmjuuW",
     year: "2025",
     gallery: [
-      { id: 1, placeholder: "Business Rationale | Parameter Selection", modalText: "A higher alpha (0.10) was chosen because the business risk of a false positive (rolling out an ineffective change) is low—it's a minor UI tweak, easily reversible, with minimal cost.", image: businessContextImg },
-      { id: 2, placeholder: "Conversion Statistics", modalText: "The control group had a 19.9% conversion rate, while the treatment group achieved over 61%, demonstrating a statistically significant improvement.", image: conversionStatImg },
+      {
+        id: 1,
+        placeholder: "Business Rationale | Parameter Selection",
+        modalText: (
+          <>
+            To evaluate this low-risk UI change, taking into account the following business context:
+            <ul className="list-disc list-inside text-left mt-2 space-y-1">
+              <li>Test Type: Minor UI button tweak (low implementation cost)</li>
+              <li>Primary Risk Concern: Missing a real improvement &gt; Cost of false positive</li>
+              <li>Current Performance: 19.9% conversion rate (clicks)</li>
+              <li>Business Goal: Increase non-client to client conversions</li>
+            </ul>
+          </>
+        ),
+        image: businessContextImg,
+      },
+      { id: 2, placeholder: "Conversion Statistics", modalText: "The control group had a 19.9% conversion rate, while the treatment group achieved over 61%, demonstrating a statistically significant improvement. Thus the implementation is suggested.", image: conversionStatImg },
       { id: 3, placeholder: "Groups Visualization", modalText: "Visual comparison of conversion rates between control and treatment groups, clearly showing the dramatic improvement from the UI change.", image: abtestingImg },
     ],
   },
@@ -38,9 +46,24 @@ const projects = [
     link: "https://lnkd.in/eZMdm3_V",
     year: "2025",
     gallery: [
-      { id: 1, placeholder: "Data Pipeline" },
-      { id: 2, placeholder: "Model Performance" },
-      { id: 3, placeholder: "Feature Importance" },
+      {
+        id: 1,
+        placeholder: "EDA & Feature Engineering",
+        modalText: (
+          <>
+            Processed industrial production data by cleaning, engineering key features like recovery rates, and removing outliers. The refined dataset was then segmented by specific process stages for targeted analysis and modeling.
+            <ul className="list-disc list-inside text-left mt-2 space-y-1">
+              <li>Cleaned multi-stage process data with Pandas: handled missing values and anomalies</li>
+              <li>Feature engineering: calculated recovery rates using metallurgical formulas</li>
+              <li>Removed outliers in concentration measurements</li>
+              <li>Split data by process stages (rougher, primary cleaner, final)</li>
+            </ul>
+          </>
+        ),
+        image: goldrecoveryEDAImg,
+      },
+      { id: 2, placeholder: "Conversion Statistics", modalText: "The control group had a 19.9% conversion rate, while the treatment group achieved over 61%, demonstrating a statistically significant improvement. Thus the implementation is suggested.", image: concentrationperStageImg },
+      { id: 3, placeholder: "Groups Visualization", modalText: "Visual comparison of conversion rates between control and treatment groups, clearly showing the dramatic improvement from the UI change.", image: abtestingImg },
     ],
   },
   {
@@ -61,7 +84,7 @@ const projects = [
 
 const ProjectsSection = () => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
-  const [selectedImage, setSelectedImage] = useState<{ image: string; text: string } | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{ image: string; text: React.ReactNode } | null>(null);
 
   return (
     <section id="projects" className="py-32 bg-background text-foreground relative">
@@ -230,9 +253,9 @@ const ProjectsSection = () => {
               className="max-w-full max-h-[80vh] object-contain border border-foreground/20 shadow-2xl"
             />
             <div className="mt-4 text-center max-w-2xl px-4">
-              <p className="font-body text-sm text-foreground/80">
+              <div className="font-body text-sm text-foreground/80">
                 {selectedImage.text}
-              </p>
+              </div>
             </div>
             <button className="absolute top-4 right-4 md:-top-12 md:right-0 text-foreground hover:text-foreground/70 transition-colors">
               <span className="font-mono text-sm uppercase tracking-widest">Close</span>
