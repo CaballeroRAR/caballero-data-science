@@ -13,9 +13,9 @@ const projects = [
     link: "https://lnkd.in/gpcmjuuW",
     year: "2025",
     gallery: [
-      { id: 1, placeholder: "Business Rationale | Parameter Selection", image: businessContextImg },
-      { id: 2, placeholder: "Conversion Statistics", image: conversionStatImg },
-      { id: 3, placeholder: "Groups Visualization", image: abtestingImg },
+      { id: 1, placeholder: "Business Rationale | Parameter Selection", modalText: "A higher alpha (0.10) was chosen because the business risk of a false positive (rolling out an ineffective change) is low—it's a minor UI tweak, easily reversible, with minimal cost.", image: businessContextImg },
+      { id: 2, placeholder: "Conversion Statistics", modalText: "The control group had a 19.9% conversion rate, while the treatment group achieved over 61%, demonstrating a statistically significant improvement.", image: conversionStatImg },
+      { id: 3, placeholder: "Groups Visualization", modalText: "Visual comparison of conversion rates between control and treatment groups, clearly showing the dramatic improvement from the UI change.", image: abtestingImg },
     ],
   },
   {
@@ -50,7 +50,7 @@ const projects = [
 
 const ProjectsSection = () => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{ image: string; text: string } | null>(null);
 
   return (
     <section id="projects" className="py-32 bg-background text-foreground relative">
@@ -155,7 +155,7 @@ const ProjectsSection = () => {
                         style={{ animationDelay: `${idx * 100}ms` }}
                         onClick={(e) => {
                           e.stopPropagation();
-                          if (item.image) setSelectedImage(item.image);
+                          if (item.image) setSelectedImage({ image: item.image, text: item.modalText || item.placeholder });
                         }}
                       >
                         {/* Placeholder content - shown when no image */}
@@ -212,12 +212,17 @@ const ProjectsSection = () => {
           className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-sm p-4 animate-fade-in"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-7xl max-h-[90vh] w-full flex items-center justify-center">
+          <div className="relative max-w-7xl max-h-[90vh] w-full flex flex-col items-center justify-center">
             <img 
-              src={selectedImage} 
+              src={selectedImage.image} 
               alt="Project detail" 
-              className="max-w-full max-h-[90vh] object-contain border border-foreground/20 shadow-2xl"
+              className="max-w-full max-h-[80vh] object-contain border border-foreground/20 shadow-2xl"
             />
+            <div className="mt-4 text-center max-w-2xl px-4">
+              <p className="font-body text-sm text-foreground/80">
+                {selectedImage.text}
+              </p>
+            </div>
             <button className="absolute top-4 right-4 md:-top-12 md:right-0 text-foreground hover:text-foreground/70 transition-colors">
               <span className="font-mono text-sm uppercase tracking-widest">Close</span>
             </button>
