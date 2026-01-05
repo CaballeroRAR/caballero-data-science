@@ -1,11 +1,16 @@
 import { useState } from "react";
 import businessContextImg from "@/assets/img/business-context.png";
 import conversionStatImg from "@/assets/img/conversion-stat.png";
-import abtestingImg from "@/assets/img/abtesting.png";
+import hyperparameterImg from "@/assets/img/abtesting.png";
 
 import goldrecoveryEDAImg from "@/assets/img/gold-recovery-dataset.png";
 import concentrationperStageImg from "@/assets/img/distribucion-concentraciones-stage.png";
+import goldhyperparameterImg from "@/assets/img/ajuste-de-hiperparametros.png";
 
+import salaryEDAImg from "@/assets/img/eda-salary-analysis.png";
+import meanSalaryPerAge from "@/assets/img/mean-salary-per-age.png";
+import distributionImg from "@/assets/img/distribution-of-assets.png";
+import kmeansImg from "@/assets/img/cluster-with-elbow-method.png";
 
 const projects = [
   {
@@ -34,7 +39,7 @@ const projects = [
         image: businessContextImg,
       },
       { id: 2, placeholder: "Conversion Statistics", modalText: "The control group had a 19.9% conversion rate, while the treatment group achieved over 61%, demonstrating a statistically significant improvement. Thus the implementation is suggested.", image: conversionStatImg },
-      { id: 3, placeholder: "Groups Visualization", modalText: "Visual comparison of conversion rates between control and treatment groups, clearly showing the dramatic improvement from the UI change.", image: abtestingImg },
+      { id: 3, placeholder: "Groups Visualization", modalText: "Visual comparison of conversion rates between control and treatment groups, clearly showing the dramatic improvement from the UI change.", image: hyperparameterImg },
     ],
   },
   {
@@ -42,7 +47,7 @@ const projects = [
     title: "Gold Recovery Prediction",
     category: "Machine Learning",
     description: "Developed an end-to-end regression pipeline to predict gold recovery rates and optimize industrial flotation processes. The model identifies optimal parameter ranges for reagent concentration and particle size to maximize extraction efficiency and reduce waste.",
-    skills: ["Regression Modeling", "Feature Engineering", "Ensemble Methods", "Scikit-learn", "Custom Metrics (sMAPE)"],
+    skills: ["Regression Modeling", "Feature Engineering", "Ensemble Methods", "Linear Regression", "Random Forest Regression", "Decision Tree Regression", "Custom Metrics (sMAPE)"],
     link: "https://lnkd.in/eZMdm3_V",
     year: "2025",
     gallery: [
@@ -62,8 +67,8 @@ const projects = [
         ),
         image: goldrecoveryEDAImg,
       },
-      { id: 2, placeholder: "Conversion Statistics", modalText: "The control group had a 19.9% conversion rate, while the treatment group achieved over 61%, demonstrating a statistically significant improvement. Thus the implementation is suggested.", image: concentrationperStageImg },
-      { id: 3, placeholder: "Groups Visualization", modalText: "Visual comparison of conversion rates between control and treatment groups, clearly showing the dramatic improvement from the UI change.", image: abtestingImg },
+      { id: 2, placeholder: "Data Visualization", modalText: "By grouping the data given, it is possible to visualize the distribution of the three different metals in the different stages of the process.", image: concentrationperStageImg },
+      { id: 3, placeholder: "Hyperparameter Tunning with MAE", modalText: "Output of the custom function to find the best hyperparameters for a LinearRegression model", image: goldhyperparameterImg },
     ],
   },
   {
@@ -71,13 +76,14 @@ const projects = [
     title: "Employee Salary Analysis",
     category: "Statistical Analysis",
     description: "Conducted exploratory data analysis on compensation patterns to quantify the impact of experience, education, and role on salary structures. Delivered visual benchmarks and statistical insights to support HR strategy and talent acquisition planning.",
-    skills: ["Exploratory Data Analysis (EDA)", "Data Visualization", "Statistical Analysis", "Business Analytics", "Data Cleaning"],
+    skills: ["Exploratory Data Analysis (EDA)", "Data Visualization", "Statistical Analysis", "Business Analytics", "Data Cleaning", "KMeans Clustering", "Principal Component Analysis (PCA)"],
     link: "https://lnkd.in/eaUVU9yg",
     year: "2025",
     gallery: [
-      { id: 1, placeholder: "EDA Overview" },
-      { id: 2, placeholder: "Salary Distribution" },
-      { id: 3, placeholder: "Key Insights" },
+      { id: 1, placeholder: "EDA Overview", modalText: "First glance to the dataset.", image: salaryEDAImg },
+      { id: 2, placeholder: "Mean Salary by Age", modalText: "Visualization of distribution of salaries per age. This graphice allows to describe skewness of the data.", image: meanSalaryPerAge },
+      { id: 3, placeholder: "Distribution of employees", modalText: "Quick glance to how are employees distributed in the different departments, whats the impact of the department salary-wise.", image: distributionImg },
+      { id: 4, placeholder: "KMeans Clustering with PCA", modalText: "Visualization of the KMeans Clustering using the PCA method", image: kmeansImg },
     ],
   },
 ];
