@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const greetings = [
   { intro: "Hi! I am", role: "and I am a" },
@@ -8,6 +8,130 @@ const greetings = [
   { intro: "Oi! Eu sou", role: "e eu sou um" },
   { intro: "Hallo! Ich bin", role: "und ich bin ein" },
 ];
+
+const glitchFragments = ["01", "//", ">>", "<<", "##", "$$", "&&", "**", "[]", "{}", "=>", "!="];
+
+const GlitchText = ({ children }: { children: string }) => {
+  const containerRef = useRef<HTMLSpanElement>(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [fragments, setFragments] = useState<Array<{ id: number; x: number; y: number; char: string; angle: number }>>([]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setMousePos({ x, y });
+
+    // Generate fragments pointing toward cursor
+    if (Math.random() > 0.7) {
+      const newFragment = {
+        id: Date.now() + Math.random(),
+        x: Math.random() * rect.width,
+        y: Math.random() * rect.height,
+        char: glitchFragments[Math.floor(Math.random() * glitchFragments.length)],
+        angle: Math.atan2(y - Math.random() * rect.height, x - Math.random() * rect.width) * (180 / Math.PI),
+      };
+      setFragments(prev => [...prev.slice(-8), newFragment]);
+    }
+  };
+
+  useEffect(() => {
+    if (!isHovering) {
+      setFragments([]);
+    }
+  }, [isHovering]);
+
+  return (
+    <span
+      ref={containerRef}
+      className="relative inline-block cursor-default select-none"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      onMouseMove={handleMouseMove}
+    >
+      {/* Main text */}
+      <span className={`relative z-10 transition-all duration-100 ${isHovering ? '[text-shadow:2px_0_0_hsl(var(--primary)),_-2px_0_0_hsl(var(--destructive))]' : ''}`}>
+        {children}
+      </span>
+
+      {/* Glitch overlay layers */}
+      {isHovering && (
+        <>
+          <span 
+            className="absolute inset-0 text-primary opacity-70 animate-pulse"
+            style={{ 
+              transform: `translate(${(mousePos.x - 100) * 0.02}px, ${(mousePos.y - 20) * 0.02}px)`,
+              clipPath: 'inset(20% 0 40% 0)'
+            }}
+            aria-hidden="true"
+          >
+            {children}
+          </span>
+          <span 
+            className="absolute inset-0 text-destructive opacity-50"
+            style={{ 
+              transform: `translate(${(mousePos.x - 100) * -0.02}px, ${(mousePos.y - 20) * -0.02}px)`,
+              clipPath: 'inset(60% 0 10% 0)'
+            }}
+            aria-hidden="true"
+          >
+            {children}
+          </span>
+
+          {/* Glitch lines reaching to cursor */}
+          <svg className="absolute inset-0 w-full h-full overflow-visible pointer-events-none" style={{ left: '-50%', top: '-100%', width: '200%', height: '300%' }}>
+            {fragments.map((frag) => (
+              <g key={frag.id}>
+                <line
+                  x1={`${frag.x + 50}%`}
+                  y1={`${frag.y + 100}%`}
+                  x2={`${mousePos.x / 2}%`}
+                  y2={`${mousePos.y + 100}%`}
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="1"
+                  opacity="0.4"
+                  className="animate-pulse"
+                />
+              </g>
+            ))}
+          </svg>
+
+          {/* Floating data fragments */}
+          {fragments.map((frag) => (
+            <span
+              key={frag.id}
+              className="absolute font-mono text-xs text-primary opacity-60 pointer-events-none animate-fade-in"
+              style={{
+                left: frag.x,
+                top: frag.y,
+                transform: `rotate(${frag.angle}deg)`,
+              }}
+            >
+              {frag.char}
+            </span>
+          ))}
+
+          {/* Underline glitch */}
+          <span 
+            className="absolute -bottom-1 left-0 h-px bg-primary"
+            style={{ 
+              width: `${Math.min(100, Math.abs(mousePos.x / 2))}%`,
+              opacity: 0.8 
+            }} 
+          />
+          <span 
+            className="absolute -bottom-2 right-0 h-px bg-destructive opacity-40"
+            style={{ 
+              width: `${Math.min(60, Math.abs((200 - mousePos.x) / 3))}%`
+            }} 
+          />
+        </>
+      )}
+    </span>
+  );
+};
 
 const HeroSection = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
@@ -74,17 +198,8 @@ const HeroSection = () => {
             >
               {greetings[greetingIndex].role}
             </span>
-            <span className="font-display text-xl md:text-2xl lg:text-3xl group cursor-default relative">
-              <span className="relative inline-block group-hover:animate-none">
-                <span className="group-hover:[text-shadow:2px_0_0_hsl(var(--primary)),_-2px_0_0_hsl(var(--destructive))] transition-all duration-100">
-                  Data Scientist
-                </span>
-                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 group-hover:animate-pulse [text-shadow:0_0_10px_hsl(var(--primary))]" aria-hidden="true">
-                  Data Scientist
-                </span>
-              </span>
-              <span className="absolute -bottom-1 left-0 w-full h-px bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-              <span className="absolute -bottom-1 left-0 w-full h-px bg-primary opacity-0 group-hover:opacity-50 group-hover:translate-x-1 transition-all duration-300 delay-75" />
+            <span className="font-display text-xl md:text-2xl lg:text-3xl">
+              <GlitchText>Data Scientist</GlitchText>
             </span>
           </div>
 
