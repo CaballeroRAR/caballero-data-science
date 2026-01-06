@@ -7,115 +7,86 @@ const greetings = [
   { intro: "Привет, я", role: "и я" },
   { intro: "Oi! Eu sou", role: "e eu sou um" },
   { intro: "Hallo! Ich bin", role: "und ich bin ein" },
+  { intro: "مرحباً! أنا", role: "وأنا" },
 ];
 
-const glitchFragments = ["01", "//", ">>", "<<", "##", "$$", "&&", "**", "[]", "{}", "=>", "!="];
-
 const GlitchText = ({ children }: { children: string }) => {
-  const containerRef = useRef<HTMLSpanElement>(null);
   const [isHovering, setIsHovering] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [fragments, setFragments] = useState<Array<{ id: number; startX: number; startY: number; char: string }>>([]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    setMousePos({ x, y });
-
-    // Generate fragments from within the text reaching toward cursor
-    if (Math.random() > 0.6) {
-      const newFragment = {
-        id: Date.now() + Math.random(),
-        startX: Math.random() * rect.width,
-        startY: Math.random() * rect.height,
-        char: glitchFragments[Math.floor(Math.random() * glitchFragments.length)],
-      };
-      setFragments(prev => [...prev.slice(-10), newFragment]);
-    }
-  };
+  const [displayText, setDisplayText] = useState(children);
+  const intervalRef = useRef<any>(null);
+  const timeoutRef = useRef<any>(null);
 
   useEffect(() => {
     if (!isHovering) {
-      setFragments([]);
+      setDisplayText(children);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      return;
     }
-  }, [isHovering]);
+
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#%&_<>[]{}";
+    let iteration = 0;
+    
+    intervalRef.current = setInterval(() => {
+      if (iteration < children.length) {
+        iteration += 1;
+      }
+
+      setDisplayText((current) =>
+        children
+          .split("")
+          .map((char, index) => {
+            if (char === " ") return " ";
+            
+            if (index < children.length - iteration) {
+              return children[index];
+            }
+
+            if (Math.random() < 0.7) return children[index];
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("")
+      );
+    }, 100);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isHovering, children]);
 
   return (
     <span
-      ref={containerRef}
-      // Adding padding increases the hit area (proximity) for the hover effect
-      className="relative inline-block cursor-default select-none p-6"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-      onMouseMove={handleMouseMove}
+      className="relative inline-block cursor-default select-none"
+      onMouseEnter={() => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        setIsHovering(true);
+      }}
+      onMouseLeave={() => {
+        timeoutRef.current = setTimeout(() => setIsHovering(false), 600);
+      }}
     >
-      {/* Main text */}
-      <span className={`relative z-10 transition-all duration-100 ${isHovering ? '[text-shadow:2px_0_0_hsl(var(--primary)),_-2px_0_0_hsl(var(--destructive))]' : ''}`}>
-        {children}
-      </span>
-
-      {/* Glitch overlay layers */}
+      <span className="relative z-10">{displayText}</span>
       {isHovering && (
         <>
           <span 
-            className="absolute inset-0 text-primary opacity-70 animate-pulse p-6"
+            className="absolute top-0 left-0 -z-10 text-primary opacity-50 animate-pulse"
             style={{ 
-              transform: `translate(${(mousePos.x - 100) * 0.02}px, ${(mousePos.y - 20) * 0.02}px)`,
-              clipPath: 'inset(20% 0 40% 0)'
+              clipPath: 'inset(0 0 50% 0)',
+              transform: 'translate(-2px, 0)'
             }}
             aria-hidden="true"
           >
-            {children}
+            {displayText}
           </span>
           <span 
-            className="absolute inset-0 text-destructive opacity-50 p-6"
+            className="absolute top-0 left-0 -z-10 text-destructive opacity-50 animate-pulse"
             style={{ 
-              transform: `translate(${(mousePos.x - 100) * -0.02}px, ${(mousePos.y - 20) * -0.02}px)`,
-              clipPath: 'inset(60% 0 10% 0)'
+              clipPath: 'inset(50% 0 0 0)',
+              transform: 'translate(2px, 0)'
             }}
             aria-hidden="true"
           >
-            {children}
+            {displayText}
           </span>
-
-          {/* Glitch lines from text to cursor */}
-          <svg className="absolute overflow-visible pointer-events-none" style={{ left: 0, top: 0, width: '100%', height: '100%' }}>
-            {fragments.map((frag) => (
-              <line
-                key={frag.id}
-                x1={frag.startX}
-                y1={frag.startY}
-                x2={mousePos.x}
-                y2={mousePos.y}
-                stroke="hsl(var(--primary))"
-                strokeWidth="1"
-                opacity="0.5"
-                className="animate-pulse"
-              />
-            ))}
-          </svg>
-
-          {/* Floating data fragments traveling from text toward cursor */}
-          {fragments.map((frag) => {
-            const progress = 0.3 + Math.random() * 0.5;
-            const x = frag.startX + (mousePos.x - frag.startX) * progress;
-            const y = frag.startY + (mousePos.y - frag.startY) * progress;
-            return (
-              <span
-                key={frag.id}
-                className="absolute font-mono text-xs text-primary pointer-events-none animate-fade-in"
-                style={{
-                  left: x,
-                  top: y,
-                  opacity: 0.7,
-                }}
-              >
-                {frag.char}
-              </span>
-            );
-          })}
         </>
       )}
     </span>
