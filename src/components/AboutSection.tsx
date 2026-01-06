@@ -25,19 +25,28 @@ const AboutSection = () => {
                   isHovered ? "opacity-0" : "opacity-100"
                 }`}
               >
-                <div className="absolute inset-0 grid-pattern-dense opacity-50" />
+                <div className="absolute inset-0 grid-pattern-dense opacity-50 animate-pulse" />
                 <div className="absolute inset-8 border border-foreground/30" />
-                <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 border border-foreground/50 rotate-12" />
+                <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 border border-foreground/50 rotate-45 animate-[spin_10s_linear_infinite]" />
                 <div className="absolute bottom-12 right-12 w-24 h-24 bg-foreground" />
                 
                 {/* Data visualization lines */}
                 <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <style>
+                    {`
+                      @keyframes flow {
+                        to { stroke-dashoffset: -20; }
+                      }
+                    `}
+                  </style>
                   <path
                     d="M 10 80 Q 30 60, 50 70 T 90 30"
                     stroke="currentColor"
                     strokeWidth="0.5"
                     fill="none"
                     className="text-foreground/40"
+                    strokeDasharray="4 4"
+                    style={{ animation: 'flow 1s linear infinite' }}
                   />
                   <path
                     d="M 10 60 Q 40 40, 60 50 T 90 20"
@@ -45,6 +54,8 @@ const AboutSection = () => {
                     strokeWidth="0.3"
                     fill="none"
                     className="text-foreground/30"
+                    strokeDasharray="3 3"
+                    style={{ animation: 'flow 1.5s linear infinite reverse' }}
                   />
                 </svg>
               </div>
@@ -70,7 +81,7 @@ const AboutSection = () => {
             
             {/* Caption */}
             <div className="mt-4 font-mono text-xs text-muted-foreground">
-              {isHovered ? "FIG. 01 — PROFILE" : "FIG. 01 — STRUCTURAL ANALYSIS"}
+              {isHovered ? "FIG. 01 — PROFILE" : "FIG. 01 — ANALYSIS"}
             </div>
           </div>
 
