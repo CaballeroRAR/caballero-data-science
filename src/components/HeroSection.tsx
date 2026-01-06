@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 
 const greetings = [
-  "Hi! I am",
-  "Hola! Soy",
-  "Привет, я",
-  "Oi! Eu sou",
-  "Hallo! Ich bin",
+  { intro: "Hi! I am", role: "and I am a" },
+  { intro: "Hola! Soy", role: "y soy" },
+  { intro: "Привет, я", role: "и я" },
+  { intro: "Oi! Eu sou", role: "e eu sou um" },
+  { intro: "Hallo! Ich bin", role: "und ich bin ein" },
 ];
 
 const HeroSection = () => {
@@ -57,13 +57,31 @@ const HeroSection = () => {
                   isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
                 }`}
               >
-                {greetings[greetingIndex]}
+                {greetings[greetingIndex].intro}
               </span>
             </span>
             <span className="block opacity-0 animate-fade-up animation-delay-200">
               Gabriel
             </span>
           </h1>
+
+          {/* Role line */}
+          <div className="flex items-center gap-3 mb-8 opacity-0 animate-fade-up animation-delay-300">
+            <span 
+              className={`font-body text-lg md:text-xl text-muted-foreground transition-all duration-300 ease-out ${
+                isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
+              }`}
+            >
+              {greetings[greetingIndex].role}
+            </span>
+            <span className="font-display text-xl md:text-2xl lg:text-3xl group cursor-default">
+              <span className="relative inline-block">
+                Data Scientist
+                <span className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/30 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
+                <span className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+              </span>
+            </span>
+          </div>
 
           {/* Subtitle */}
           <p className="font-body text-lg md:text-xl text-muted-foreground max-w-xl mb-12 opacity-0 animate-fade-up animation-delay-400">
