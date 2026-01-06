@@ -103,11 +103,24 @@ const AboutSection = () => {
                 and optimize decision-making.
               </p>
               <p>
-                Recognized for clear and structured communication, analytical thinking, 
+                Recognized for: 
+                Clear and structured communication, analytical thinking, 
                 complex problem-solving, innovation, self-management, and proactivity. 
                 Effective collaborator in hybrid and changing environments, with constant 
                 curiosity and a focus on continuous improvement.
+                
               </p>
+              <p className="font-body text-muted-foreground">
+              Proof of my curiosity and commitment is this page. I am not an expert web developer, but I will find a way. Check the repository 
+  <a 
+    href="https://github.com/CaballeroRAR/caballero-data-science" 
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-blue-600 hover:text-blue-800 underline ml-1"
+  >
+    here
+  </a>.
+</p>
             </div>
 
             {/* Expertise tags */}
