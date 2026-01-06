@@ -31,7 +31,7 @@ const Header = () => {
           <div className="font-display text-xl tracking-tight">
             <span className="text-foreground">DS</span>
             <span className="text-muted-foreground">/</span>
-            <span className="font-mono text-sm text-muted-foreground ml-1">Gabriel_Caballero</span>
+            <span className="font-mono text-sm text-muted-foreground ml-1">ARCHITECT</span>
           </div>
 
           <ul className="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-widest">

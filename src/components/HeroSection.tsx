@@ -45,8 +45,7 @@ const GlitchText = ({ children }: { children: string }) => {
   return (
     <span
       ref={containerRef}
-      // Adding padding increases the hit area (proximity) for the hover effect
-      className="relative inline-block cursor-default select-none p-6"
+      className="relative inline-block cursor-default select-none"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       onMouseMove={handleMouseMove}
@@ -60,7 +59,7 @@ const GlitchText = ({ children }: { children: string }) => {
       {isHovering && (
         <>
           <span 
-            className="absolute inset-0 text-primary opacity-70 animate-pulse p-6"
+            className="absolute inset-0 text-primary opacity-70 animate-pulse"
             style={{ 
               transform: `translate(${(mousePos.x - 100) * 0.02}px, ${(mousePos.y - 20) * 0.02}px)`,
               clipPath: 'inset(20% 0 40% 0)'
@@ -70,7 +69,7 @@ const GlitchText = ({ children }: { children: string }) => {
             {children}
           </span>
           <span 
-            className="absolute inset-0 text-destructive opacity-50 p-6"
+            className="absolute inset-0 text-destructive opacity-50"
             style={{ 
               transform: `translate(${(mousePos.x - 100) * -0.02}px, ${(mousePos.y - 20) * -0.02}px)`,
               clipPath: 'inset(60% 0 10% 0)'
@@ -194,8 +193,8 @@ const HeroSection = () => {
 
           {/* Subtitle */}
           <p className="font-body text-lg md:text-xl text-muted-foreground max-w-xl mb-12 opacity-0 animate-fade-up animation-delay-400">
-            I architect predictive models with <strong>Machine Learning & Neural Networks</strong>, specializing in turning complex data into measurable outcomes. 
-            From business-oriented exploratory analysis that uncovers hidden opportunities to optimizing industrial processes and driving data-informed strategy.
+            Building predictive models with the structured precision of an architect. 
+            Specializing in Machine Learning algorithms and Neural Networks to turn complex data into actionable insights—from optimizing industrial processes to driving strategic decisions.            
           </p>
 
           {/* CTA Buttons */}
