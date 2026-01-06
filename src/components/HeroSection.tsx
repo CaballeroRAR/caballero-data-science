@@ -1,5 +1,30 @@
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+
+const greetings = [
+  "Hi! I am",
+  "Hola! Soy",
+  "Привет, я",
+  "Oi! Eu sou",
+  "Hallo! Ich bin",
+];
+
 const HeroSection = () => {
+  const [greetingIndex, setGreetingIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setGreetingIndex((prev) => (prev + 1) % greetings.length);
+        setIsAnimating(false);
+      }, 300);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const scrollToContact = () => {
     const element = document.getElementById("contact");
     if (element) {
@@ -25,15 +50,18 @@ const HeroSection = () => {
           
 
           {/* Main headline */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display leading-[0.9] mb-8">
-            <span className="block opacity-0 animate-fade-up animation-delay-100">
-              DATA
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display leading-[1.1] mb-8">
+            <span className="block text-muted-foreground opacity-0 animate-fade-up animation-delay-100 mb-2">
+              <span 
+                className={`inline-block transition-all duration-300 ease-out ${
+                  isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
+                }`}
+              >
+                {greetings[greetingIndex]}
+              </span>
             </span>
             <span className="block opacity-0 animate-fade-up animation-delay-200">
-              SCIENTIST
-            </span>
-            <span className="block text-muted-foreground opacity-0 animate-fade-up animation-delay-300">
-              & ARCHITECT
+              Gabriel
             </span>
           </h1>
 
