@@ -92,26 +92,20 @@ const AboutSection = () => {
 
             <div className="space-y-6 font-body text-muted-foreground leading-relaxed">
               <p>
-                Data Scientist with experience in predictive and time series modeling, 
-                ETL pipeline development in Google Cloud, and design of scalable interactive 
-                dashboards.
+                Data scientist with hands-on experience in predictive and time series modeling, building ETL pipelines in Google Cloud, 
+                and developing scalable, interactive dashboards. Skilled in Python (Pandas, NumPy, scikit-learn, Statsmodels, TensorFlow), 
+                SQL, and Power BI, applying advanced machine learning, analytics, and statistics to turn data into actionable insights and 
+                support strategic decision-making.
               </p>
               <p>
-                Specialized in Python (Pandas, NumPy, Scikit-learn, Statsmodels, and TensorFlow), 
-                SQL, and visualization tools (Power BI), applying advanced Machine Learning 
-                techniques, data analytics, and statistics to generate actionable insights 
-                and optimize decision-making.
-              </p>
-              <p>
-                Recognized for: 
-                Clear and structured communication, analytical thinking, 
-                complex problem-solving, innovation, self-management, and proactivity. 
-                Effective collaborator in hybrid and changing environments, with constant 
-                curiosity and a focus on continuous improvement.
-                
+                Known for clear, structured communication, strong analytical thinking, complex problem-solving, innovation, and effective 
+                self-management. I thrive in hybrid, fast-changing environments, driven by constant curiosity and a commitment to continuous 
+                improvement.
               </p>
               <p className="font-body text-muted-foreground">
-              Proof of my curiosity and commitment is this page. I am not an expert web developer, but I will find a way. Check the repository 
+              This page is a direct reflection of that curiosity and commitment. While web development is not my primary expertise, 
+              every element here is an experiment in learning and iteration—and the process will keep evolving. The full implementation 
+              and ongoing improvements can be explored in the repository linked
   <a 
     href="https://github.com/CaballeroRAR/caballero-data-science" 
     target="_blank"
