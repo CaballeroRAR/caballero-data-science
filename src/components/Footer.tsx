@@ -7,7 +7,7 @@ const Footer = () => {
           <div className="font-display text-lg">
             <span className="text-foreground">DS</span>
             <span className="text-muted-foreground">/</span>
-            <span className="font-mono text-xs text-muted-foreground ml-1">ARCHITECT</span>
+            <span className="font-mono text-xs text-muted-foreground ml-1">Gabriel_Caballero</span>
           </div>
 
           {/* Copyright */}

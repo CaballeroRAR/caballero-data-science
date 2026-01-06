@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
+import { SectionNumber } from "./ui/SectionNumber";
 
 const ContactSection = () => {
   return (
     <section id="contact" className="py-32 relative">
       {/* Blueprint number */}
-      <div className="absolute right-8 top-32 font-mono text-8xl text-muted/30 hidden lg:block">
-        05
-      </div>
+      <SectionNumber number="05" className="absolute left-8 top-32 text-muted/80" />
 
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section header */}

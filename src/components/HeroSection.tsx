@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
+import { SectionNumber } from "@/components/ui/SectionNumber";
 
 const greetings = [
   { intro: "Hi! I am", role: "and I am a" },
@@ -124,9 +125,7 @@ const HeroSection = () => {
       <div className="absolute top-1/3 right-1/4 w-px h-40 bg-foreground/20 opacity-0 animate-fade-in animation-delay-300" />
       
       {/* Blueprint numbers */}
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 font-mono text-8xl text-muted/50 hidden lg:block">
-        01
-      </div>
+      <SectionNumber number="01" className="absolute right-8 top-1/2 -translate-y-1/2 text-muted/80" />
 
       <div className="container mx-auto px-6 lg:px-12 pt-20">
         <div className="max-w-5xl">

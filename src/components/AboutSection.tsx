@@ -1,5 +1,6 @@
 import { useState } from "react";
 import profilePhoto from "@/assets/profile-photo.png";
+import { SectionNumber } from "./ui/SectionNumber";
 
 const AboutSection = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -7,9 +8,7 @@ const AboutSection = () => {
   return (
     <section id="about" className="py-32 relative">
       {/* Blueprint number */}
-      <div className="absolute left-8 top-32 font-mono text-8xl text-muted/30 hidden lg:block">
-        02
-      </div>
+      <SectionNumber number="02" className="absolute left-8 top-32 text-muted/80" />
 
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
