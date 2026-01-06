@@ -1,3 +1,5 @@
+import { SectionNumber } from "./ui/SectionNumber";
+
 const skills = [
   { name: "Python", category: "Language" },
   { name: "SQL", category: "Language" },
@@ -35,9 +37,7 @@ const SkillsSection = () => {
   return (
     <section id="skills" className="py-32 relative grid-pattern">
       {/* Blueprint number */}
-      <div className="absolute left-8 top-32 font-mono text-8xl text-muted/30 hidden lg:block">
-        04
-      </div>
+      <SectionNumber number="04" className="absolute left-8 top-32 text-muted/80" />
 
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section header */}

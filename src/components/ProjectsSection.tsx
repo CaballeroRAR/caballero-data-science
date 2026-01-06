@@ -11,6 +11,7 @@ import salaryEDAImg from "@/assets/img/eda-salary-analysis.png";
 import meanSalaryPerAge from "@/assets/img/mean-salary-per-age.png";
 import distributionImg from "@/assets/img/distribution-of-assets.png";
 import kmeansImg from "@/assets/img/cluster-with-elbow-method.png";
+import { SectionNumber } from "./ui/SectionNumber";
 
 const projects = [
   {
@@ -95,9 +96,7 @@ const ProjectsSection = () => {
   return (
     <section id="projects" className="py-32 bg-background text-foreground relative">
       {/* Blueprint number */}
-      <div className="absolute right-8 top-32 font-mono text-8xl text-foreground/10 hidden lg:block">
-        03
-      </div>
+      <SectionNumber number="03" className="absolute left-8 top-32 text-muted/80" />
 
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section header */}
