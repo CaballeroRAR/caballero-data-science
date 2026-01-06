@@ -15,7 +15,7 @@ const GlitchText = ({ children }: { children: string }) => {
   const containerRef = useRef<HTMLSpanElement>(null);
   const [isHovering, setIsHovering] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [fragments, setFragments] = useState<Array<{ id: number; x: number; y: number; char: string; angle: number }>>([]);
+  const [fragments, setFragments] = useState<Array<{ id: number; startX: number; startY: number; char: string }>>([]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current) return;
@@ -24,16 +24,15 @@ const GlitchText = ({ children }: { children: string }) => {
     const y = e.clientY - rect.top;
     setMousePos({ x, y });
 
-    // Generate fragments pointing toward cursor
-    if (Math.random() > 0.7) {
+    // Generate fragments from within the text reaching toward cursor
+    if (Math.random() > 0.6) {
       const newFragment = {
         id: Date.now() + Math.random(),
-        x: Math.random() * rect.width,
-        y: Math.random() * rect.height,
+        startX: Math.random() * rect.width,
+        startY: Math.random() * rect.height,
         char: glitchFragments[Math.floor(Math.random() * glitchFragments.length)],
-        angle: Math.atan2(y - Math.random() * rect.height, x - Math.random() * rect.width) * (180 / Math.PI),
       };
-      setFragments(prev => [...prev.slice(-8), newFragment]);
+      setFragments(prev => [...prev.slice(-10), newFragment]);
     }
   };
 
@@ -80,53 +79,42 @@ const GlitchText = ({ children }: { children: string }) => {
             {children}
           </span>
 
-          {/* Glitch lines reaching to cursor */}
-          <svg className="absolute inset-0 w-full h-full overflow-visible pointer-events-none" style={{ left: '-50%', top: '-100%', width: '200%', height: '300%' }}>
+          {/* Glitch lines from text to cursor */}
+          <svg className="absolute overflow-visible pointer-events-none" style={{ left: 0, top: 0, width: '100%', height: '100%' }}>
             {fragments.map((frag) => (
-              <g key={frag.id}>
-                <line
-                  x1={`${frag.x + 50}%`}
-                  y1={`${frag.y + 100}%`}
-                  x2={`${mousePos.x / 2}%`}
-                  y2={`${mousePos.y + 100}%`}
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="1"
-                  opacity="0.4"
-                  className="animate-pulse"
-                />
-              </g>
+              <line
+                key={frag.id}
+                x1={frag.startX}
+                y1={frag.startY}
+                x2={mousePos.x}
+                y2={mousePos.y}
+                stroke="hsl(var(--primary))"
+                strokeWidth="1"
+                opacity="0.5"
+                className="animate-pulse"
+              />
             ))}
           </svg>
 
-          {/* Floating data fragments */}
-          {fragments.map((frag) => (
-            <span
-              key={frag.id}
-              className="absolute font-mono text-xs text-primary opacity-60 pointer-events-none animate-fade-in"
-              style={{
-                left: frag.x,
-                top: frag.y,
-                transform: `rotate(${frag.angle}deg)`,
-              }}
-            >
-              {frag.char}
-            </span>
-          ))}
-
-          {/* Underline glitch */}
-          <span 
-            className="absolute -bottom-1 left-0 h-px bg-primary"
-            style={{ 
-              width: `${Math.min(100, Math.abs(mousePos.x / 2))}%`,
-              opacity: 0.8 
-            }} 
-          />
-          <span 
-            className="absolute -bottom-2 right-0 h-px bg-destructive opacity-40"
-            style={{ 
-              width: `${Math.min(60, Math.abs((200 - mousePos.x) / 3))}%`
-            }} 
-          />
+          {/* Floating data fragments traveling from text toward cursor */}
+          {fragments.map((frag) => {
+            const progress = 0.3 + Math.random() * 0.5;
+            const x = frag.startX + (mousePos.x - frag.startX) * progress;
+            const y = frag.startY + (mousePos.y - frag.startY) * progress;
+            return (
+              <span
+                key={frag.id}
+                className="absolute font-mono text-xs text-primary pointer-events-none animate-fade-in"
+                style={{
+                  left: x,
+                  top: y,
+                  opacity: 0.7,
+                }}
+              >
+                {frag.char}
+              </span>
+            );
+          })}
         </>
       )}
     </span>
