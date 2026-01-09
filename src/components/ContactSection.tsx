@@ -4,11 +4,14 @@ import { SectionNumber } from "./ui/SectionNumber";
 const ContactSection = () => {
   return (
     <section id="contact" className="py-32 relative">
-      {/* Blueprint number - positioned in left margin */}
-      <SectionNumber number="05" className="absolute left-4 xl:left-8 top-32 text-muted/80" />
-      
       <div className="container mx-auto px-6 lg:px-12">
-        {/* Section header */}
+        <div className="lg:grid lg:grid-cols-[10rem_minmax(0,1fr)] lg:gap-12">
+          <div className="hidden lg:flex justify-end pt-8">
+            <SectionNumber number="05" className="text-muted/80" />
+          </div>
+
+          <div>
+            {/* Section header */}
         <div className="flex items-center gap-4 mb-16">
           <span className="font-mono text-xs text-muted-foreground tracking-widest uppercase">
             Contact
@@ -101,6 +104,8 @@ const ContactSection = () => {
                 Open to consulting engagements, advisory roles, and select full-time opportunities.
               </p>
             </div>
+          </div>
+        </div>
           </div>
         </div>
       </div>
