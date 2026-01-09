@@ -7,10 +7,9 @@ const AboutSection = () => {
 
   return (
     <section id="about" className="py-32 relative">
-      {/* Blueprint number */}
-      <SectionNumber number="02" className="absolute left-8 top-32 text-muted/80" />
-
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto px-6 lg:px-12 relative">
+        {/* Blueprint number */}
+        <SectionNumber number="02" className="absolute -left-4 lg:left-0 top-0 text-muted/80" />
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Left column - Image/Visual */}
           <div className="relative">
