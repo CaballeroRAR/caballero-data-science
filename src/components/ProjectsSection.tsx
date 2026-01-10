@@ -95,11 +95,14 @@ const ProjectsSection = () => {
 
   return (
     <section id="projects" className="py-32 bg-background text-foreground relative">
-      {/* Blueprint number */}
-      <SectionNumber number="03" className="absolute left-8 top-32 text-muted/80" />
-
       <div className="container mx-auto px-6 lg:px-12">
-        {/* Section header */}
+        <div className="lg:grid lg:grid-cols-[10rem_minmax(0,1fr)] lg:gap-12">
+          <div className="hidden lg:flex justify-end pt-8">
+            <SectionNumber number="03" className="text-muted/80" />
+          </div>
+
+          <div>
+            {/* Section header */}
         <div className="flex items-center gap-4 mb-16">
           <span className="font-mono text-xs text-foreground/60 tracking-widest uppercase">
             Selected Work
@@ -243,6 +246,8 @@ const ProjectsSection = () => {
 
         {/* Bottom border */}
         <div className="border-t border-foreground/20 mt-1" />
+          </div>
+        </div>
       </div>
 
       {/* Image Modal */}
