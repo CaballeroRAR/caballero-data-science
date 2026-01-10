@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const dataFragments = [
   "0x3F", "NULL", "∑", "μ", "σ²", "42", "π", "∞", "λ", "Δ",
@@ -6,38 +6,104 @@ const dataFragments = [
   "0.95", "p<.05", "n=100", "R²", "β", "α", "χ²", "df=3", "η²"
 ];
 
+const glitchChars = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~░▒▓█▄▀■□▪▫";
+
+type CloudItem = {
+  id: number;
+  text: string;
+  displayText: string;
+  x: number;
+  y: number;
+  phase: "appear" | "encrypt" | "glitch" | "disappear";
+  opacity: number;
+};
+
+let itemIdCounter = 0;
+
 const DataBinsAnimation = () => {
   const [bins, setBins] = useState<number[]>([40, 65, 30, 80, 55, 45, 70, 35, 60, 50]);
-  const [cloudItems, setCloudItems] = useState<{ text: string; opacity: number; x: number; y: number }[]>([]);
+  const [cloudItems, setCloudItems] = useState<CloudItem[]>([]);
+
+  const createItem = useCallback((): CloudItem => {
+    return {
+      id: itemIdCounter++,
+      text: dataFragments[Math.floor(Math.random() * dataFragments.length)],
+      displayText: "",
+      x: Math.random() * 85 + 5,
+      y: Math.random() * 85 + 5,
+      phase: "appear",
+      opacity: 0,
+    };
+  }, []);
 
   useEffect(() => {
-    // Initialize cloud items
-    const items = Array.from({ length: 16 }, () => ({
-      text: dataFragments[Math.floor(Math.random() * dataFragments.length)],
-      opacity: Math.random() * 0.5 + 0.1,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-    }));
-    setCloudItems(items);
+    // Initialize items
+    const initialItems = Array.from({ length: 12 }, createItem);
+    setCloudItems(initialItems);
 
+    // Bins animation
     const binsInterval = setInterval(() => {
       setBins(prev => prev.map(() => Math.floor(Math.random() * 60) + 20));
     }, 800);
 
-    const cloudInterval = setInterval(() => {
-      setCloudItems(prev => prev.map(item => ({
-        text: Math.random() > 0.7 ? dataFragments[Math.floor(Math.random() * dataFragments.length)] : item.text,
-        opacity: Math.random() * 0.5 + 0.1,
-        x: item.x + (Math.random() - 0.5) * 10,
-        y: item.y + (Math.random() - 0.5) * 8,
-      })));
-    }, 1200);
+    // Phase progression
+    const phaseInterval = setInterval(() => {
+      setCloudItems(prev => {
+        const updated = prev.map(item => {
+          switch (item.phase) {
+            case "appear":
+              // Fade in, show real text
+              if (item.opacity >= 0.6) {
+                return { ...item, phase: "encrypt" as const, displayText: item.text };
+              }
+              return { ...item, opacity: item.opacity + 0.15, displayText: item.text };
+            
+            case "encrypt":
+              // Scramble characters
+              const scrambled = item.text
+                .split("")
+                .map(() => glitchChars[Math.floor(Math.random() * glitchChars.length)])
+                .join("");
+              if (Math.random() > 0.6) {
+                return { ...item, phase: "glitch" as const, displayText: scrambled };
+              }
+              return { ...item, displayText: scrambled };
+            
+            case "glitch":
+              // Glitch with offset, then fade
+              if (Math.random() > 0.5) {
+                return { ...item, phase: "disappear" as const };
+              }
+              const glitched = item.text
+                .split("")
+                .map(() => glitchChars[Math.floor(Math.random() * glitchChars.length)])
+                .join("");
+              return { 
+                ...item, 
+                displayText: glitched,
+                x: item.x + (Math.random() - 0.5) * 4,
+              };
+            
+            case "disappear":
+              // Fade out
+              if (item.opacity <= 0) {
+                return createItem(); // Respawn new item
+              }
+              return { ...item, opacity: item.opacity - 0.15 };
+            
+            default:
+              return item;
+          }
+        });
+        return updated;
+      });
+    }, 120);
 
     return () => {
       clearInterval(binsInterval);
-      clearInterval(cloudInterval);
+      clearInterval(phaseInterval);
     };
-  }, []);
+  }, [createItem]);
 
   return (
     <div className="mt-6">
@@ -52,22 +118,30 @@ const DataBinsAnimation = () => {
         ))}
       </div>
 
-      {/* Data cloud */}
+      {/* Data cloud with glitch animation */}
       <div className="relative h-40 mt-4 overflow-hidden">
-        {cloudItems.map((item, i) => (
+        {cloudItems.map((item) => (
           <span
-            key={i}
-            className="absolute font-mono text-xs text-foreground transition-all duration-1000 ease-out"
+            key={item.id}
+            className={`absolute font-mono text-xs text-foreground transition-all duration-100 ${
+              item.phase === "glitch" ? "animate-pulse" : ""
+            }`}
             style={{
-              left: `${Math.min(Math.max(item.x, 5), 90)}%`,
-              top: `${Math.min(Math.max(item.y, 5), 85)}%`,
+              left: `${item.x}%`,
+              top: `${item.y}%`,
               opacity: item.opacity,
+              transform: item.phase === "glitch" 
+                ? `translate(${(Math.random() - 0.5) * 4}px, ${(Math.random() - 0.5) * 4}px)` 
+                : "none",
+              textShadow: item.phase === "glitch" 
+                ? "0 0 4px currentColor" 
+                : "none",
             }}
           >
-            {item.text}
+            {item.displayText}
           </span>
         ))}
-        {/* Fade gradient at bottom to hint scrolling */}
+        {/* Fade gradient at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-background to-transparent" />
       </div>
     </div>
