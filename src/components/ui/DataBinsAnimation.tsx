@@ -53,7 +53,7 @@ const DataBinsAnimation = () => {
       </div>
 
       {/* Data cloud */}
-      <div className="relative h-20 mt-4 overflow-hidden">
+      <div className="relative h-40 mt-4 overflow-hidden">
         {cloudItems.map((item, i) => (
           <span
             key={i}
