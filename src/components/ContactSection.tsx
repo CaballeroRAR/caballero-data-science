@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { SectionNumber } from "./ui/SectionNumber";
+import CVDownloadDialog from "./CVDownloadDialog";
 
 const ContactSection = () => {
   return (
@@ -33,11 +34,14 @@ const ContactSection = () => {
               Whether you need regression modeling for process optimization, forecasting solutions for demand planning,
               or data-driven insights to support decision-making. I'd love to discuss how I can help.
             </p>
-            <Button variant="default" size="lg" asChild>
-              <a href="mailto:caballero.data.scientist@gmail.com">
-                Start a Conversation
-              </a>
-            </Button>
+            <div className="flex flex-wrap gap-4">
+              <Button variant="default" size="lg" asChild>
+                <a href="mailto:caballero.data.scientist@gmail.com">
+                  Start a Conversation
+                </a>
+              </Button>
+              <CVDownloadDialog />
+            </div>
           </div>
 
           {/* Right - Contact info */}
