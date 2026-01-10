@@ -1,6 +1,7 @@
 import { useState } from "react";
 import profilePhoto from "@/assets/profile-photo.png";
 import { SectionNumber } from "./ui/SectionNumber";
+import DataBinsAnimation from "./ui/DataBinsAnimation";
 
 const AboutSection = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -86,6 +87,9 @@ const AboutSection = () => {
             <div className="mt-4 font-mono text-xs text-muted-foreground">
               {isHovered ? "FIG. 01 — PROFILE" : "FIG. 01 — ANALYSIS"}
             </div>
+
+            {/* Data bins animation */}
+            <DataBinsAnimation />
           </div>
 
           {/* Right column - Content */}
