@@ -50,7 +50,7 @@ const AboutSection = () => {
                     fill="none"
                     className="text-foreground/40"
                     strokeDasharray="4 4"
-                    style={{ animation: 'flow 1s linear infinite' }}
+                    style={{ animation: 'flow 2s linear infinite' }}
                   />
                   <path
                     d="M 10 60 Q 40 40, 60 50 T 90 20"
@@ -59,7 +59,7 @@ const AboutSection = () => {
                     fill="none"
                     className="text-foreground/30"
                     strokeDasharray="3 3"
-                    style={{ animation: 'flow 1.5s linear infinite reverse' }}
+                    style={{ animation: 'flow 3s linear infinite reverse' }}
                   />
                 </svg>
               </div>

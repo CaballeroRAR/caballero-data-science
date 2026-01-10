@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback } from "react";
 
 const dataFragments = [
-  "0x3F", "NULL", "∑", "μ", "σ²", "42", "π", "∞", "λ", "Δ",
-  "1.618", "0b101", "NaN", "[]", "{}", "=>", "++", "&&", "||",
+  "0x3F", "NULL", "undefined", "μ", "σ²", "0", "π", "$_", "λ", "0.3",
+  "1.618", "0b101", "NaN", "[", "{", "=>", "++", "&&", "||", "0xFF",
   "0.95", "p<.05", "n=100", "R²", "β", "α", "χ²", "df=3", "η²"
 ];
 
-const glitchChars = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~░▒▓█▄▀■□▪▫";
+const glitchChars = "!@#$^&*()_+-=:\",./<>?`~░▒▓█▪▫";
 
 type CloudItem = {
   id: number;
