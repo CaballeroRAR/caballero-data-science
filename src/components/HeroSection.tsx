@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { SectionNumber } from "@/components/ui/SectionNumber";
+
+const INTRO_SHOWN_KEY = "portfolio_intro_shown";
+const glitchChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;':\",./<>?";
 
 const greetings = [
   { intro: "Hi! I am", role: "and I am a" },
@@ -10,6 +13,77 @@ const greetings = [
   { intro: "Hallo! Ich bin", role: "und ich bin ein" },
   { intro: "مرحباً! أنا", role: "وأنا" },
 ];
+
+// Decrypting text effect for first load
+const DecryptingText = ({ 
+  children, 
+  delay = 0, 
+  shouldDecrypt = true,
+  className = "" 
+}: { 
+  children: string; 
+  delay?: number; 
+  shouldDecrypt?: boolean;
+  className?: string;
+}) => {
+  const [displayText, setDisplayText] = useState(shouldDecrypt ? "" : children);
+  const [isComplete, setIsComplete] = useState(!shouldDecrypt);
+
+  useEffect(() => {
+    if (!shouldDecrypt) {
+      setDisplayText(children);
+      setIsComplete(true);
+      return;
+    }
+
+    // Start with placeholder
+    const placeholder = Array(children.length).fill("_").join("");
+    setDisplayText(placeholder);
+
+    const startTimeout = setTimeout(() => {
+      // Start scrambling
+      setDisplayText(
+        Array(children.length)
+          .fill("")
+          .map(() => glitchChars[Math.floor(Math.random() * glitchChars.length)])
+          .join("")
+      );
+
+      let currentIndex = 0;
+      const interval = setInterval(() => {
+        if (currentIndex >= children.length) {
+          clearInterval(interval);
+          setIsComplete(true);
+          return;
+        }
+
+        setDisplayText((prev) => {
+          const chars = prev.split("");
+          chars[currentIndex] = children[currentIndex];
+          for (let i = currentIndex + 1; i < children.length; i++) {
+            if (children[i] === " ") {
+              chars[i] = " ";
+            } else if (Math.random() > 0.3) {
+              chars[i] = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+            }
+          }
+          return chars.join("");
+        });
+        currentIndex++;
+      }, 40);
+
+      return () => clearInterval(interval);
+    }, delay);
+
+    return () => clearTimeout(startTimeout);
+  }, [children, delay, shouldDecrypt]);
+
+  return (
+    <span className={`${className} ${!isComplete ? "text-primary/80" : ""}`}>
+      {displayText}
+    </span>
+  );
+};
 
 const GlitchText = ({ children }: { children: string }) => {
   const [isHovering, setIsHovering] = useState(false);
@@ -97,6 +171,33 @@ const GlitchText = ({ children }: { children: string }) => {
 const HeroSection = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(false);
+
+  // Check for first visit
+  useEffect(() => {
+    const wasShown = sessionStorage.getItem(INTRO_SHOWN_KEY);
+    if (!wasShown) {
+      setIsFirstVisit(true);
+      sessionStorage.setItem(INTRO_SHOWN_KEY, "true");
+      // Show scroll hint after decryption completes
+      setTimeout(() => setShowScrollHint(true), 2500);
+    }
+  }, []);
+
+  // Hide scroll hint on scroll
+  useEffect(() => {
+    if (!showScrollHint) return;
+    
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setShowScrollHint(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [showScrollHint]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -118,7 +219,9 @@ const HeroSection = () => {
       });
     }
   };
-  return <section className="min-h-screen relative flex items-center grid-pattern overflow-hidden">
+
+  return (
+    <section className="min-h-screen relative flex items-center grid-pattern overflow-hidden">
       {/* Geometric decorations */}
       <div className="absolute top-20 right-10 w-40 h-40 border border-foreground/20 rotate-45 opacity-0 animate-fade-in animation-delay-500" />
       <div className="absolute bottom-40 left-10 w-24 h-24 border border-foreground/20 opacity-0 animate-fade-in animation-delay-400" />
@@ -129,9 +232,6 @@ const HeroSection = () => {
 
       <div className="container mx-auto px-6 lg:px-12 pt-20">
         <div className="max-w-5xl">
-          {/* Top line with coordinates */}
-          
-
           {/* Main headline */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display leading-[1.1] mb-8">
             <span className="block text-muted-foreground opacity-0 animate-fade-up animation-delay-100 mb-2">
@@ -144,7 +244,9 @@ const HeroSection = () => {
               </span>
             </span>
             <span className="block opacity-0 animate-fade-up animation-delay-200">
-              Gabriel
+              <DecryptingText shouldDecrypt={isFirstVisit} delay={300}>
+                Gabriel
+              </DecryptingText>
             </span>
           </h1>
 
@@ -158,14 +260,28 @@ const HeroSection = () => {
               {greetings[greetingIndex].role}
             </span>
             <span className="font-display text-xl md:text-2xl lg:text-3xl">
-              <GlitchText>Data Scientist</GlitchText>
+              {isFirstVisit ? (
+                <DecryptingText shouldDecrypt={isFirstVisit} delay={800}>
+                  Data Scientist
+                </DecryptingText>
+              ) : (
+                <GlitchText>Data Scientist</GlitchText>
+              )}
             </span>
           </div>
 
           {/* Subtitle */}
           <p className="font-body text-lg md:text-xl text-muted-foreground max-w-xl mb-12 opacity-0 animate-fade-up animation-delay-400">
-            I architect predictive models with <strong>Machine Learning & Neural Networks</strong>, specializing in turning complex data into measurable outcomes. 
-            From business-oriented exploratory analysis that uncovers hidden opportunities to optimizing industrial processes and driving data-informed strategy.
+            {isFirstVisit ? (
+              <DecryptingText shouldDecrypt={isFirstVisit} delay={1400}>
+                I architect predictive models with Machine Learning & Neural Networks, specializing in turning complex data into measurable outcomes.
+              </DecryptingText>
+            ) : (
+              <>
+                I architect predictive models with <strong>Machine Learning & Neural Networks</strong>, specializing in turning complex data into measurable outcomes. 
+                From business-oriented exploratory analysis that uncovers hidden opportunities to optimizing industrial processes and driving data-informed strategy.
+              </>
+            )}
           </p>
 
           {/* CTA Buttons */}
@@ -192,22 +308,58 @@ const HeroSection = () => {
           {
             value: "50+",
             label: "Projects"
-          }].map(stat => <div key={stat.label}>
-                <div className="font-display text-3xl md:text-4xl">{stat.value}</div>
+          }].map((stat, index) => (
+              <div key={stat.label}>
+                <div className="font-display text-3xl md:text-4xl">
+                  {isFirstVisit ? (
+                    <DecryptingText shouldDecrypt={isFirstVisit} delay={1800 + index * 200}>
+                      {stat.value}
+                    </DecryptingText>
+                  ) : (
+                    stat.value
+                  )}
+                </div>
                 <div className="font-mono text-xs text-muted-foreground mt-1 uppercase tracking-wider">
                   {stat.label}
                 </div>
-              </div>)}
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Bottom architectural line */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-foreground/20" />
-      <div className="absolute bottom-8 left-6 font-mono text-xs text-muted-foreground hidden md:block">
+      
+      {/* Scroll indicator - enhanced for first visit */}
+      <div 
+        className={`absolute bottom-8 left-6 font-mono text-xs text-muted-foreground hidden md:block transition-all duration-500 ${
+          showScrollHint ? "animate-bounce-slow" : ""
+        }`}
+      >
         SCROLL TO EXPLORE
         <span className="inline-block w-4 h-px bg-foreground ml-3 animate-pulse" />
       </div>
-    </section>;
+
+      {/* Mobile scroll indicator for first visit */}
+      {showScrollHint && (
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 md:hidden flex flex-col items-center gap-2 animate-bounce-slow">
+          <span className="font-mono text-xs text-muted-foreground">SCROLL</span>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            className="text-foreground/60"
+          >
+            <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+          </svg>
+        </div>
+      )}
+    </section>
+  );
 };
+
 export default HeroSection;
