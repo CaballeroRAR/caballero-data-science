@@ -14,7 +14,7 @@ type CloudItem = {
   displayText: string;
   x: number;
   y: number;
-  phase: "appear" | "encrypt" | "glitch" | "reveal" | "disappear";
+  phase: "appear" | "reveal" | "disappear";
   opacity: number;
 };
 
@@ -54,36 +54,10 @@ const DataBinsAnimation = () => {
             case "appear":
               // Fade in, show real text
               if (item.opacity >= 0.6) {
-                return { ...item, phase: "encrypt" as const, displayText: item.text };
+                return { ...item, phase: "reveal" as const, displayText: item.text };
               }
               return { ...item, opacity: item.opacity + 0.15, displayText: item.text };
             
-            case "encrypt":
-              // Scramble characters
-              const scrambled = item.text
-                .split("")
-                .map(() => glitchChars[Math.floor(Math.random() * glitchChars.length)])
-                .join("");
-              if (Math.random() > 0.6) {
-                return { ...item, phase: "glitch" as const, displayText: scrambled };
-              }
-              return { ...item, displayText: scrambled };
-            
-            case "glitch":
-              // Glitch with offset, then fade
-              if (Math.random() > 0.5) {
-                return { ...item, phase: "reveal" as const };
-              }
-              const glitched = item.text
-                .split("")
-                .map(() => glitchChars[Math.floor(Math.random() * glitchChars.length)])
-                .join("");
-              return { 
-                ...item, 
-                displayText: glitched,
-                x: item.x + (Math.random() - 0.5) * 4,
-              };
-
             case "reveal":
               // Show real text for a bit
               if (Math.random() > 0.7) {
@@ -130,19 +104,11 @@ const DataBinsAnimation = () => {
         {cloudItems.map((item) => (
           <span
             key={item.id}
-            className={`absolute font-mono text-xs text-foreground transition-all duration-100 ${
-              item.phase === "glitch" ? "animate-pulse" : ""
-            }`}
+            className={`absolute font-mono text-xs text-foreground transition-all duration-100`}
             style={{
               left: `${item.x}%`,
               top: `${item.y}%`,
               opacity: item.opacity,
-              transform: item.phase === "glitch" 
-                ? `translate(${(Math.random() - 0.5) * 4}px, ${(Math.random() - 0.5) * 4}px)` 
-                : "none",
-              textShadow: item.phase === "glitch" 
-                ? "0 0 4px currentColor" 
-                : "none",
             }}
           >
             {item.displayText}

@@ -14,71 +14,85 @@ const greetings = [
 ];
 
 // Decrypting text effect for first load
-const DecryptingText = ({ 
-  children, 
-  delay = 0, 
+const DecryptingText = ({
+  children,
+  delay = 0,
   shouldDecrypt = true,
-  className = "" 
-}: { 
-  children: string; 
-  delay?: number; 
+  className = ""
+}: {
+  children: string;
+  delay?: number;
   shouldDecrypt?: boolean;
   className?: string;
 }) => {
-  const [displayText, setDisplayText] = useState(shouldDecrypt ? "" : children);
-  const [isComplete, setIsComplete] = useState(!shouldDecrypt);
+  const [displayText, setDisplayText] = useState(children);
+  const [phase, setPhase] = useState(shouldDecrypt ? "placeholder" : "complete");
+  const scrambleIntervalRef = useRef<any>();
+  const revealIntervalRef = useRef<any>();
+  const timeoutRef = useRef<any>();
 
   useEffect(() => {
     if (!shouldDecrypt) {
+      setPhase("complete");
       setDisplayText(children);
-      setIsComplete(true);
       return;
     }
 
-    // Start with placeholder
+    setPhase("placeholder");
     const placeholder = Array(children.length).fill("_").join("");
     setDisplayText(placeholder);
 
-    const startTimeout = setTimeout(() => {
-      // Start scrambling
-      setDisplayText(
-        Array(children.length)
-          .fill("")
-          .map(() => glitchChars[Math.floor(Math.random() * glitchChars.length)])
-          .join("")
-      );
+    timeoutRef.current = setTimeout(() => {
+      setPhase("scrambling");
+      let scrambleIterations = 0;
+      scrambleIntervalRef.current = setInterval(() => {
+        if (scrambleIterations >= 5) {
+          clearInterval(scrambleIntervalRef.current);
+          setPhase("revealing");
+          let currentIndex = 0;
+          const totalDuration = 800;
+          const intervalDuration = Math.max(totalDuration / children.length, 20);
 
-      let currentIndex = 0;
-      const interval = setInterval(() => {
-        if (currentIndex >= children.length) {
-          clearInterval(interval);
-          setIsComplete(true);
-          return;
-        }
-
-        setDisplayText((prev) => {
-          const chars = prev.split("");
-          chars[currentIndex] = children[currentIndex];
-          for (let i = currentIndex + 1; i < children.length; i++) {
-            if (children[i] === " ") {
-              chars[i] = " ";
-            } else if (Math.random() > 0.3) {
-              chars[i] = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+          revealIntervalRef.current = setInterval(() => {
+            if (currentIndex >= children.length) {
+              clearInterval(revealIntervalRef.current);
+              setPhase("complete");
+              setDisplayText(children);
+              return;
             }
-          }
-          return chars.join("");
-        });
-        currentIndex++;
-      }, 40);
-
-      return () => clearInterval(interval);
+            setDisplayText(prev => {
+              const chars = prev.split('');
+              chars[currentIndex] = children[currentIndex];
+              for (let i = currentIndex + 1; i < children.length; i++) {
+                if (children[i] !== ' ') {
+                  chars[i] = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                }
+              }
+              return chars.join('');
+            });
+            currentIndex++;
+          }, intervalDuration);
+        } else {
+          setDisplayText(
+            Array(children.length)
+              .fill('')
+              .map((_, i) => (children[i] === ' ' ? ' ' : glitchChars[Math.floor(Math.random() * glitchChars.length)]))
+              .join('')
+          );
+        }
+        scrambleIterations++;
+      }, 100);
     }, delay);
 
-    return () => clearTimeout(startTimeout);
+    return () => {
+      clearTimeout(timeoutRef.current);
+      clearInterval(scrambleIntervalRef.current);
+      clearInterval(revealIntervalRef.current);
+    };
   }, [children, delay, shouldDecrypt]);
 
   return (
-    <span className={`${className} ${!isComplete ? "text-primary/80" : ""}`}>
+    <span className={`${className} ${phase !== "complete" ? "text-primary/80" : ""}`}>
       {displayText}
     </span>
   );
