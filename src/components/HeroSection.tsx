@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { SectionNumber } from "@/components/ui/SectionNumber";
 
-const INTRO_SHOWN_KEY = "portfolio_intro_shown";
 const glitchChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;':\",./<>?";
 
 const greetings = [
@@ -171,18 +170,13 @@ const GlitchText = ({ children }: { children: string }) => {
 const HeroSection = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [isFirstVisit, setIsFirstVisit] = useState(false);
+  const [showDecrypt] = useState(true);
   const [showScrollHint, setShowScrollHint] = useState(false);
 
-  // Check for first visit
+  // Show scroll hint after decryption completes
   useEffect(() => {
-    const wasShown = sessionStorage.getItem(INTRO_SHOWN_KEY);
-    if (!wasShown) {
-      setIsFirstVisit(true);
-      sessionStorage.setItem(INTRO_SHOWN_KEY, "true");
-      // Show scroll hint after decryption completes
-      setTimeout(() => setShowScrollHint(true), 2500);
-    }
+    const timeout = setTimeout(() => setShowScrollHint(true), 2500);
+    return () => clearTimeout(timeout);
   }, []);
 
   // Hide scroll hint on scroll
@@ -244,7 +238,7 @@ const HeroSection = () => {
               </span>
             </span>
             <span className="block opacity-0 animate-fade-up animation-delay-200">
-              <DecryptingText shouldDecrypt={isFirstVisit} delay={300}>
+              <DecryptingText shouldDecrypt={showDecrypt} delay={300}>
                 Gabriel
               </DecryptingText>
             </span>
@@ -260,28 +254,17 @@ const HeroSection = () => {
               {greetings[greetingIndex].role}
             </span>
             <span className="font-display text-xl md:text-2xl lg:text-3xl">
-              {isFirstVisit ? (
-                <DecryptingText shouldDecrypt={isFirstVisit} delay={800}>
-                  Data Scientist
-                </DecryptingText>
-              ) : (
-                <GlitchText>Data Scientist</GlitchText>
-              )}
+              <DecryptingText shouldDecrypt={showDecrypt} delay={800}>
+                Data Scientist
+              </DecryptingText>
             </span>
           </div>
 
           {/* Subtitle */}
           <p className="font-body text-lg md:text-xl text-muted-foreground max-w-xl mb-12 opacity-0 animate-fade-up animation-delay-400">
-            {isFirstVisit ? (
-              <DecryptingText shouldDecrypt={isFirstVisit} delay={1400}>
-                I architect predictive models with Machine Learning & Neural Networks, specializing in turning complex data into measurable outcomes.
-              </DecryptingText>
-            ) : (
-              <>
-                I architect predictive models with <strong>Machine Learning & Neural Networks</strong>, specializing in turning complex data into measurable outcomes. 
-                From business-oriented exploratory analysis that uncovers hidden opportunities to optimizing industrial processes and driving data-informed strategy.
-              </>
-            )}
+            <DecryptingText shouldDecrypt={showDecrypt} delay={1400}>
+              I architect predictive models with Machine Learning & Neural Networks, specializing in turning complex data into measurable outcomes.
+            </DecryptingText>
           </p>
 
           {/* CTA Buttons */}
@@ -311,13 +294,9 @@ const HeroSection = () => {
           }].map((stat, index) => (
               <div key={stat.label}>
                 <div className="font-display text-3xl md:text-4xl">
-                  {isFirstVisit ? (
-                    <DecryptingText shouldDecrypt={isFirstVisit} delay={1800 + index * 200}>
-                      {stat.value}
-                    </DecryptingText>
-                  ) : (
-                    stat.value
-                  )}
+                  <DecryptingText shouldDecrypt={showDecrypt} delay={1800 + index * 200}>
+                    {stat.value}
+                  </DecryptingText>
                 </div>
                 <div className="font-mono text-xs text-muted-foreground mt-1 uppercase tracking-wider">
                   {stat.label}
