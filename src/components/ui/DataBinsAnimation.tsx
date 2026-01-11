@@ -14,14 +14,14 @@ type CloudItem = {
   displayText: string;
   x: number;
   y: number;
-  phase: "appear" | "encrypt" | "glitch" | "disappear";
+  phase: "appear" | "encrypt" | "glitch" | "reveal" | "disappear";
   opacity: number;
 };
 
 let itemIdCounter = 0;
 
 const DataBinsAnimation = () => {
-  const [bins, setBins] = useState<number[]>([40, 65, 30, 80, 55, 45, 70, 35, 60, 50]);
+  const [bins, setBins] = useState<number[]>([40, 65, 10, 80, 55, 45, 70, 35, 60, 50]);
   const [cloudItems, setCloudItems] = useState<CloudItem[]>([]);
 
   const createItem = useCallback((): CloudItem => {
@@ -72,7 +72,7 @@ const DataBinsAnimation = () => {
             case "glitch":
               // Glitch with offset, then fade
               if (Math.random() > 0.5) {
-                return { ...item, phase: "disappear" as const };
+                return { ...item, phase: "reveal" as const };
               }
               const glitched = item.text
                 .split("")
@@ -83,6 +83,13 @@ const DataBinsAnimation = () => {
                 displayText: glitched,
                 x: item.x + (Math.random() - 0.5) * 4,
               };
+
+            case "reveal":
+              // Show real text for a bit
+              if (Math.random() > 0.7) {
+                return { ...item, phase: "disappear" as const };
+              }
+              return { ...item, displayText: item.text };
             
             case "disappear":
               // Fade out
