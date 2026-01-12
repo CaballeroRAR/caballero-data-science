@@ -256,6 +256,15 @@
   }
 }
 
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
 @layer utilities {
   .animate-stream-down {
     animation: streamDown 3s linear forwards;
@@ -267,5 +276,9 @@
 
   .animate-scale-in {
     animation: scaleIn 0.5s ease-out forwards;
+  }
+
+  .animate-blink {
+    animation: blink 1.5s ease-in-out infinite;
   }
 }
