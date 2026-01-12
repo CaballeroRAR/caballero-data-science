@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SectionNumber } from "@/components/ui/SectionNumber";
-
 const glitchChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;':\",./<>?";
 
 const greetings = [
@@ -91,89 +90,6 @@ const DecryptingText = ({
   return (
     <span className={`${className} transition-colors duration-300 ${phase !== "complete" ? "text-primary/70" : ""}`}>
       {displayText}
-    </span>
-  );
-};
-
-const GlitchText = ({ children }: { children: string }) => {
-  const [isHovering, setIsHovering] = useState(false);
-  const [displayText, setDisplayText] = useState(children);
-  const intervalRef = useRef<any>(null);
-  const timeoutRef = useRef<any>(null);
-
-  useEffect(() => {
-    if (!isHovering) {
-      setDisplayText(children);
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      return;
-    }
-
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#%&_<>[]{}";
-    let iteration = 0;
-    
-    intervalRef.current = setInterval(() => {
-      if (iteration < children.length) {
-        iteration += 1;
-      }
-
-      setDisplayText((current) =>
-        children
-          .split("")
-          .map((char, index) => {
-            if (char === " ") return " ";
-            
-            if (index < children.length - iteration) {
-              return children[index];
-            }
-
-            if (Math.random() < 0.7) return children[index];
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join("")
-      );
-    }, 100);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [isHovering, children]);
-
-  return (
-    <span
-      className="relative inline-block cursor-default select-none"
-      onMouseEnter={() => {
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-        setIsHovering(true);
-      }}
-      onMouseLeave={() => {
-        timeoutRef.current = setTimeout(() => setIsHovering(false), 600);
-      }}
-    >
-      <span className="relative z-10">{displayText}</span>
-      {isHovering && (
-        <>
-          <span 
-            className="absolute top-0 left-0 -z-10 text-primary opacity-50 animate-pulse"
-            style={{ 
-              clipPath: 'inset(0 0 50% 0)',
-              transform: 'translate(-2px, 0)'
-            }}
-            aria-hidden="true"
-          >
-            {displayText}
-          </span>
-          <span 
-            className="absolute top-0 left-0 -z-10 text-destructive opacity-50 animate-pulse"
-            style={{ 
-              clipPath: 'inset(50% 0 0 0)',
-              transform: 'translate(2px, 0)'
-            }}
-            aria-hidden="true"
-          >
-            {displayText}
-          </span>
-        </>
-      )}
     </span>
   );
 };
