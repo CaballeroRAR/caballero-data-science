@@ -277,7 +277,7 @@ const HeroSection = () => {
           {/* Subtitle */}
           <p className="font-body text-lg md:text-xl text-muted-foreground max-w-xl mb-12 opacity-0 animate-fade-up animation-delay-400">
             <DecryptingText shouldDecrypt={showDecrypt} delay={1400}>
-              I architect predictive models with Machine Learning & Neural Networks, specializing in turning complex data into measurable outcomes.
+              Data Scientist with an architectural mindset, turning messy, real-world problems into clean, deployable data products that drive decisions, not just dashboards. From predictive models and time series to end-to-end pipelines and BI, this portfolio showcases how data can move from raw tables to concrete business impact.
             </DecryptingText>
           </p>
 

@@ -109,20 +109,23 @@ const AboutSection = () => {
 
             <div className="space-y-6 font-body text-muted-foreground leading-relaxed">
               <p>
-                Data scientist with hands-on experience in predictive and time series modeling, building ETL pipelines in Google Cloud, 
-                and developing scalable, interactive dashboards. Skilled in Python (Pandas, NumPy, scikit-learn, Statsmodels, TensorFlow), 
-                SQL, and Power BI, applying advanced machine learning, analytics, and statistics to turn data into actionable insights and 
-                support strategic decision-making.
+                Data Scientist blending predictive modeling, time series analysis,
+                Google Cloud ETL pipelines, and interactive BI dashboards to transform
+                raw data into strategic business impact. Expert in Python
+                (Pandas, NumPy, Scikit-learn, Statsmodels, TensorFlow),
+                SQL, and Power BI—delivering machine learning, analytics, and statistical
+                solutions that drive decisions.
+
               </p>
               <p>
-                Known for clear, structured communication, strong analytical thinking, complex problem-solving, innovation, and effective 
-                self-management. I thrive in hybrid, fast-changing environments, driven by constant curiosity and a commitment to continuous 
-                improvement.
+                Recognized for analytical rigor, clear communication, innovative 
+                problem-solving, and self-managed execution in dynamic hybrid environments. 
+                Fueled by relentless curiosity and continuous growth.
+
               </p>
               <p className="font-body text-muted-foreground">
-              This page is a direct reflection of that curiosity and commitment. While web development is not my primary expertise, 
-              every element here is an experiment in learning and iteration—and the process will keep evolving. The full implementation 
-              and ongoing improvements can be explored in the repository linked
+              This portfolio embodies that drive. Web dev isn't my core skill, but every 
+              line here reflects hands-on learning and iteration—check the live evolution on GitHub
   <a 
     href="https://github.com/CaballeroRAR/caballero-data-science" 
     target="_blank"
@@ -136,7 +139,7 @@ const AboutSection = () => {
 
             {/* Expertise tags */}
             <div className="mt-12 flex flex-wrap gap-3">
-              {["Python", "SQL", "Machine Learning", "Power BI", "Google Cloud", "TensorFlow"].map((tag) => (
+              {["Python", "SQL", "Machine Learning", "Power BI", "Google Cloud", "TensorFlow", "ETL", "Data Pipelines", "Time Series", "Predictive Modeling", "Pandas", "Scikit-learn", "Business Intelligence"].map((tag) => (
                 <span
                   key={tag}
                   className="px-4 py-2 border border-foreground/30 font-mono text-xs uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors duration-300"
