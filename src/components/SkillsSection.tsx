@@ -11,7 +11,6 @@ import {
   Cpu,
   Database,
   GitBranch,
-  Link2,
   NotebookText,
   PlugZap,
   Sigma,
