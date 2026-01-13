@@ -12,7 +12,7 @@ const greetings = [
   { intro: "مرحباً! أنا", role: "وأنا" },
 ];
 
-// Decrypting text effect for first load
+// Decrypting text effect for first load - uses invisible text for stable sizing
 const DecryptingText = ({
   children,
   delay = 0,
@@ -24,38 +24,30 @@ const DecryptingText = ({
   shouldDecrypt?: boolean;
   className?: string;
 }) => {
-  const [displayText, setDisplayText] = useState(children);
-  const [phase, setPhase] = useState(shouldDecrypt ? "placeholder" : "complete");
+  const [displayText, setDisplayText] = useState(shouldDecrypt ? "" : children);
+  const [isComplete, setIsComplete] = useState(!shouldDecrypt);
   const animationRef = useRef<number>();
   const timeoutRef = useRef<any>();
 
   useEffect(() => {
     if (!shouldDecrypt) {
-      setPhase("complete");
+      setIsComplete(true);
       setDisplayText(children);
       return;
     }
 
-    setPhase("placeholder");
-    const placeholder = Array(children.length).fill("_").join("");
-    setDisplayText(placeholder);
-
     timeoutRef.current = setTimeout(() => {
-      setPhase("revealing");
       const startTime = performance.now();
-      const totalDuration = 1200; // Smoother, longer duration
-      const scrambleDuration = 400; // Initial scramble phase
+      const totalDuration = 600; // Brief animation
       
       const animate = (currentTime: number) => {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / totalDuration, 1);
-        
-        // Eased progress for smoother reveal
-        const easedProgress = 1 - Math.pow(1 - progress, 3); // Cubic ease-out
+        const easedProgress = 1 - Math.pow(1 - progress, 2); // Quadratic ease-out
         const revealIndex = Math.floor(easedProgress * children.length);
         
         if (progress >= 1) {
-          setPhase("complete");
+          setIsComplete(true);
           setDisplayText(children);
           return;
         }
@@ -66,11 +58,7 @@ const DecryptingText = ({
             .map((char, i) => {
               if (char === ' ') return ' ';
               if (i < revealIndex) return children[i];
-              // Gentler scramble - less frequent changes
-              if (elapsed < scrambleDuration || Math.random() < 0.3) {
-                return glitchChars[Math.floor(Math.random() * glitchChars.length)];
-              }
-              return children[i];
+              return glitchChars[Math.floor(Math.random() * glitchChars.length)];
             })
             .join('')
         );
@@ -88,8 +76,16 @@ const DecryptingText = ({
   }, [children, delay, shouldDecrypt]);
 
   return (
-    <span className={`${className} transition-colors duration-300 ${phase !== "complete" ? "text-primary/70" : ""}`}>
-      {displayText}
+    <span className={`${className} relative inline-block`}>
+      {/* Invisible text reserves the exact space needed */}
+      <span className="invisible" aria-hidden="true">{children}</span>
+      {/* Visible animated text positioned absolutely */}
+      <span 
+        className={`absolute inset-0 transition-colors duration-200 ${!isComplete ? "text-primary/70" : ""}`}
+        aria-live="polite"
+      >
+        {displayText}
+      </span>
     </span>
   );
 };
@@ -102,7 +98,7 @@ const HeroSection = () => {
 
   // Show scroll hint after decryption completes
   useEffect(() => {
-    const timeout = setTimeout(() => setShowScrollHint(true), 2500);
+    const timeout = setTimeout(() => setShowScrollHint(true), 1800);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -165,7 +161,7 @@ const HeroSection = () => {
               </span>
             </span>
             <span className="block opacity-0 animate-fade-up animation-delay-200">
-              <DecryptingText shouldDecrypt={showDecrypt} delay={300}>
+              <DecryptingText shouldDecrypt={showDecrypt} delay={200}>
                 Gabriel
               </DecryptingText>
             </span>
@@ -181,7 +177,7 @@ const HeroSection = () => {
               {greetings[greetingIndex].role}
             </span>
             <span className="font-display text-xl sm:text-2xl lg:text-3xl">
-              <DecryptingText shouldDecrypt={showDecrypt} delay={800}>
+              <DecryptingText shouldDecrypt={showDecrypt} delay={400}>
                 Data Scientist
               </DecryptingText>
             </span>
@@ -189,7 +185,7 @@ const HeroSection = () => {
 
           {/* Subtitle */}
           <p className="font-body text-base sm:text-lg md:text-xl text-muted-foreground max-w-xl mb-8 md:mb-12 opacity-0 animate-fade-up animation-delay-400">
-            <DecryptingText shouldDecrypt={showDecrypt} delay={1400}>
+            <DecryptingText shouldDecrypt={showDecrypt} delay={700}>
               Data Scientist with an architectural mindset, turning messy, real-world problems into clean, deployable data products that drive decisions, not just dashboards. From predictive models and time series to end-to-end pipelines and BI, this portfolio showcases how data can move from raw tables to concrete business impact.
             </DecryptingText>
           </p>
@@ -221,7 +217,7 @@ const HeroSection = () => {
           }].map((stat, index) => (
               <div key={stat.label}>
                 <div className="font-display text-2xl sm:text-3xl md:text-4xl">
-                  <DecryptingText shouldDecrypt={showDecrypt} delay={1800 + index * 200}>
+                  <DecryptingText shouldDecrypt={showDecrypt} delay={1100 + index * 100}>
                     {stat.value}
                   </DecryptingText>
                 </div>
