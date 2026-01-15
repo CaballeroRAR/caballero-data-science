@@ -185,7 +185,8 @@ const ProjectsSection = () => {
                         href={project.link} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="font-mono text-xs text-foreground/60 hover:text-foreground underline underline-offset-2 ml-4"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-1 font-mono text-xs text-foreground bg-foreground/10 hover:bg-foreground hover:text-background px-3 py-1.5 border border-foreground/20 transition-colors duration-300 ml-auto"
                       >
                         View Project →
                       </a>
