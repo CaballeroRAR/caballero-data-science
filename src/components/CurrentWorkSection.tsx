@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { SectionNumber } from "./ui/SectionNumber";
-import { GitBranch, ExternalLink, FileText, Users, Loader2 } from "lucide-react";
+import { GitBranch, ExternalLink, FileText, Users, Loader2, GitCommit, ImageOff } from "lucide-react";
 
 const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs";
 const README_RAW_URL = "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/rol-responsabilidades.md";
+const COMMITS_API_URL = "https://api.github.com/repos/CaballeroRAR/ds_projects_collabs/commits?per_page=5";
 
 const projectInfo = {
   title: "Customer Segmentation & Clustering",
@@ -12,11 +13,26 @@ const projectInfo = {
   status: "In Progress",
   collaborators: 2,
   technologies: ["Python", "Scikit-learn", "K-Means", "DBSCAN", "PCA", "Jupyter Notebook"],
+  previewImage: null as string | null, // Placeholder for uploaded screenshot
 };
+
+interface Commit {
+  sha: string;
+  commit: {
+    message: string;
+    author: {
+      name: string;
+      date: string;
+    };
+  };
+  html_url: string;
+}
 
 const CurrentWorkSection = () => {
   const [readme, setReadme] = useState<string | null>(null);
+  const [commits, setCommits] = useState<Commit[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingCommits, setIsLoadingCommits] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -33,8 +49,36 @@ const CurrentWorkSection = () => {
         setIsLoading(false);
       }
     };
+
+    const fetchCommits = async () => {
+      try {
+        const response = await fetch(COMMITS_API_URL);
+        if (!response.ok) throw new Error("Failed to fetch commits");
+        const data = await response.json();
+        setCommits(data);
+      } catch (err) {
+        console.error("Could not load commits:", err);
+      } finally {
+        setIsLoadingCommits(false);
+      }
+    };
+
     fetchReadme();
+    fetchCommits();
   }, []);
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) return "Today";
+    if (diffDays === 1) return "Yesterday";
+    if (diffDays < 7) return `${diffDays} days ago`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  };
 
   // Simple markdown to JSX converter for basic formatting
   const renderMarkdown = (text: string) => {
@@ -103,7 +147,7 @@ const CurrentWorkSection = () => {
             </div>
 
             {/* Project Card */}
-            <div className="border border-foreground/20 bg-background">
+            <div className="border border-foreground/20 bg-background relative">
               {/* Header */}
               <div className="p-6 lg:p-8 border-b border-foreground/10">
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
@@ -128,8 +172,34 @@ const CurrentWorkSection = () => {
                 </div>
               </div>
 
+              {/* Preview Image Section */}
+              <div className="p-6 lg:p-8 border-b border-foreground/10">
+                <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest mb-4">
+                  Latest Preview
+                </h4>
+                <div className="aspect-video bg-surface-elevated border border-dashed border-foreground/20 flex flex-col items-center justify-center gap-4">
+                  {projectInfo.previewImage ? (
+                    <img 
+                      src={projectInfo.previewImage} 
+                      alt="Project Preview" 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <>
+                      <ImageOff className="w-12 h-12 text-foreground/20" />
+                      <p className="font-mono text-sm text-foreground/40 text-center px-4">
+                        Latest Preview Not Available :(
+                      </p>
+                      <p className="font-mono text-[10px] text-foreground/30 uppercase tracking-wider">
+                        Upload screenshot to display here
+                      </p>
+                    </>
+                  )}
+                </div>
+              </div>
+
               {/* Content Grid */}
-              <div className="grid lg:grid-cols-2 gap-0">
+              <div className="grid lg:grid-cols-3 gap-0">
                 {/* Left: Project Info */}
                 <div className="p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-foreground/10">
                   <p className="font-body text-sm text-foreground/80 leading-relaxed mb-6">
@@ -160,6 +230,65 @@ const CurrentWorkSection = () => {
                       {projectInfo.collaborators} Collaborators
                     </span>
                   </div>
+                </div>
+
+                {/* Middle: Commit Timeline */}
+                <div className="p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-foreground/10">
+                  <div className="flex items-center gap-2 mb-4">
+                    <GitCommit className="w-4 h-4 text-foreground/60" />
+                    <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest">
+                      Recent Commits
+                    </h4>
+                  </div>
+                  
+                  {isLoadingCommits ? (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="w-6 h-6 animate-spin text-foreground/40" />
+                    </div>
+                  ) : commits.length > 0 ? (
+                    <div className="relative">
+                      {/* Timeline line */}
+                      <div className="absolute left-[5px] top-2 bottom-2 w-px bg-foreground/10" />
+                      
+                      <div className="space-y-4">
+                        {commits.map((commit, index) => (
+                          <a
+                            key={commit.sha}
+                            href={commit.html_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block group"
+                          >
+                            <div className="flex gap-3 relative">
+                              {/* Timeline dot */}
+                              <div className={`w-[11px] h-[11px] rounded-full border-2 flex-shrink-0 mt-1 z-10 transition-colors ${
+                                index === 0 
+                                  ? "bg-green-500 border-green-500" 
+                                  : "bg-background border-foreground/30 group-hover:border-foreground/60"
+                              }`} />
+                              
+                              <div className="flex-1 min-w-0">
+                                <p className="font-mono text-xs text-foreground/80 leading-relaxed line-clamp-2 group-hover:text-foreground transition-colors">
+                                  {commit.commit.message.split("\n")[0]}
+                                </p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <span className="font-mono text-[10px] text-foreground/40">
+                                    {commit.commit.author.name}
+                                  </span>
+                                  <span className="text-foreground/20">•</span>
+                                  <span className="font-mono text-[10px] text-foreground/40">
+                                    {formatDate(commit.commit.author.date)}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-foreground/50 text-sm font-mono">No commits found</p>
+                  )}
                 </div>
 
                 {/* Right: README Preview */}
