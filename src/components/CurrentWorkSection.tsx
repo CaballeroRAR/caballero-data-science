@@ -199,7 +199,7 @@ const CurrentWorkSection = () => {
               </div>
 
               {/* Content Grid */}
-              <div className="grid lg:grid-cols-3 gap-0">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
                 {/* Left: Project Info */}
                 <div className="p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-foreground/10">
                   <p className="font-body text-sm text-foreground/80 leading-relaxed mb-6">
