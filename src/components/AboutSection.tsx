@@ -109,18 +109,17 @@ const AboutSection = () => {
 
             <div className="space-y-6 font-body text-muted-foreground leading-relaxed">
               <p>
-                Data Scientist blending predictive modeling, time series analysis,
-                Google Cloud ETL pipelines, and interactive BI dashboards to transform
-                raw data into strategic business impact. Expert in Python
-                (Pandas, NumPy, Scikit-learn, Statsmodels, TensorFlow),
-                SQL, and Power BI—delivering machine learning, analytics, and statistical
-                solutions that drive decisions.
+                Transforming raw data into strategic value through predictive modeling, 
+                time series analysis, and Google Cloud ETL pipelines. I utilize a 
+                robust stack including Python (Pandas, NumPy, Scikit-learn, Statsmodels, 
+                TensorFlow), SQL, and Power BI to build scalable analytics and machine 
+                learning solutions.
 
               </p>
               <p>
-                Recognized for analytical rigor, clear communication, innovative 
-                problem-solving, and self-managed execution in dynamic hybrid environments. 
-                Fueled by relentless curiosity and continuous growth.
+                Known for combining analytical rigor with clear communication, I 
+                autonomously navigate complex challenges in hybrid settings. My work is 
+                driven by a passion for innovation and continuous learning.
 
               </p>
               <p className="font-body text-muted-foreground">
