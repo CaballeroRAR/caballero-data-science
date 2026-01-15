@@ -186,7 +186,9 @@ const HeroSection = () => {
           {/* Subtitle */}
           <p className="font-body text-base sm:text-lg md:text-xl text-muted-foreground max-w-xl mb-8 md:mb-12 opacity-0 animate-fade-up animation-delay-400">
             <DecryptingText shouldDecrypt={showDecrypt} delay={700}>
-              Data Scientist with an architectural mindset, turning messy, real-world problems into clean, deployable data products that drive decisions, not just dashboards. From predictive models and time series to end-to-end pipelines and BI, this portfolio showcases how data can move from raw tables to concrete business impact.
+              I approach analytics with an architectural focus, transforming complex challenges into scalable solutions that go beyond 
+              visualizations. Whether building predictive engines or end-to-end pipelines, my work demonstrates how to convert raw 
+              information into tangible business value.
             </DecryptingText>
           </p>
 

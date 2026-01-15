@@ -3,16 +3,16 @@ import { SectionNumber } from "./ui/SectionNumber";
 import { GitBranch, ExternalLink, FileText, Users, Loader2, GitCommit, ImageOff } from "lucide-react";
 
 const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs";
-const README_RAW_URL = "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/rol-responsabilidades.md";
+const README_RAW_URL = "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/1-cluster_retail-uci/README.md"; // Raw URL to the README file 
 const COMMITS_API_URL = "https://api.github.com/repos/CaballeroRAR/ds_projects_collabs/commits?per_page=5";
 
 const projectInfo = {
-  title: "Customer Segmentation & Clustering",
-  subtitle: "Collaborative Data Science Project",
-  description: "A collaborative project focused on identifying key customer segments using clustering algorithms on the UCI Online Retail dataset. The goal is to identify 'Whales' (high-value), 'Core' (retention-focused), and 'Swing' (reactivation-focused) customer segments.",
+  title: "Customer Clustering for Retail Insights",
+  subtitle: "Collaborative Unsupervised Learning Project",
+  description: "Collaborative data science project applying RFM analysis and clustering algorithms (K-Means, DBSCAN) to UCI Online Retail transactional data. Identifies actionable customer segments—high-value 'Whales', steady 'Core' customers, and reactivation 'Swing' buyers—to drive targeted marketing, retention, and reactivation strategies. Covers EDA, feature engineering, model comparison, and business interpretation.",
   status: "In Progress",
   collaborators: 2,
-  technologies: ["Python", "Scikit-learn", "K-Means", "DBSCAN", "PCA", "Jupyter Notebook"],
+  technologies: ["Python", "Pandas", "NumPy", "Scikit-learn", "K-Means", "DBSCAN", "PCA", "Matplotlib", "Seaborn", "Jupyter Notebook"],
   previewImage: null as string | null, // Placeholder for uploaded screenshot
 };
 
@@ -191,7 +191,7 @@ const CurrentWorkSection = () => {
                         Latest Preview Not Available :(
                       </p>
                       <p className="font-mono text-[10px] text-foreground/30 uppercase tracking-wider">
-                        Upload screenshot to display here
+                        Screenshot not uploaded yet
                       </p>
                     </>
                   )}
