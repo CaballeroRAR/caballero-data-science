@@ -121,6 +121,12 @@ const ProjectsSection = () => {
               className="group border-t border-foreground/20 py-8 cursor-pointer transition-all duration-300"
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
+              onClick={() => {
+                // On mobile, toggle expanded state on tap
+                if (window.innerWidth < 1024) {
+                  setHoveredProject(hoveredProject === project.id ? null : project.id);
+                }
+              }}
             >
               <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
                 {/* Number */}
@@ -186,57 +192,80 @@ const ProjectsSection = () => {
                     )}
                   </div>
 
-                  {/* Gallery */}
-                  <div className="flex gap-3 mt-4">
-                    {project.gallery.map((item, idx) => (
-                      <div
-                        key={item.id}
-                        className={`relative w-32 h-20 bg-muted border border-foreground/20 overflow-hidden group/gallery ${
-                          item.image ? "cursor-pointer" : ""
-                        }`}
-                        style={{ animationDelay: `${idx * 100}ms` }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (item.image) setSelectedImage({ image: item.image, text: item.modalText || item.placeholder });
-                        }}
-                      >
-                        {/* Placeholder content - shown when no image */}
-                        {!item.image && (
-                          <>
-                            <div className="absolute inset-0 grid-pattern-dense opacity-30" />
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <span className="font-mono text-[10px] text-foreground/50 text-center px-2">
-                                {item.placeholder}
-                              </span>
-                            </div>
-                          </>
-                        )}
-                        {/* Image with click-to-view text overlay */}
-                        {item.image && (
-                          <>
-                            <img
-                              src={item.image}
-                              alt={item.placeholder}
-                              className="absolute inset-0 w-full h-full object-cover"
-                            />
-                            {/* Click to view overlay */}
-                            <div className="absolute inset-0 bg-background/80 opacity-0 group-hover/gallery:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center">
-                              <span className="font-mono text-[10px] text-foreground/90 text-center px-2 mb-1">
-                                {item.placeholder}
-                              </span>
-                              <span className="font-mono text-[8px] text-foreground/60 uppercase tracking-wider">
-                                Click to view
-                              </span>
-                            </div>
-                          </>
-                        )}
-                        {/* Frame corners */}
-                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-foreground/40" />
-                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-foreground/40" />
-                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-foreground/40" />
-                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-foreground/40" />
-                      </div>
-                    ))}
+                  {/* Gallery - horizontal scroll on mobile */}
+                  <div className="relative mt-4">
+                    {/* Scroll hint for mobile */}
+                    <div className="lg:hidden flex items-center gap-2 mb-2">
+                      <span className="font-mono text-[10px] text-foreground/50 uppercase tracking-wider">
+                        Swipe to explore
+                      </span>
+                      <div className="flex-1 h-px bg-foreground/10" />
+                      <span className="font-mono text-[10px] text-foreground/40">
+                        {project.gallery.length} images
+                      </span>
+                    </div>
+                    
+                    {/* Scrollable gallery container */}
+                    <div 
+                      className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-foreground/20 scrollbar-track-transparent lg:overflow-visible lg:flex-wrap"
+                      style={{ 
+                        scrollbarWidth: 'thin',
+                        WebkitOverflowScrolling: 'touch'
+                      }}
+                    >
+                      {project.gallery.map((item, idx) => (
+                        <div
+                          key={item.id}
+                          className={`relative flex-shrink-0 w-36 h-24 md:w-32 md:h-20 bg-muted border border-foreground/20 overflow-hidden group/gallery snap-start ${
+                            item.image ? "cursor-pointer active:scale-95 transition-transform" : ""
+                          }`}
+                          style={{ animationDelay: `${idx * 100}ms` }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (item.image) setSelectedImage({ image: item.image, text: item.modalText || item.placeholder });
+                          }}
+                        >
+                          {/* Placeholder content - shown when no image */}
+                          {!item.image && (
+                            <>
+                              <div className="absolute inset-0 grid-pattern-dense opacity-30" />
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="font-mono text-[10px] text-foreground/50 text-center px-2">
+                                  {item.placeholder}
+                                </span>
+                              </div>
+                            </>
+                          )}
+                          {/* Image with tap/click overlay */}
+                          {item.image && (
+                            <>
+                              <img
+                                src={item.image}
+                                alt={item.placeholder}
+                                className="absolute inset-0 w-full h-full object-cover"
+                              />
+                              {/* Tap indicator - always visible on mobile, hover on desktop */}
+                              <div className="absolute inset-0 bg-background/60 lg:bg-background/80 opacity-100 lg:opacity-0 group-hover/gallery:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center">
+                                <span className="font-mono text-[10px] text-foreground/90 text-center px-2 mb-1 line-clamp-2">
+                                  {item.placeholder}
+                                </span>
+                                <span className="font-mono text-[8px] text-foreground/60 uppercase tracking-wider">
+                                  Tap to view
+                                </span>
+                              </div>
+                            </>
+                          )}
+                          {/* Frame corners */}
+                          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-foreground/40" />
+                          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-foreground/40" />
+                          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-foreground/40" />
+                          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-foreground/40" />
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Scroll fade indicators for mobile */}
+                    <div className="lg:hidden pointer-events-none absolute right-0 top-8 bottom-2 w-8 bg-gradient-to-l from-background to-transparent" />
                   </div>
                 </div>
               </div>
