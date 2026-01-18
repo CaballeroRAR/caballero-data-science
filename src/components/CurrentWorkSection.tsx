@@ -4,7 +4,7 @@ import { GitBranch, ExternalLink, FileText, Users, Loader2, GitCommit, ImageOff 
 
 const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs";
 const README_RAW_URL = "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/1-cluster_retail-uci/README.md"; // Raw URL to the README file 
-const COMMITS_API_URL = "https://api.github.com/repos/CaballeroRAR/ds_projects_collabs/commits?per_page=5";
+const COMMITS_API_URL = "https://api.github.com/repos/CaballeroRAR/ds_projects_collabs/commits?per_page=7";
 
 const projectInfo = {
   title: "Customer Clustering for Retail Insights",
