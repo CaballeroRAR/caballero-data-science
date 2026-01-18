@@ -3,6 +3,8 @@ import { SectionNumber } from "./ui/SectionNumber";
 import { GitBranch, ExternalLink, FileText, Users, Loader2, GitCommit, ImageOff, ZoomIn, X } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import cleaningPipelineDiagram from "@/assets/img/cleaning-pipeline-diagram.svg";
 
 const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs";
@@ -84,48 +86,6 @@ const CurrentWorkSection = () => {
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
   };
 
-  // Simple markdown to JSX converter for basic formatting
-  const renderMarkdown = (text: string) => {
-    const lines = text.split("\n");
-    return lines.map((line, i) => {
-      // Headers
-      if (line.startsWith("### ")) {
-        return <h4 key={i} className="font-display text-lg mt-4 mb-2">{line.replace("### ", "")}</h4>;
-      }
-      if (line.startsWith("## ")) {
-        return <h3 key={i} className="font-display text-xl mt-6 mb-3 text-foreground/90">{line.replace("## ", "")}</h3>;
-      }
-      if (line.startsWith("# ")) {
-        return <h2 key={i} className="font-display text-2xl mt-6 mb-4">{line.replace("# ", "")}</h2>;
-      }
-      // Lists
-      if (line.startsWith("- ") || line.startsWith("* ")) {
-        return (
-          <li key={i} className="ml-4 text-foreground/70 text-sm font-body flex items-start gap-2">
-            <span className="w-1.5 h-1.5 bg-foreground/40 mt-2 flex-shrink-0" />
-            <span>{line.replace(/^[-*] /, "")}</span>
-          </li>
-        );
-      }
-      // Code blocks
-      if (line.startsWith("```")) {
-        return null;
-      }
-      // Bold text
-      const boldProcessed = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-      // Empty lines
-      if (line.trim() === "") {
-        return <div key={i} className="h-2" />;
-      }
-      return (
-        <p 
-          key={i} 
-          className="text-foreground/70 text-sm font-body leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: boldProcessed }}
-        />
-      );
-    });
-  };
 
   return (
     <section id="current-work" className="py-32 bg-surface-elevated relative">
@@ -345,8 +305,24 @@ const CurrentWorkSection = () => {
                     ) : error ? (
                       <p className="text-foreground/50 text-sm font-mono">{error}</p>
                     ) : readme ? (
-                      <div className="space-y-1">
-                        {renderMarkdown(readme)}
+                      <div className="prose prose-sm prose-invert max-w-none 
+                        prose-headings:font-display prose-headings:text-foreground 
+                        prose-h1:text-2xl prose-h1:mt-6 prose-h1:mb-4
+                        prose-h2:text-xl prose-h2:mt-6 prose-h2:mb-3 prose-h2:text-foreground/90
+                        prose-h3:text-lg prose-h3:mt-4 prose-h3:mb-2
+                        prose-p:text-foreground/70 prose-p:text-sm prose-p:font-body prose-p:leading-relaxed
+                        prose-li:text-foreground/70 prose-li:text-sm prose-li:font-body
+                        prose-strong:text-foreground/90 prose-strong:font-semibold
+                        prose-code:text-foreground/80 prose-code:bg-foreground/10 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-xs prose-code:font-mono
+                        prose-pre:bg-foreground/5 prose-pre:border prose-pre:border-foreground/10 prose-pre:text-xs
+                        prose-a:text-foreground/80 prose-a:underline prose-a:underline-offset-2 hover:prose-a:text-foreground
+                        prose-blockquote:border-l-foreground/30 prose-blockquote:text-foreground/60
+                        prose-table:text-sm prose-th:text-foreground/80 prose-td:text-foreground/70
+                        prose-hr:border-foreground/20
+                      ">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {readme}
+                        </ReactMarkdown>
                       </div>
                     ) : null}
                   </div>
