@@ -3,7 +3,7 @@ import { SectionNumber } from "./ui/SectionNumber";
 import { GitBranch, ExternalLink, FileText, Users, Loader2, GitCommit, ImageOff } from "lucide-react";
 
 const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs";
-const README_RAW_URL = "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/README.md"; 
+const README_RAW_URL = "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/1-cluster_retail_uci/README.md"; 
 const COMMITS_API_URL = "https://api.github.com/repos/CaballeroRAR/ds_projects_collabs/commits?per_page=7";
 
 const projectInfo = {
