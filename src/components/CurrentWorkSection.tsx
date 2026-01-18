@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { SectionNumber } from "./ui/SectionNumber";
 import { GitBranch, ExternalLink, FileText, Users, Loader2, GitCommit, ImageOff } from "lucide-react";
+import cleaningPipelineDiagram from "@/assets/img/cleaning-pipeline-diagram.svg";
 
 const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs";
 const README_RAW_URL = "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/1-cluster_retail_uci/README.md"; 
@@ -13,7 +14,7 @@ const projectInfo = {
   status: "In Progress",
   collaborators: 2,
   technologies: ["Python", "Pandas", "NumPy", "Scikit-learn", "K-Means", "DBSCAN", "PCA", "Matplotlib", "Seaborn", "Jupyter Notebook"],
-  previewImage: null as string | null, // Placeholder for uploaded screenshot
+  previewImage: cleaningPipelineDiagram,
 };
 
 interface Commit {
