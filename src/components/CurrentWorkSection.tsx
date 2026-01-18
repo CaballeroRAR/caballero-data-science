@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { SectionNumber } from "./ui/SectionNumber";
-import { GitBranch, ExternalLink, FileText, Users, Loader2, GitCommit, ImageOff } from "lucide-react";
+import { GitBranch, ExternalLink, FileText, Users, Loader2, GitCommit, ImageOff, ZoomIn, X } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import cleaningPipelineDiagram from "@/assets/img/cleaning-pipeline-diagram.svg";
 
 const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs";
@@ -35,6 +37,7 @@ const CurrentWorkSection = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingCommits, setIsLoadingCommits] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isImageOpen, setIsImageOpen] = useState(false);
 
   useEffect(() => {
     const fetchReadme = async () => {
@@ -178,15 +181,26 @@ const CurrentWorkSection = () => {
                 <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest mb-4">
                   Latest Preview
                 </h4>
-                <div className="aspect-video bg-surface-elevated border border-dashed border-foreground/20 flex flex-col items-center justify-center gap-4">
+                <div className="aspect-video bg-surface-elevated border border-dashed border-foreground/20 flex items-center justify-center overflow-hidden">
                   {projectInfo.previewImage ? (
-                    <img 
-                      src={projectInfo.previewImage} 
-                      alt="Project Preview" 
-                      className="w-full h-full object-cover"
-                    />
+                    <button
+                      onClick={() => setIsImageOpen(true)}
+                      className="relative group w-full h-full flex items-center justify-center p-4 cursor-zoom-in"
+                    >
+                      <img 
+                        src={projectInfo.previewImage} 
+                        alt="Project Preview" 
+                        className="max-w-full max-h-full object-contain"
+                      />
+                      <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div className="flex items-center gap-2 text-foreground/80">
+                          <ZoomIn className="w-6 h-6" />
+                          <span className="font-mono text-sm uppercase tracking-wider">Click to expand</span>
+                        </div>
+                      </div>
+                    </button>
                   ) : (
-                    <>
+                    <div className="flex flex-col items-center justify-center gap-4">
                       <ImageOff className="w-12 h-12 text-foreground/20" />
                       <p className="font-mono text-sm text-foreground/40 text-center px-4">
                         Latest Preview Not Available :(
@@ -194,10 +208,32 @@ const CurrentWorkSection = () => {
                       <p className="font-mono text-[10px] text-foreground/30 uppercase tracking-wider">
                         Screenshot not uploaded yet
                       </p>
-                    </>
+                    </div>
                   )}
                 </div>
               </div>
+
+              {/* Image Lightbox Dialog */}
+              <Dialog open={isImageOpen} onOpenChange={setIsImageOpen}>
+                <DialogContent className="max-w-[95vw] max-h-[95vh] w-auto h-auto p-0 bg-background/95 backdrop-blur-sm border-foreground/20 overflow-auto">
+                  <VisuallyHidden>
+                    <DialogTitle>Project Preview - Cleaning Pipeline Diagram</DialogTitle>
+                  </VisuallyHidden>
+                  <button
+                    onClick={() => setIsImageOpen(false)}
+                    className="absolute top-4 right-4 z-50 p-2 bg-background/80 border border-foreground/20 hover:bg-foreground hover:text-background transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                  <div className="p-4 flex items-center justify-center">
+                    <img 
+                      src={projectInfo.previewImage!} 
+                      alt="Project Preview - Full Size" 
+                      className="max-w-full max-h-[90vh] object-contain"
+                    />
+                  </div>
+                </DialogContent>
+              </Dialog>
 
               {/* Content Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
