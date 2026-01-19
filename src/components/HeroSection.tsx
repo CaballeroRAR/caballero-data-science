@@ -202,6 +202,15 @@ const HeroSection = () => {
           })}>
               View Projects
             </Button>
+            <Button 
+              variant="architectural" 
+              size="lg" 
+              onClick={() => document.getElementById("current-work")?.scrollIntoView({ behavior: "smooth" })}
+              className="relative overflow-hidden group"
+            >
+              <span className="relative z-10">View Latest Project</span>
+              <span className="absolute inset-0 bg-foreground/10 animate-pulse-subtle" />
+            </Button>
           </div>
 
           {/* Stats */}
