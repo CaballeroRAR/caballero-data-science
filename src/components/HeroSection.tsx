@@ -208,10 +208,10 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 opacity-0 animate-fade-up animation-delay-500">
-            <Button variant="default" size="lg" onClick={scrollToContact}>
+            <Button variant="glass" size="lg" onClick={scrollToContact}>
               Get in Touch
             </Button>
-            <Button variant="architectural" size="lg" onClick={() => document.getElementById("projects")?.scrollIntoView({
+            <Button variant="glass" size="lg" onClick={() => document.getElementById("projects")?.scrollIntoView({
             behavior: "smooth"
           })}>
               View Projects
@@ -222,8 +222,41 @@ const HeroSection = () => {
               onClick={() => document.getElementById("current-work")?.scrollIntoView({ behavior: "smooth" })}
               className="relative overflow-hidden group"
             >
+              {/* Top histogram skyline */}
+              <span className="absolute top-0 left-0 right-0 h-2 flex items-end justify-center gap-[1px] pointer-events-none">
+                {[...Array(21)].map((_, i) => {
+                  const distFromCenter = Math.abs(i - 10);
+                  const height = Math.max(2, 8 - distFromCenter * 0.7);
+                  return (
+                    <span
+                      key={`top-${i}`}
+                      className="w-[2px] bg-foreground/40 animate-blink"
+                      style={{ 
+                        height: `${height}px`,
+                        animationDelay: `${i * 50}ms`
+                      }}
+                    />
+                  );
+                })}
+              </span>
               <span className="relative z-10">View Latest Project</span>
-              <span className="absolute inset-0 bg-foreground/10 animate-pulse-subtle" />
+              {/* Bottom histogram skyline (mirrored) */}
+              <span className="absolute bottom-0 left-0 right-0 h-2 flex items-start justify-center gap-[1px] pointer-events-none">
+                {[...Array(21)].map((_, i) => {
+                  const distFromCenter = Math.abs(i - 10);
+                  const height = Math.max(2, 8 - distFromCenter * 0.7);
+                  return (
+                    <span
+                      key={`bottom-${i}`}
+                      className="w-[2px] bg-foreground/40 animate-blink"
+                      style={{ 
+                        height: `${height}px`,
+                        animationDelay: `${i * 50}ms`
+                      }}
+                    />
+                  );
+                })}
+              </span>
             </Button>
           </div>
 
@@ -255,7 +288,7 @@ const HeroSection = () => {
           </div>
 
           {/* Right side - Rhombus Video Player */}
-          <div className="hidden lg:flex flex-1 items-center justify-center opacity-0 animate-fade-in animation-delay-500">
+          <div className="hidden lg:flex flex-1 items-center justify-center animate-fade-in animation-delay-500">
             <div 
               className={`relative transition-all duration-500 ease-out ${
                 isVideoExpanded 
