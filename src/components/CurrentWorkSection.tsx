@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { SectionNumber } from "./ui/SectionNumber";
-import { GitBranch, ExternalLink, FileText, Users, Loader2, GitCommit, ImageOff, ZoomIn, X } from "lucide-react";
+import { GitBranch, ExternalLink, FileText, Users, Loader2, GitCommit, ImageOff, ZoomIn } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import ReactMarkdown from "react-markdown";
@@ -175,23 +175,15 @@ const CurrentWorkSection = () => {
 
               {/* Image Lightbox Dialog */}
               <Dialog open={isImageOpen} onOpenChange={setIsImageOpen}>
-                <DialogContent className="max-w-[95vw] max-h-[95vh] w-auto h-auto p-0 bg-background/95 backdrop-blur-sm border-foreground/20 overflow-auto">
+                <DialogContent className="max-w-[90vw] max-h-[90vh] w-fit p-8 bg-background border-foreground/20 flex items-center justify-center">
                   <VisuallyHidden>
                     <DialogTitle>Project Preview - Cleaning Pipeline Diagram</DialogTitle>
                   </VisuallyHidden>
-                  <button
-                    onClick={() => setIsImageOpen(false)}
-                    className="absolute top-4 right-4 z-50 p-2 bg-background/80 border border-foreground/20 hover:bg-foreground hover:text-background transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                  <div className="p-4 flex items-center justify-center">
-                    <img 
-                      src={projectInfo.previewImage!} 
-                      alt="Project Preview - Full Size" 
-                      className="max-w-full max-h-[90vh] object-contain"
-                    />
-                  </div>
+                  <img 
+                    src={projectInfo.previewImage!} 
+                    alt="Project Preview - Full Size" 
+                    className="max-w-full max-h-[80vh] object-contain"
+                  />
                 </DialogContent>
               </Dialog>
 
