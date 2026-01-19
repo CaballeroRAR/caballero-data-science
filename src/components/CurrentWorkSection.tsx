@@ -175,15 +175,17 @@ const CurrentWorkSection = () => {
 
               {/* Image Lightbox Dialog */}
               <Dialog open={isImageOpen} onOpenChange={setIsImageOpen}>
-                <DialogContent className="max-w-[90vw] max-h-[90vh] w-fit p-8 bg-background border-foreground/20 flex items-center justify-center">
+                <DialogContent className="max-w-[90vw] w-[90vw] max-h-[90vh] p-8 bg-background border-foreground/20">
                   <VisuallyHidden>
                     <DialogTitle>Project Preview - Cleaning Pipeline Diagram</DialogTitle>
                   </VisuallyHidden>
-                  <img 
-                    src={projectInfo.previewImage!} 
-                    alt="Project Preview - Full Size" 
-                    className="max-w-full max-h-[80vh] object-contain"
-                  />
+                  <div className="w-full h-full flex items-center justify-center">
+                    <img 
+                      src={projectInfo.previewImage!} 
+                      alt="Project Preview - Full Size" 
+                      className="w-full h-auto max-h-[75vh] object-contain"
+                    />
+                  </div>
                 </DialogContent>
               </Dialog>
 
