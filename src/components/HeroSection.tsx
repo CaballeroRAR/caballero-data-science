@@ -1,7 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { SectionNumber } from "@/components/ui/SectionNumber";
+import { Play, X } from "lucide-react";
+
 const glitchChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;':\",./<>?";
+
+// ==========================================
+// VIDEO URL - Add your YouTube embed URL here
+// Example: "https://www.youtube.com/embed/VIDEO_ID"
+// Leave empty or null if no video available
+// ==========================================
+const YOUTUBE_EMBED_URL: string | null = null;
 
 const greetings = [
   { intro: "Hi! I am", role: "and I am a" },
@@ -95,6 +104,9 @@ const HeroSection = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [showDecrypt] = useState(true);
   const [showScrollHint, setShowScrollHint] = useState(false);
+  const [isVideoExpanded, setIsVideoExpanded] = useState(false);
+
+  const hasVideo = !!YOUTUBE_EMBED_URL;
 
   // Show scroll hint after decryption completes
   useEffect(() => {
@@ -148,7 +160,9 @@ const HeroSection = () => {
       <SectionNumber number="01" className="absolute right-8 top-1/2 -translate-y-1/2 text-muted/80" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 pt-16 md:pt-20">
-        <div className="max-w-5xl">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-12">
+          {/* Left content */}
+          <div className="max-w-3xl flex-1">
           {/* Main headline */}
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display leading-[1.1] mb-6 md:mb-8">
             <span className="block text-muted-foreground opacity-0 animate-fade-up animation-delay-100 mb-2">
@@ -237,6 +251,68 @@ const HeroSection = () => {
                 </div>
               </div>
             ))}
+          </div>
+          </div>
+
+          {/* Right side - Rhombus Video Player */}
+          <div className="hidden lg:flex flex-1 items-center justify-center opacity-0 animate-fade-in animation-delay-500">
+            <div 
+              className={`relative transition-all duration-500 ease-out ${
+                isVideoExpanded 
+                  ? "w-[500px] h-[281px] rotate-0" 
+                  : "w-48 h-48 rotate-45 cursor-pointer hover:scale-105"
+              }`}
+              onClick={() => hasVideo && !isVideoExpanded && setIsVideoExpanded(true)}
+            >
+              {/* Rhombus / Rectangle container */}
+              <div 
+                className={`absolute inset-0 border-2 border-foreground/30 bg-background/80 backdrop-blur-sm transition-all duration-500 ${
+                  isVideoExpanded ? "rounded-lg" : ""
+                }`}
+              >
+                {isVideoExpanded ? (
+                  <>
+                    {/* Close button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsVideoExpanded(false);
+                      }}
+                      className="absolute -top-3 -right-3 z-10 w-8 h-8 bg-background border border-foreground/30 rounded-full flex items-center justify-center hover:bg-foreground/10 transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                    {/* Video iframe */}
+                    {hasVideo ? (
+                      <iframe
+                        src={`${YOUTUBE_EMBED_URL}?autoplay=1`}
+                        className="w-full h-full rounded-lg"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="font-mono text-sm text-muted-foreground">Video not available yet :(</span>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  /* Rhombus content - rotated back to be readable */
+                  <div className="absolute inset-0 flex flex-col items-center justify-center -rotate-45">
+                    {hasVideo ? (
+                      <>
+                        <Play className="w-8 h-8 mb-2 text-foreground/70" />
+                        <span className="font-mono text-xs text-muted-foreground text-center">Click to play</span>
+                      </>
+                    ) : (
+                      <span className="font-mono text-xs text-muted-foreground text-center px-4 leading-relaxed">
+                        Video not available yet :(
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
