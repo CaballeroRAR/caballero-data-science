@@ -208,7 +208,7 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 opacity-0 animate-fade-up animation-delay-500">
-            <Button variant="glass" size="lg" onClick={scrollToContact}>
+            <Button variant="glass" size="lg" onClick={scrollToContact} className="bg-white text-black hover:bg-gray-200">
               Get in Touch
             </Button>
             <Button variant="glass" size="lg" onClick={() => document.getElementById("projects")?.scrollIntoView({
@@ -220,12 +220,12 @@ const HeroSection = () => {
               variant="architectural" 
               size="lg" 
               onClick={() => document.getElementById("current-work")?.scrollIntoView({ behavior: "smooth" })}
-              className="relative overflow-hidden group"
+              className="relative group"
             >
               {/* Top histogram skyline */}
-              <span className="absolute top-0 left-0 right-0 h-2 flex items-end justify-center gap-[1px] pointer-events-none">
-                {[...Array(21)].map((_, i) => {
-                  const distFromCenter = Math.abs(i - 10);
+              <span className="absolute top-[-8px] left-0 right-0 h-2 flex items-end justify-between pointer-events-none px-2">
+                {[...Array(41)].map((_, i) => {
+                  const distFromCenter = Math.abs(i - 20);
                   const height = Math.max(2, 8 - distFromCenter * 0.7);
                   return (
                     <span
@@ -241,9 +241,9 @@ const HeroSection = () => {
               </span>
               <span className="relative z-10">View Latest Project</span>
               {/* Bottom histogram skyline (mirrored) */}
-              <span className="absolute bottom-0 left-0 right-0 h-2 flex items-start justify-center gap-[1px] pointer-events-none">
-                {[...Array(21)].map((_, i) => {
-                  const distFromCenter = Math.abs(i - 10);
+              <span className="absolute bottom-[-8px] left-0 right-0 h-2 flex items-start justify-between pointer-events-none px-2">
+                {[...Array(41)].map((_, i) => {
+                  const distFromCenter = Math.abs(i - 20);
                   const height = Math.max(2, 8 - distFromCenter * 0.7);
                   return (
                     <span
