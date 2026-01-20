@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
 import { SectionNumber } from "./ui/SectionNumber";
-import { GitBranch, ExternalLink, FileText, Users, Loader2, GitCommit, ImageOff, ZoomIn } from "lucide-react";
+import {
+  GitBranch,
+  ExternalLink,
+  FileText,
+  Users,
+  Loader2,
+  GitCommit,
+  ImageOff,
+  ZoomIn,
+} from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import ReactMarkdown from "react-markdown";
@@ -8,16 +17,29 @@ import remarkGfm from "remark-gfm";
 import cleaningPipelineDiagram from "@/assets/img/cleaning-pipeline-diagram.svg";
 
 const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs";
-const README_RAW_URL = "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/1-cluster_retail_uci/README.md"; 
-const COMMITS_API_URL = "https://api.github.com/repos/CaballeroRAR/ds_projects_collabs/commits?per_page=7";
+const README_RAW_URL =
+  "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/1-cluster_retail_uci/README.md";
+const COMMITS_API_URL =
+  "https://api.github.com/repos/CaballeroRAR/ds_projects_collabs/commits?per_page=7";
 
-const projectInfo = {
+const PROJECT_INFO = {
   title: "Customer Clustering for Retail Insights",
   subtitle: "Collaborative Unsupervised Learning Project",
-  description: "Collaborative data science project applying RFM analysis and clustering algorithms (K-Means, DBSCAN) to UCI Online Retail transactional data. Identifies actionable customer segments—high-value 'Whales', steady 'Core' customers, and reactivation 'Swing' buyers—to drive targeted marketing, retention, and reactivation strategies. Covers EDA, feature engineering, model comparison, and business interpretation.",
+  description:
+    "Collaborative data science project applying RFM analysis and clustering algorithms (K-Means, DBSCAN) to UCI Online Retail transactional data. Identifies actionable customer segments to drive targeted marketing and retention strategies.",
   status: "In Progress",
   collaborators: 2,
-  technologies: ["Python", "Pandas", "NumPy", "Scikit-learn", "K-Means", "DBSCAN", "PCA", "Matplotlib", "Seaborn", "Jupyter Notebook"],
+  technologies: [
+    "Python",
+    "Pandas",
+    "NumPy",
+    "Scikit-learn",
+    "K-Means",
+    "DBSCAN",
+    "PCA",
+    "Matplotlib",
+    "Seaborn",
+  ],
   previewImage: cleaningPipelineDiagram,
 };
 
@@ -33,6 +55,19 @@ interface Commit {
   html_url: string;
 }
 
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return "Today";
+  if (diffDays === 1) return "Yesterday";
+  if (diffDays < 7) return `${diffDays} days ago`;
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+};
+
 const CurrentWorkSection = () => {
   const [readme, setReadme] = useState<string | null>(null);
   const [commits, setCommits] = useState<Commit[]>([]);
@@ -42,54 +77,39 @@ const CurrentWorkSection = () => {
   const [isImageOpen, setIsImageOpen] = useState(false);
 
   useEffect(() => {
-    const fetchReadme = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(README_RAW_URL);
-        if (!response.ok) throw new Error("Failed to fetch README");
-        const text = await response.text();
-        setReadme(text);
+        const [readmeRes, commitsRes] = await Promise.all([
+          fetch(README_RAW_URL),
+          fetch(COMMITS_API_URL),
+        ]);
+
+        if (readmeRes.ok) {
+          const text = await readmeRes.text();
+          setReadme(text);
+        } else {
+          setError("Could not load README");
+        }
+
+        if (commitsRes.ok) {
+          const data = await commitsRes.json();
+          setCommits(data);
+        }
       } catch (err) {
         setError("Could not load README");
         console.error(err);
       } finally {
         setIsLoading(false);
-      }
-    };
-
-    const fetchCommits = async () => {
-      try {
-        const response = await fetch(COMMITS_API_URL);
-        if (!response.ok) throw new Error("Failed to fetch commits");
-        const data = await response.json();
-        setCommits(data);
-      } catch (err) {
-        console.error("Could not load commits:", err);
-      } finally {
         setIsLoadingCommits(false);
       }
     };
 
-    fetchReadme();
-    fetchCommits();
+    fetchData();
   }, []);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 0) return "Today";
-    if (diffDays === 1) return "Yesterday";
-    if (diffDays < 7) return `${diffDays} days ago`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  };
-
-
   return (
-    <section id="current-work" className="py-32 bg-surface-elevated relative">
-      <div className="container mx-auto px-6 lg:px-12">
+    <section id="current-work" className="py-16 md:py-32 bg-surface-elevated relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         <div className="lg:grid lg:grid-cols-[10rem_minmax(0,1fr)] lg:gap-12">
           <div className="hidden lg:flex justify-end pt-8">
             <SectionNumber number="03.5" className="text-muted/80" />
@@ -97,15 +117,15 @@ const CurrentWorkSection = () => {
 
           <div>
             {/* Section header */}
-            <div className="flex items-center gap-4 mb-16">
+            <div className="flex items-center gap-4 mb-10 md:mb-16">
               <span className="font-mono text-xs text-foreground/60 tracking-widest uppercase">
                 Current Work
               </span>
               <div className="flex-1 h-px bg-foreground/20" />
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="font-mono text-xs text-green-500/80 uppercase">
-                  {projectInfo.status}
+                <span className="font-mono text-[10px] md:text-xs text-green-500/80 uppercase">
+                  {PROJECT_INFO.status}
                 </span>
               </div>
             </div>
@@ -113,60 +133,59 @@ const CurrentWorkSection = () => {
             {/* Project Card */}
             <div className="border border-foreground/20 bg-background relative">
               {/* Header */}
-              <div className="p-6 lg:p-8 border-b border-foreground/10">
+              <div className="p-4 md:p-6 lg:p-8 border-b border-foreground/10">
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                   <div>
-                    <h2 className="font-display text-3xl md:text-4xl mb-2">
-                      {projectInfo.title}
+                    <h2 className="font-display text-2xl md:text-3xl lg:text-4xl mb-2">
+                      {PROJECT_INFO.title}
                     </h2>
-                    <p className="font-mono text-xs text-foreground/60 uppercase tracking-wider">
-                      {projectInfo.subtitle}
+                    <p className="font-mono text-[10px] md:text-xs text-foreground/60 uppercase tracking-wider">
+                      {PROJECT_INFO.subtitle}
                     </p>
                   </div>
                   <a
                     href={REPO_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 border border-foreground/20 hover:bg-foreground hover:text-background transition-colors duration-300 font-mono text-xs uppercase tracking-wider"
+                    className="inline-flex items-center gap-2 px-3 md:px-4 py-2 border border-foreground/20 hover:bg-foreground hover:text-background transition-colors duration-300 font-mono text-[10px] md:text-xs uppercase tracking-wider self-start"
                   >
-                    <GitBranch className="w-4 h-4" />
-                    View on GitHub
+                    <GitBranch className="w-3 md:w-4 h-3 md:h-4" />
+                    <span className="hidden sm:inline">View on</span> GitHub
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 </div>
               </div>
 
               {/* Preview Image Section */}
-              <div className="p-6 lg:p-8 border-b border-foreground/10">
-                <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest mb-4">
+              <div className="p-4 md:p-6 lg:p-8 border-b border-foreground/10">
+                <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest mb-3 md:mb-4">
                   Latest Preview
                 </h4>
                 <div className="aspect-video bg-surface-elevated border border-dashed border-foreground/20 flex items-center justify-center overflow-hidden">
-                  {projectInfo.previewImage ? (
+                  {PROJECT_INFO.previewImage ? (
                     <button
                       onClick={() => setIsImageOpen(true)}
-                      className="relative group w-full h-full flex items-center justify-center p-4 cursor-zoom-in"
+                      className="relative group w-full h-full flex items-center justify-center p-2 md:p-4 cursor-zoom-in"
                     >
-                      <img 
-                        src={projectInfo.previewImage} 
-                        alt="Project Preview" 
+                      <img
+                        src={PROJECT_INFO.previewImage}
+                        alt="Project Preview"
                         className="max-w-full max-h-full object-contain"
                       />
                       <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <div className="flex items-center gap-2 text-foreground/80">
-                          <ZoomIn className="w-6 h-6" />
-                          <span className="font-mono text-sm uppercase tracking-wider">Click to expand</span>
+                          <ZoomIn className="w-5 md:w-6 h-5 md:h-6" />
+                          <span className="font-mono text-xs md:text-sm uppercase tracking-wider">
+                            Click to expand
+                          </span>
                         </div>
                       </div>
                     </button>
                   ) : (
-                    <div className="flex flex-col items-center justify-center gap-4">
-                      <ImageOff className="w-12 h-12 text-foreground/20" />
-                      <p className="font-mono text-sm text-foreground/40 text-center px-4">
+                    <div className="flex flex-col items-center justify-center gap-3 md:gap-4">
+                      <ImageOff className="w-10 md:w-12 h-10 md:h-12 text-foreground/20" />
+                      <p className="font-mono text-xs md:text-sm text-foreground/40 text-center px-4">
                         Latest Preview Not Available :(
-                      </p>
-                      <p className="font-mono text-[10px] text-foreground/30 uppercase tracking-wider">
-                        Screenshot not uploaded yet
                       </p>
                     </div>
                   )}
@@ -175,14 +194,14 @@ const CurrentWorkSection = () => {
 
               {/* Image Lightbox Dialog */}
               <Dialog open={isImageOpen} onOpenChange={setIsImageOpen}>
-                <DialogContent className="max-w-[90vw] w-[90vw] max-h-[90vh] p-8 bg-background border-foreground/20">
+                <DialogContent className="max-w-[95vw] md:max-w-[90vw] w-full max-h-[90vh] p-4 md:p-8 bg-background border-foreground/20">
                   <VisuallyHidden>
-                    <DialogTitle>Project Preview - Cleaning Pipeline Diagram</DialogTitle>
+                    <DialogTitle>Project Preview</DialogTitle>
                   </VisuallyHidden>
                   <div className="w-full h-full flex items-center justify-center">
-                    <img 
-                      src={projectInfo.previewImage!} 
-                      alt="Project Preview - Full Size" 
+                    <img
+                      src={PROJECT_INFO.previewImage!}
+                      alt="Project Preview - Full Size"
                       className="w-full h-auto max-h-[75vh] object-contain"
                     />
                   </div>
@@ -191,22 +210,22 @@ const CurrentWorkSection = () => {
 
               {/* Content Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
-                {/* Left: Project Info */}
-                <div className="p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-foreground/10">
-                  <p className="font-body text-sm text-foreground/80 leading-relaxed mb-6">
-                    {projectInfo.description}
+                {/* Project Info */}
+                <div className="p-4 md:p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-foreground/10">
+                  <p className="font-body text-xs md:text-sm text-foreground/80 leading-relaxed mb-4 md:mb-6">
+                    {PROJECT_INFO.description}
                   </p>
 
                   {/* Technologies */}
-                  <div className="mb-6">
-                    <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest mb-3">
+                  <div className="mb-4 md:mb-6">
+                    <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest mb-2 md:mb-3">
                       Technologies
                     </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {projectInfo.technologies.map((tech) => (
+                    <div className="flex flex-wrap gap-1.5 md:gap-2">
+                      {PROJECT_INFO.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="px-2 py-1 border border-foreground/20 font-mono text-[10px] uppercase tracking-wider text-foreground/70"
+                          className="px-1.5 md:px-2 py-0.5 md:py-1 border border-foreground/20 font-mono text-[9px] md:text-[10px] uppercase tracking-wider text-foreground/70"
                         >
                           {tech}
                         </span>
@@ -216,33 +235,31 @@ const CurrentWorkSection = () => {
 
                   {/* Collaborators */}
                   <div className="flex items-center gap-2 text-foreground/60">
-                    <Users className="w-4 h-4" />
-                    <span className="font-mono text-xs">
-                      {projectInfo.collaborators} Collaborators
+                    <Users className="w-3 md:w-4 h-3 md:h-4" />
+                    <span className="font-mono text-[10px] md:text-xs">
+                      {PROJECT_INFO.collaborators} Collaborators
                     </span>
                   </div>
                 </div>
 
-                {/* Middle: Commit Timeline */}
-                <div className="p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-foreground/10">
-                  <div className="flex items-center gap-2 mb-4">
-                    <GitCommit className="w-4 h-4 text-foreground/60" />
+                {/* Commit Timeline */}
+                <div className="p-4 md:p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-foreground/10">
+                  <div className="flex items-center gap-2 mb-3 md:mb-4">
+                    <GitCommit className="w-3 md:w-4 h-3 md:h-4 text-foreground/60" />
                     <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest">
                       Recent Commits
                     </h4>
                   </div>
-                  
+
                   {isLoadingCommits ? (
-                    <div className="flex items-center justify-center py-8">
-                      <Loader2 className="w-6 h-6 animate-spin text-foreground/40" />
+                    <div className="flex items-center justify-center py-6 md:py-8">
+                      <Loader2 className="w-5 md:w-6 h-5 md:h-6 animate-spin text-foreground/40" />
                     </div>
                   ) : commits.length > 0 ? (
                     <div className="relative">
-                      {/* Timeline line */}
                       <div className="absolute left-[5px] top-2 bottom-2 w-px bg-foreground/10" />
-                      
-                      <div className="space-y-4">
-                        {commits.map((commit, index) => (
+                      <div className="space-y-3 md:space-y-4">
+                        {commits.slice(0, 5).map((commit, index) => (
                           <a
                             key={commit.sha}
                             href={commit.html_url}
@@ -250,24 +267,24 @@ const CurrentWorkSection = () => {
                             rel="noopener noreferrer"
                             className="block group"
                           >
-                            <div className="flex gap-3 relative">
-                              {/* Timeline dot */}
-                              <div className={`w-[11px] h-[11px] rounded-full border-2 flex-shrink-0 mt-1 z-10 transition-colors ${
-                                index === 0 
-                                  ? "bg-green-500 border-green-500" 
-                                  : "bg-background border-foreground/30 group-hover:border-foreground/60"
-                              }`} />
-                              
+                            <div className="flex gap-2 md:gap-3 relative">
+                              <div
+                                className={`w-[9px] md:w-[11px] h-[9px] md:h-[11px] rounded-full border-2 flex-shrink-0 mt-1 z-10 transition-colors ${
+                                  index === 0
+                                    ? "bg-green-500 border-green-500"
+                                    : "bg-background border-foreground/30 group-hover:border-foreground/60"
+                                }`}
+                              />
                               <div className="flex-1 min-w-0">
-                                <p className="font-mono text-xs text-foreground/80 leading-relaxed line-clamp-2 group-hover:text-foreground transition-colors">
+                                <p className="font-mono text-[10px] md:text-xs text-foreground/80 leading-relaxed line-clamp-2 group-hover:text-foreground transition-colors">
                                   {commit.commit.message.split("\n")[0]}
                                 </p>
-                                <div className="flex items-center gap-2 mt-1">
-                                  <span className="font-mono text-[10px] text-foreground/40">
+                                <div className="flex items-center gap-1.5 md:gap-2 mt-0.5 md:mt-1">
+                                  <span className="font-mono text-[9px] md:text-[10px] text-foreground/40 truncate max-w-[80px]">
                                     {commit.commit.author.name}
                                   </span>
                                   <span className="text-foreground/20">•</span>
-                                  <span className="font-mono text-[10px] text-foreground/40">
+                                  <span className="font-mono text-[9px] md:text-[10px] text-foreground/40">
                                     {formatDate(commit.commit.author.date)}
                                   </span>
                                 </div>
@@ -278,45 +295,29 @@ const CurrentWorkSection = () => {
                       </div>
                     </div>
                   ) : (
-                    <p className="text-foreground/50 text-sm font-mono">No commits found</p>
+                    <p className="text-foreground/50 text-xs font-mono">No commits found</p>
                   )}
                 </div>
 
-                {/* Right: README Preview */}
-                <div className="p-6 lg:p-8">
-                  <div className="flex items-center gap-2 mb-4">
-                    <FileText className="w-4 h-4 text-foreground/60" />
+                {/* README Preview */}
+                <div className="p-4 md:p-6 lg:p-8">
+                  <div className="flex items-center gap-2 mb-3 md:mb-4">
+                    <FileText className="w-3 md:w-4 h-3 md:h-4 text-foreground/60" />
                     <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest">
-                      Project Documentation
+                      Documentation
                     </h4>
                   </div>
-                  
-                  <div className="max-h-80 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-foreground/20 scrollbar-track-transparent">
+
+                  <div className="max-h-60 md:max-h-80 overflow-y-auto pr-2">
                     {isLoading ? (
-                      <div className="flex items-center justify-center py-8">
-                        <Loader2 className="w-6 h-6 animate-spin text-foreground/40" />
+                      <div className="flex items-center justify-center py-6 md:py-8">
+                        <Loader2 className="w-5 md:w-6 h-5 md:h-6 animate-spin text-foreground/40" />
                       </div>
                     ) : error ? (
-                      <p className="text-foreground/50 text-sm font-mono">{error}</p>
+                      <p className="text-foreground/50 text-xs font-mono">{error}</p>
                     ) : readme ? (
-                      <div className="prose prose-sm prose-invert max-w-none 
-                        prose-headings:font-display prose-headings:text-foreground 
-                        prose-h1:text-2xl prose-h1:mt-6 prose-h1:mb-4
-                        prose-h2:text-xl prose-h2:mt-6 prose-h2:mb-3 prose-h2:text-foreground/90
-                        prose-h3:text-lg prose-h3:mt-4 prose-h3:mb-2
-                        prose-p:text-foreground/70 prose-p:text-sm prose-p:font-body prose-p:leading-relaxed
-                        prose-li:text-foreground/70 prose-li:text-sm prose-li:font-body
-                        prose-strong:text-foreground/90 prose-strong:font-semibold
-                        prose-code:text-foreground/80 prose-code:bg-foreground/10 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-xs prose-code:font-mono
-                        prose-pre:bg-foreground/5 prose-pre:border prose-pre:border-foreground/10 prose-pre:text-xs
-                        prose-a:text-foreground/80 prose-a:underline prose-a:underline-offset-2 hover:prose-a:text-foreground
-                        prose-blockquote:border-l-foreground/30 prose-blockquote:text-foreground/60
-                        prose-table:text-sm prose-th:text-foreground/80 prose-td:text-foreground/70
-                        prose-hr:border-foreground/20
-                      ">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                          {readme}
-                        </ReactMarkdown>
+                      <div className="prose prose-sm prose-invert max-w-none prose-headings:font-display prose-headings:text-foreground prose-h1:text-xl prose-h2:text-lg prose-h3:text-base prose-p:text-xs prose-p:text-foreground/70 prose-li:text-xs prose-li:text-foreground/70 prose-code:text-[10px] prose-code:bg-foreground/10 prose-code:px-1 prose-code:py-0.5 prose-a:text-foreground/80">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{readme}</ReactMarkdown>
                       </div>
                     ) : null}
                   </div>
@@ -324,10 +325,10 @@ const CurrentWorkSection = () => {
               </div>
 
               {/* Frame corners */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-foreground/30 pointer-events-none" />
-              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-foreground/30 pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-foreground/30 pointer-events-none" />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-foreground/30 pointer-events-none" />
+              <div className="absolute top-0 left-0 w-3 md:w-4 h-3 md:h-4 border-t-2 border-l-2 border-foreground/30 pointer-events-none" />
+              <div className="absolute top-0 right-0 w-3 md:w-4 h-3 md:h-4 border-t-2 border-r-2 border-foreground/30 pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-3 md:w-4 h-3 md:h-4 border-b-2 border-l-2 border-foreground/30 pointer-events-none" />
+              <div className="absolute bottom-0 right-0 w-3 md:w-4 h-3 md:h-4 border-b-2 border-r-2 border-foreground/30 pointer-events-none" />
             </div>
           </div>
         </div>
