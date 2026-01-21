@@ -140,8 +140,8 @@ const RhombusVideoPlayer = ({
   <div
     className={`relative transition-all duration-500 ease-out ${
       isExpanded
-        ? "w-[400px] xl:w-[500px] h-[225px] xl:h-[281px] rotate-0"
-        : "w-40 xl:w-48 h-40 xl:h-48 rotate-45 cursor-pointer hover:scale-105"
+        ? "w-[280px] sm:w-[400px] xl:w-[500px] h-[158px] sm:h-[225px] xl:h-[281px] rotate-0"
+        : "w-24 sm:w-32 lg:w-40 xl:w-48 h-24 sm:h-32 lg:h-40 xl:h-48 rotate-45 cursor-pointer hover:scale-105"
     }`}
     onClick={() => hasVideo && !isExpanded && onExpand()}
   >
@@ -353,8 +353,8 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right side - Rhombus Video Player (desktop only) */}
-          <div className="hidden lg:flex flex-1 items-center justify-center animate-fade-in animation-delay-500">
+          {/* Right side - Rhombus Video Player */}
+          <div className="flex flex-1 items-center justify-center mt-8 lg:mt-0 animate-fade-in animation-delay-500">
             <RhombusVideoPlayer
               hasVideo={hasVideo}
               isExpanded={isVideoExpanded}
