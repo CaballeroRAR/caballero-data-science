@@ -157,12 +157,25 @@ const projects: Project[] = [
 
 const ProjectsSection = () => {
   const [expandedProject, setExpandedProject] = useState<number | null>(null);
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<{
     image: string;
     text: React.ReactNode;
   } | null>(null);
 
+  // Expand on hover (desktop) or click (mobile)
+  const activeProject = hoveredProject ?? expandedProject;
+
+  const handleMouseEnter = (projectId: number) => {
+    setHoveredProject(projectId);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredProject(null);
+  };
+
   const toggleProject = (projectId: number) => {
+    // For mobile: toggle on click
     setExpandedProject(expandedProject === projectId ? null : projectId);
   };
 
@@ -193,6 +206,8 @@ const ProjectsSection = () => {
                   key={project.id}
                   className="group border-t border-foreground/20 py-6 md:py-8 cursor-pointer"
                   onClick={() => toggleProject(project.id)}
+                  onMouseEnter={() => handleMouseEnter(project.id)}
+                  onMouseLeave={handleMouseLeave}
                 >
                   <div className="grid grid-cols-12 gap-4 lg:gap-8 items-start">
                     {/* Number */}
@@ -214,13 +229,13 @@ const ProjectsSection = () => {
 
                     {/* Description - hidden on mobile, shown when expanded */}
                     <div className="hidden lg:block lg:col-span-4">
-                      <div
-                        className={`font-body text-sm text-foreground/70 transition-opacity duration-300 ${
-                          expandedProject === project.id ? "opacity-100" : "opacity-60"
-                        }`}
-                      >
-                        {project.description}
-                      </div>
+                    <div
+                      className={`font-body text-sm text-foreground/70 transition-opacity duration-300 ${
+                        activeProject === project.id ? "opacity-100" : "opacity-60"
+                      }`}
+                    >
+                      {project.description}
+                    </div>
                     </div>
 
                     {/* Year */}
@@ -232,7 +247,7 @@ const ProjectsSection = () => {
                   {/* Expanded content */}
                   <div
                     className={`overflow-hidden transition-all duration-500 ${
-                      expandedProject === project.id
+                      activeProject === project.id
                         ? "max-h-[500px] opacity-100 mt-4 md:mt-6"
                         : "max-h-0 opacity-0"
                     }`}

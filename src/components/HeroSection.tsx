@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { SectionNumber } from "@/components/ui/SectionNumber";
-import { Play, X } from "lucide-react";
+import { Play, X, Linkedin, Mail, Github } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const GLITCH_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;':\",./<>?";
 
@@ -25,6 +26,12 @@ const STATS = [
   { value: "8+", label: "Years as Architect" },
   { value: "1+", label: "Years as Data Scientist" },
   { value: "50+", label: "Projects" },
+];
+
+const SOCIAL_LINKS = [
+  { icon: Linkedin, href: "https://www.linkedin.com/in/datacaballero", label: "LinkedIn" },
+  { icon: Mail, href: "mailto:caballero.data.scientist@gmail.com", label: "Email" },
+  { icon: Github, href: "https://github.com/CaballeroRAR", label: "GitHub" },
 ];
 
 const HISTOGRAM_BAR_COUNT = 31;
@@ -202,6 +209,7 @@ const HeroSection = () => {
   const [showDecrypt] = useState(true);
   const [showScrollHint, setShowScrollHint] = useState(false);
   const [isVideoExpanded, setIsVideoExpanded] = useState(false);
+  const [showContactMenu, setShowContactMenu] = useState(false);
 
   const hasVideo = !!YOUTUBE_EMBED_URL;
 
@@ -298,14 +306,58 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 opacity-0 animate-fade-up animation-delay-500">
-              <Button
-                variant="glass"
-                size="lg"
-                onClick={() => scrollToSection("contact")}
-                className="bg-foreground text-background hover:bg-foreground/90 w-full sm:w-auto"
+              {/* Get in Touch with hover menu */}
+              <div
+                className="relative w-full sm:w-auto"
+                onMouseEnter={() => setShowContactMenu(true)}
+                onMouseLeave={() => setShowContactMenu(false)}
               >
-                Get in Touch
-              </Button>
+                <Button
+                  variant="glass"
+                  size="lg"
+                  onClick={() => {
+                    // On mobile, toggle menu; on desktop, go to contact
+                    if (window.innerWidth < 640) {
+                      setShowContactMenu(!showContactMenu);
+                    } else {
+                      scrollToSection("contact");
+                    }
+                  }}
+                  className="bg-foreground text-background hover:bg-foreground/90 w-full sm:w-auto"
+                >
+                  Get in Touch
+                </Button>
+
+                {/* Social mini-menu */}
+                <AnimatePresence>
+                  {showContactMenu && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                      transition={{ duration: 0.15, ease: "easeOut" }}
+                      className="absolute left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 top-full mt-2 flex items-center gap-1 p-1.5 bg-background/95 backdrop-blur-md border border-foreground/20 rounded-full shadow-lg z-50"
+                    >
+                      {SOCIAL_LINKS.map((link, index) => (
+                        <motion.a
+                          key={link.label}
+                          href={link.href}
+                          target={link.href.startsWith("mailto") ? undefined : "_blank"}
+                          rel="noopener noreferrer"
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: index * 0.05, duration: 0.15 }}
+                          className="p-2 rounded-full hover:bg-foreground/10 transition-colors duration-200"
+                          aria-label={link.label}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <link.icon className="w-4 h-4 text-foreground" />
+                        </motion.a>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               <Button
                 variant="glass"
                 size="lg"
