@@ -328,32 +328,44 @@ const HeroSection = () => {
                   Get in Touch
                 </Button>
 
-                {/* Social mini-menu */}
+                {/* Social mini-menu - orthogonal design */}
                 <AnimatePresence>
                   {showContactMenu && (
                     <motion.div
-                      initial={{ opacity: 0, y: -8, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -8, scale: 0.95 }}
-                      transition={{ duration: 0.15, ease: "easeOut" }}
-                      className="absolute left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 top-full mt-2 flex items-center gap-1 p-1.5 bg-background/95 backdrop-blur-md border border-foreground/20 rounded-full shadow-lg z-50"
+                      initial={{ opacity: 0, scaleY: 0 }}
+                      animate={{ opacity: 1, scaleY: 1 }}
+                      exit={{ opacity: 0, scaleY: 0 }}
+                      transition={{ duration: 0.12, ease: "easeOut" }}
+                      style={{ transformOrigin: "top" }}
+                      className="absolute left-0 right-0 sm:right-auto top-full mt-1 bg-background/95 backdrop-blur-md border border-foreground/20 z-50"
                     >
-                      {SOCIAL_LINKS.map((link, index) => (
-                        <motion.a
-                          key={link.label}
-                          href={link.href}
-                          target={link.href.startsWith("mailto") ? undefined : "_blank"}
-                          rel="noopener noreferrer"
-                          initial={{ opacity: 0, scale: 0.5 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: index * 0.05, duration: 0.15 }}
-                          className="p-2 rounded-full hover:bg-foreground/10 transition-colors duration-200"
-                          aria-label={link.label}
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <link.icon className="w-4 h-4 text-foreground" />
-                        </motion.a>
-                      ))}
+                      {/* Corner accents */}
+                      <div className="absolute -top-px -left-px w-2 h-2 border-t border-l border-foreground/60" />
+                      <div className="absolute -top-px -right-px w-2 h-2 border-t border-r border-foreground/60" />
+                      <div className="absolute -bottom-px -left-px w-2 h-2 border-b border-l border-foreground/60" />
+                      <div className="absolute -bottom-px -right-px w-2 h-2 border-b border-r border-foreground/60" />
+
+                      <div className="flex">
+                        {SOCIAL_LINKS.map((link, index) => (
+                          <motion.a
+                            key={link.label}
+                            href={link.href}
+                            target={link.href.startsWith("mailto") ? undefined : "_blank"}
+                            rel="noopener noreferrer"
+                            initial={{ opacity: 0, x: -8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.04, duration: 0.1 }}
+                            className="group/icon flex-1 flex flex-col items-center gap-1 px-4 py-3 border-r border-foreground/10 last:border-r-0 hover:bg-foreground/5 transition-colors duration-150"
+                            aria-label={link.label}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <link.icon className="w-4 h-4 text-foreground/70 group-hover/icon:text-foreground transition-colors" />
+                            <span className="font-mono text-[8px] uppercase tracking-wider text-foreground/50 group-hover/icon:text-foreground/80 transition-colors">
+                              {link.label}
+                            </span>
+                          </motion.a>
+                        ))}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
