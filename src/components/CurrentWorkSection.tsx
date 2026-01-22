@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { SectionNumber } from "./ui/SectionNumber";
 import {
   GitBranch,
@@ -9,12 +9,23 @@ import {
   GitCommit,
   ImageOff,
   ZoomIn,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import cleaningPipelineDiagram from "@/assets/img/cleaning-pipeline-diagram.svg";
+
+// Gallery images - add more images here as needed
+const GALLERY_IMAGES = [
+  { src: cleaningPipelineDiagram, alt: "Cleaning Pipeline Diagram" },
+  // Add more images here:
+  // { src: importedImage, alt: "Description" },
+];
+
+const AUTOPLAY_INTERVAL = 4000; // 4 seconds
 
 const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs";
 const README_RAW_URL =
@@ -40,7 +51,6 @@ const PROJECT_INFO = {
     "Matplotlib",
     "Seaborn",
   ],
-  previewImage: cleaningPipelineDiagram,
 };
 
 interface Commit {
@@ -75,6 +85,25 @@ const CurrentWorkSection = () => {
   const [isLoadingCommits, setIsLoadingCommits] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isImageOpen, setIsImageOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Gallery navigation
+  const goToNext = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev + 1) % GALLERY_IMAGES.length);
+  }, []);
+
+  const goToPrev = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+  }, []);
+
+  // Autoplay effect
+  useEffect(() => {
+    if (isPaused || GALLERY_IMAGES.length <= 1) return;
+    
+    const interval = setInterval(goToNext, AUTOPLAY_INTERVAL);
+    return () => clearInterval(interval);
+  }, [isPaused, goToNext]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -156,31 +185,98 @@ const CurrentWorkSection = () => {
                 </div>
               </div>
 
-              {/* Preview Image Section */}
+              {/* Preview Gallery Section */}
               <div className="p-4 md:p-6 lg:p-8 border-b border-foreground/10">
-                <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest mb-3 md:mb-4">
-                  Latest Preview
-                </h4>
-                <div className="aspect-video bg-surface-elevated border border-dashed border-foreground/20 flex items-center justify-center overflow-hidden">
-                  {PROJECT_INFO.previewImage ? (
-                    <button
-                      onClick={() => setIsImageOpen(true)}
-                      className="relative group w-full h-full flex items-center justify-center p-2 md:p-4 cursor-zoom-in"
-                    >
-                      <img
-                        src={PROJECT_INFO.previewImage}
-                        alt="Project Preview"
-                        className="max-w-full max-h-full object-contain"
-                      />
-                      <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <div className="flex items-center gap-2 text-foreground/80">
-                          <ZoomIn className="w-5 md:w-6 h-5 md:h-6" />
-                          <span className="font-mono text-xs md:text-sm uppercase tracking-wider">
-                            Click to expand
-                          </span>
+                <div className="flex items-center justify-between mb-3 md:mb-4">
+                  <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest">
+                    Latest Preview
+                  </h4>
+                  {GALLERY_IMAGES.length > 1 && (
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[9px] text-foreground/40">
+                        {currentImageIndex + 1} / {GALLERY_IMAGES.length}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div 
+                  className="relative aspect-video bg-surface-elevated border border-dashed border-foreground/20 flex items-center justify-center overflow-hidden"
+                  onMouseEnter={() => setIsPaused(true)}
+                  onMouseLeave={() => setIsPaused(false)}
+                >
+                  {GALLERY_IMAGES.length > 0 ? (
+                    <>
+                      {/* Image display with fade transition */}
+                      <button
+                        onClick={() => setIsImageOpen(true)}
+                        className="relative group w-full h-full flex items-center justify-center p-2 md:p-4 cursor-zoom-in"
+                      >
+                        <img
+                          key={currentImageIndex}
+                          src={GALLERY_IMAGES[currentImageIndex].src}
+                          alt={GALLERY_IMAGES[currentImageIndex].alt}
+                          className="max-w-full max-h-full object-contain animate-fade-in"
+                        />
+                        <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <div className="flex items-center gap-2 text-foreground/80">
+                            <ZoomIn className="w-5 md:w-6 h-5 md:h-6" />
+                            <span className="font-mono text-xs md:text-sm uppercase tracking-wider">
+                              Click to expand
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </button>
+                      </button>
+
+                      {/* Navigation arrows */}
+                      {GALLERY_IMAGES.length > 1 && (
+                        <>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); goToPrev(); }}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 md:p-2 border border-foreground/20 bg-background/80 backdrop-blur-sm hover:bg-foreground hover:text-background transition-colors duration-200 opacity-0 group-hover:opacity-100"
+                            aria-label="Previous image"
+                          >
+                            <ChevronLeft className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 md:p-2 border border-foreground/20 bg-background/80 backdrop-blur-sm hover:bg-foreground hover:text-background transition-colors duration-200 opacity-0 group-hover:opacity-100"
+                            aria-label="Next image"
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+                        </>
+                      )}
+
+                      {/* Progress dots */}
+                      {GALLERY_IMAGES.length > 1 && (
+                        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5">
+                          {GALLERY_IMAGES.map((_, index) => (
+                            <button
+                              key={index}
+                              onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(index); }}
+                              className={`w-1.5 h-1.5 transition-all duration-300 ${
+                                index === currentImageIndex 
+                                  ? "bg-foreground w-4" 
+                                  : "bg-foreground/30 hover:bg-foreground/50"
+                              }`}
+                              aria-label={`Go to image ${index + 1}`}
+                            />
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Autoplay progress bar */}
+                      {GALLERY_IMAGES.length > 1 && !isPaused && (
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground/10">
+                          <div 
+                            className="h-full bg-foreground/40 animate-[progress_4s_linear_infinite]"
+                            style={{ 
+                              animation: `progress ${AUTOPLAY_INTERVAL}ms linear infinite`,
+                            }}
+                          />
+                        </div>
+                      )}
+                    </>
                   ) : (
                     <div className="flex flex-col items-center justify-center gap-3 md:gap-4">
                       <ImageOff className="w-10 md:w-12 h-10 md:h-12 text-foreground/20" />
@@ -198,12 +294,34 @@ const CurrentWorkSection = () => {
                   <VisuallyHidden>
                     <DialogTitle>Project Preview</DialogTitle>
                   </VisuallyHidden>
-                  <div className="w-full h-full flex items-center justify-center">
+                  <div className="w-full h-full flex items-center justify-center relative">
                     <img
-                      src={PROJECT_INFO.previewImage!}
-                      alt="Project Preview - Full Size"
+                      src={GALLERY_IMAGES[currentImageIndex]?.src}
+                      alt={GALLERY_IMAGES[currentImageIndex]?.alt || "Project Preview - Full Size"}
                       className="w-full h-auto max-h-[75vh] object-contain"
                     />
+                    {/* Lightbox navigation */}
+                    {GALLERY_IMAGES.length > 1 && (
+                      <>
+                        <button
+                          onClick={goToPrev}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 p-2 md:p-3 border border-foreground/20 bg-background/80 hover:bg-foreground hover:text-background transition-colors duration-200"
+                          aria-label="Previous image"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={goToNext}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 md:p-3 border border-foreground/20 bg-background/80 hover:bg-foreground hover:text-background transition-colors duration-200"
+                          aria-label="Next image"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-xs text-foreground/60">
+                          {currentImageIndex + 1} / {GALLERY_IMAGES.length}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </DialogContent>
               </Dialog>
