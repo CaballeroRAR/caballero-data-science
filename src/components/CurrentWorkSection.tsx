@@ -16,13 +16,15 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import cleaningPipelineDiagram from "@/assets/img/cleaning-pipeline-diagram.svg";
+import galleryImg1 from "@/assets/img/WORK_GALLERY_IMG/cleaning-pipeline-diagram.svg";
+import galleryImg2 from "@/assets/img/WORK_GALLERY_IMG/image_2026-01-22_23-12-32.png";
+import galleryImg3 from "@/assets/img/WORK_GALLERY_IMG/image_2026-01-22_23-12-45.png";
 
 // Gallery images - add more images here as needed
 const GALLERY_IMAGES = [
-  { src: cleaningPipelineDiagram, alt: "Cleaning Pipeline Diagram" },
-  // Add more images here:
-  // { src: importedImage, alt: "Description" },
+  { src: galleryImg1, alt: "Cleaning Pipeline Diagram" },
+  { src: galleryImg2, alt: "Project Preview 2" },
+  { src: galleryImg3, alt: "Project Preview 3" },
 ];
 
 const AUTOPLAY_INTERVAL = 4000; // 4 seconds
