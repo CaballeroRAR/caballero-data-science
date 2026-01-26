@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -8,36 +9,47 @@ import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import SectionTransition from "@/components/ui/SectionTransition";
+import WelcomeScreen from "@/components/WelcomeScreen";
 
 const Index = () => {
+  const [showWelcome, setShowWelcome] = useState(true);
+
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className="min-h-screen bg-background text-foreground"
-    >
-      <Header />
-      <main>
-        <HeroSection />
-        <SectionTransition>
-          <AboutSection />
-        </SectionTransition>
-        <SectionTransition delay={0.1}>
-          <ProjectsSection />
-        </SectionTransition>
-        <SectionTransition delay={0.1}>
-          <CurrentWorkSection />
-        </SectionTransition>
-        <SectionTransition delay={0.1}>
-          <SkillsSection />
-        </SectionTransition>
-        <SectionTransition delay={0.1}>
-          <ContactSection />
-        </SectionTransition>
-      </main>
-      <Footer />
-    </motion.div>
+    <>
+      <AnimatePresence mode="wait">
+        {showWelcome && (
+          <WelcomeScreen onComplete={() => setShowWelcome(false)} />
+        )}
+      </AnimatePresence>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showWelcome ? 0 : 1 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+        className="min-h-screen bg-background text-foreground"
+      >
+        <Header />
+        <main>
+          <HeroSection />
+          <SectionTransition>
+            <AboutSection />
+          </SectionTransition>
+          <SectionTransition delay={0.1}>
+            <ProjectsSection />
+          </SectionTransition>
+          <SectionTransition delay={0.1}>
+            <CurrentWorkSection />
+          </SectionTransition>
+          <SectionTransition delay={0.1}>
+            <SkillsSection />
+          </SectionTransition>
+          <SectionTransition delay={0.1}>
+            <ContactSection />
+          </SectionTransition>
+        </main>
+        <Footer />
+      </motion.div>
+    </>
   );
 };
 
