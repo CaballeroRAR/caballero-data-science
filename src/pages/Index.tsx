@@ -13,24 +13,32 @@ import WelcomeScreen from "@/components/WelcomeScreen";
 
 const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
+  const [contentReady, setContentReady] = useState(false);
+
+  // Trigger content animations after welcome screen fades out
+  const handleWelcomeComplete = () => {
+    setShowWelcome(false);
+    // Small delay to let the fade-out complete before triggering hero animations
+    setTimeout(() => setContentReady(true), 300);
+  };
 
   return (
     <>
       <AnimatePresence mode="wait">
         {showWelcome && (
-          <WelcomeScreen onComplete={() => setShowWelcome(false)} />
+          <WelcomeScreen onComplete={handleWelcomeComplete} />
         )}
       </AnimatePresence>
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: showWelcome ? 0 : 1 }}
-        transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
         className="min-h-screen bg-background text-foreground"
       >
         <Header />
         <main>
-          <HeroSection />
+          <HeroSection animateContent={contentReady} />
           <SectionTransition>
             <AboutSection />
           </SectionTransition>
