@@ -13,6 +13,10 @@ const GLITCH_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345
 // ==========================================
 const YOUTUBE_EMBED_URL: string | null = null;
 
+interface HeroSectionProps {
+  animateContent?: boolean;
+}
+
 const GREETINGS = [
   { intro: "Hi! I am", role: "and I am a" },
   { intro: "Hola! Soy", role: "y soy" },
@@ -203,20 +207,23 @@ const RhombusVideoPlayer = ({
   </div>
 );
 
-const HeroSection = () => {
+const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [showDecrypt] = useState(true);
   const [showScrollHint, setShowScrollHint] = useState(false);
   const [isVideoExpanded, setIsVideoExpanded] = useState(false);
   const [showContactMenu, setShowContactMenu] = useState(false);
 
   const hasVideo = !!YOUTUBE_EMBED_URL;
 
+  // Only start animations when content is ready
+  const shouldAnimate = animateContent;
+
   useEffect(() => {
+    if (!shouldAnimate) return;
     const timeout = setTimeout(() => setShowScrollHint(true), 1800);
     return () => clearTimeout(timeout);
-  }, []);
+  }, [shouldAnimate]);
 
   useEffect(() => {
     if (!showScrollHint) return;
@@ -230,6 +237,8 @@ const HeroSection = () => {
   }, [showScrollHint]);
 
   useEffect(() => {
+    if (!shouldAnimate) return;
+    
     const interval = setInterval(() => {
       setIsAnimating(true);
       setTimeout(() => {
@@ -239,7 +248,7 @@ const HeroSection = () => {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [shouldAnimate]);
 
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -248,9 +257,24 @@ const HeroSection = () => {
   return (
     <section className="min-h-screen relative flex items-center grid-pattern overflow-hidden pt-16 md:pt-0">
       {/* Geometric decorations - hidden on mobile */}
-      <div className="hidden md:block absolute top-20 right-10 w-40 h-40 border border-foreground/20 rotate-45 opacity-0 animate-fade-in animation-delay-500" />
-      <div className="hidden md:block absolute bottom-40 left-10 w-24 h-24 border border-foreground/20 opacity-0 animate-fade-in animation-delay-400" />
-      <div className="hidden md:block absolute top-1/3 right-1/4 w-px h-40 bg-foreground/20 opacity-0 animate-fade-in animation-delay-300" />
+      <motion.div 
+        initial={{ opacity: 0, rotate: 45 }}
+        animate={shouldAnimate ? { opacity: 1, rotate: 45 } : { opacity: 0, rotate: 45 }}
+        transition={{ duration: 0.8, delay: 0.6 }}
+        className="hidden md:block absolute top-20 right-10 w-40 h-40 border border-foreground/20" 
+      />
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={shouldAnimate ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        className="hidden md:block absolute bottom-40 left-10 w-24 h-24 border border-foreground/20" 
+      />
+      <motion.div 
+        initial={{ opacity: 0, scaleY: 0 }}
+        animate={shouldAnimate ? { opacity: 1, scaleY: 1 } : { opacity: 0, scaleY: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="hidden md:block absolute top-1/3 right-1/4 w-px h-40 bg-foreground/20 origin-top" 
+      />
 
       {/* Section number - desktop only */}
       <SectionNumber
@@ -264,7 +288,12 @@ const HeroSection = () => {
           <div className="max-w-3xl flex-1">
             {/* Main headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display leading-[1.1] mb-4 md:mb-8">
-              <span className="block text-muted-foreground opacity-0 animate-fade-up animation-delay-100 mb-1 md:mb-2">
+              <motion.span 
+                initial={{ opacity: 0, y: 20 }}
+                animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+                className="block text-muted-foreground mb-1 md:mb-2"
+              >
                 <span
                   className={`inline-block transition-all duration-300 ease-out ${
                     isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
@@ -272,16 +301,26 @@ const HeroSection = () => {
                 >
                   {GREETINGS[greetingIndex].intro}
                 </span>
-              </span>
-              <span className="block opacity-0 animate-fade-up animation-delay-200">
-                <DecryptingText shouldDecrypt={showDecrypt} delay={200}>
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0, y: 30 }}
+                animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                className="block"
+              >
+                <DecryptingText shouldDecrypt={shouldAnimate} delay={200}>
                   Gabriel
                 </DecryptingText>
-              </span>
+              </motion.span>
             </h1>
 
             {/* Role line */}
-            <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-4 md:mb-8 opacity-0 animate-fade-up animation-delay-300">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+              className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-4 md:mb-8"
+            >
               <span
                 className={`font-body text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground transition-all duration-300 ease-out sm:min-w-[8rem] md:min-w-[10rem] sm:text-right ${
                   isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
@@ -290,22 +329,32 @@ const HeroSection = () => {
                 {GREETINGS[greetingIndex].role}
               </span>
               <span className="font-display text-xl sm:text-2xl lg:text-3xl">
-                <DecryptingText shouldDecrypt={showDecrypt} delay={400}>
+                <DecryptingText shouldDecrypt={shouldAnimate} delay={400}>
                   Data Scientist
                 </DecryptingText>
               </span>
-            </div>
+            </motion.div>
 
             {/* Subtitle */}
-            <p className="font-body text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mb-6 md:mb-10 opacity-0 animate-fade-up animation-delay-400 leading-relaxed">
-              <DecryptingText shouldDecrypt={showDecrypt} delay={700}>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
+              className="font-body text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mb-6 md:mb-10 leading-relaxed"
+            >
+              <DecryptingText shouldDecrypt={shouldAnimate} delay={700}>
                 I approach analytics with an architectural focus, transforming complex
                 challenges into scalable solutions that go beyond visualizations.
               </DecryptingText>
-            </p>
+            </motion.p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row flex-wrap gap-3 opacity-0 animate-fade-up animation-delay-500">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
+              className="flex flex-col sm:flex-row flex-wrap gap-3"
+            >
               {/* Get in Touch with hover menu */}
               <div
                 className="relative w-full sm:w-auto"
@@ -398,14 +447,19 @@ const HeroSection = () => {
                   ))}
                 </span>
               </Button>
-            </div>
+            </motion.div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 sm:gap-6 mt-10 md:mt-16 pt-6 border-t border-foreground/20 max-w-md opacity-0 animate-fade-up animation-delay-500">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
+              className="grid grid-cols-3 gap-4 sm:gap-6 mt-10 md:mt-16 pt-6 border-t border-foreground/20 max-w-md"
+            >
               {STATS.map((stat, index) => (
                 <div key={stat.label}>
                   <div className="font-display text-2xl sm:text-3xl md:text-4xl">
-                    <DecryptingText shouldDecrypt={showDecrypt} delay={1100 + index * 100}>
+                    <DecryptingText shouldDecrypt={shouldAnimate} delay={1100 + index * 100}>
                       {stat.value}
                     </DecryptingText>
                   </div>
@@ -414,18 +468,23 @@ const HeroSection = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Right side - Rhombus Video Player */}
-          <div className="flex flex-1 items-center justify-center mt-8 lg:mt-0 animate-fade-in animation-delay-500">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={shouldAnimate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.6, delay: 0.7, ease: "easeOut" }}
+            className="flex flex-1 items-center justify-center mt-8 lg:mt-0"
+          >
             <RhombusVideoPlayer
               hasVideo={hasVideo}
               isExpanded={isVideoExpanded}
               onExpand={() => setIsVideoExpanded(true)}
               onCollapse={() => setIsVideoExpanded(false)}
             />
-          </div>
+          </motion.div>
         </div>
       </div>
 

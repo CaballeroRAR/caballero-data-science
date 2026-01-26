@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { SectionNumber } from "./ui/SectionNumber";
+import SectionTitle from "./ui/SectionTitle";
 import {
   GitBranch,
   ExternalLink,
@@ -149,9 +150,7 @@ const CurrentWorkSection = () => {
           <div>
             {/* Section header */}
             <div className="flex items-center gap-4 mb-10 md:mb-16">
-              <span className="font-mono text-xs text-foreground/60 tracking-widest uppercase">
-                Current Work
-              </span>
+              <SectionTitle>Current Work</SectionTitle>
               <div className="flex-1 h-px bg-foreground/20" />
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />

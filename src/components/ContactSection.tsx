@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { SectionNumber } from "./ui/SectionNumber";
+import SectionTitle from "./ui/SectionTitle";
 import CVDownloadDialog from "./CVDownloadDialog";
 
 const SOCIAL_LINKS = [
@@ -20,9 +21,7 @@ const ContactSection = () => {
           <div>
             {/* Section header */}
             <div className="flex items-center gap-4 mb-10 md:mb-16">
-              <span className="font-mono text-xs text-muted-foreground tracking-widest uppercase">
-                Contact
-              </span>
+              <SectionTitle>Contact</SectionTitle>
               <div className="flex-1 h-px bg-foreground/20" />
             </div>
 

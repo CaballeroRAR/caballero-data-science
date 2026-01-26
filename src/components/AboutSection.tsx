@@ -2,6 +2,7 @@ import { useState } from "react";
 import profilePhoto from "@/assets/profile-photo.png";
 import { SectionNumber } from "./ui/SectionNumber";
 import DataBinsAnimation from "./ui/DataBinsAnimation";
+import SectionTitle from "./ui/SectionTitle";
 
 const EXPERTISE_TAGS = [
   "Python",
@@ -122,9 +123,7 @@ const AboutSection = () => {
               {/* Right column - Content */}
               <div className="lg:pt-16">
                 <div className="flex items-center gap-4 mb-4 md:mb-6">
-                  <span className="font-mono text-xs text-muted-foreground tracking-widest uppercase">
-                    About
-                  </span>
+                  <SectionTitle>About</SectionTitle>
                   <div className="flex-1 h-px bg-foreground/20" />
                 </div>
 
