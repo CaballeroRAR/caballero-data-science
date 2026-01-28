@@ -20,12 +20,15 @@ import remarkGfm from "remark-gfm";
 import galleryImg1 from "@/assets/img/WORK_GALLERY_IMG/cleaning-pipeline-diagram.svg";
 import galleryImg2 from "@/assets/img/WORK_GALLERY_IMG/image_2026-01-22_23-12-32.png";
 import galleryImg3 from "@/assets/img/WORK_GALLERY_IMG/image_2026-01-22_23-12-45.png";
-
+import galleryImg4 from "@/assets/img/WORK_GALLERY_IMG/cluster_means_comparison.png";
+import galleryImg5 from "@/assets/img/WORK_GALLERY_IMG/3d_preview.png";
 // Gallery images - add more images here as needed
 const GALLERY_IMAGES = [
   { src: galleryImg1, alt: "Cleaning Pipeline Diagram" },
   { src: galleryImg2, alt: "Project Preview 2" },
   { src: galleryImg3, alt: "Project Preview 3" },
+  { src: galleryImg4, alt: "Cluster Means Comparison" },
+  { src: galleryImg5, alt: "Distribution of RFM Data before Clustering" },
 ];
 
 const AUTOPLAY_INTERVAL = 4000; // 4 seconds
