@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SectionNumber } from "./ui/SectionNumber";
+import SectionTitle from "./ui/SectionTitle";
 
 // Import images
 import businessContextImg from "@/assets/img/business-context.png";
@@ -190,9 +191,7 @@ const ProjectsSection = () => {
           <div>
             {/* Section header */}
             <div className="flex items-center gap-4 mb-10 md:mb-16">
-              <span className="font-mono text-xs text-foreground/60 tracking-widest uppercase">
-                Selected Work
-              </span>
+              <SectionTitle>Selected Work</SectionTitle>
               <div className="flex-1 h-px bg-foreground/20" />
               <span className="font-mono text-xs text-foreground/60">
                 {projects.length} PROJECTS

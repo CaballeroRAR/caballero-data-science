@@ -1,4 +1,5 @@
 import { SectionNumber } from "./ui/SectionNumber";
+import SectionTitle from "./ui/SectionTitle";
 import type { ComponentType } from "react";
 import type { LucideProps } from "lucide-react";
 import {
@@ -64,9 +65,7 @@ const SkillsSection = () => {
           <div>
             {/* Section header */}
             <div className="flex items-center gap-4 mb-10 md:mb-16">
-              <span className="font-mono text-xs text-muted-foreground tracking-widest uppercase">
-                Technical Expertise
-              </span>
+              <SectionTitle>Technical Expertise</SectionTitle>
               <div className="flex-1 h-px bg-foreground/20" />
             </div>
 
