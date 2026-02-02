@@ -431,17 +431,17 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
                 variant="architectural"
                 size="lg"
                 onClick={() => scrollToSection("current-work")}
-                className="relative group w-full sm:w-auto overflow-hidden py-4"
+                className="relative group w-full sm:w-auto"
               >
                 {/* Top histogram skyline */}
-                <span className="absolute top-1 left-3 right-3 h-2 flex items-end justify-between pointer-events-none opacity-60">
+                <span className="absolute top-[-6px] left-2 right-2 h-2 flex items-end justify-between pointer-events-none">
                   {[...Array(HISTOGRAM_BAR_COUNT)].map((_, i) => (
                     <HistogramBar key={`top-${i}`} index={i} total={HISTOGRAM_BAR_COUNT} />
                   ))}
                 </span>
                 <span className="relative z-10">View Latest Project</span>
                 {/* Bottom histogram skyline (mirrored) */}
-                <span className="absolute bottom-1 left-3 right-3 h-2 flex items-start justify-between pointer-events-none opacity-60">
+                <span className="absolute bottom-[-6px] left-2 right-2 h-2 flex items-start justify-between pointer-events-none">
                   {[...Array(HISTOGRAM_BAR_COUNT)].map((_, i) => (
                     <HistogramBar key={`bottom-${i}`} index={i} total={HISTOGRAM_BAR_COUNT} />
                   ))}
