@@ -67,7 +67,7 @@ const DecryptingText = ({
 
     timeoutRef.current = setTimeout(() => {
       const startTime = performance.now();
-      const totalDuration = 600;
+      const totalDuration = 400;
 
       const animate = (currentTime: number) => {
         const elapsed = currentTime - startTime;
@@ -221,7 +221,7 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
 
   useEffect(() => {
     if (!shouldAnimate) return;
-    const timeout = setTimeout(() => setShowScrollHint(true), 1800);
+    const timeout = setTimeout(() => setShowScrollHint(true), 1200);
     return () => clearTimeout(timeout);
   }, [shouldAnimate]);
 
@@ -260,19 +260,19 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
       <motion.div 
         initial={{ opacity: 0, rotate: 45 }}
         animate={shouldAnimate ? { opacity: 1, rotate: 45 } : { opacity: 0, rotate: 45 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
         className="hidden md:block absolute top-20 right-10 w-40 h-40 border border-foreground/20" 
       />
       <motion.div 
         initial={{ opacity: 0 }}
         animate={shouldAnimate ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
+        transition={{ duration: 0.5, delay: 0.25 }}
         className="hidden md:block absolute bottom-40 left-10 w-24 h-24 border border-foreground/20" 
       />
       <motion.div 
         initial={{ opacity: 0, scaleY: 0 }}
         animate={shouldAnimate ? { opacity: 1, scaleY: 1 } : { opacity: 0, scaleY: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
         className="hidden md:block absolute top-1/3 right-1/4 w-px h-40 bg-foreground/20 origin-top" 
       />
 
@@ -289,13 +289,13 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
             {/* Main headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display leading-[1.1] mb-4 md:mb-8">
               <motion.span 
-                initial={{ opacity: 0, y: 20 }}
-                animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 15 }}
+                animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+                transition={{ duration: 0.35, delay: 0.05, ease: "easeOut" }}
                 className="block text-muted-foreground mb-1 md:mb-2"
               >
                 <span
-                  className={`inline-block transition-all duration-300 ease-out ${
+                  className={`inline-block transition-all duration-200 ease-out ${
                     isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
                   }`}
                 >
@@ -303,12 +303,12 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
                 </span>
               </motion.span>
               <motion.span 
-                initial={{ opacity: 0, y: 30 }}
-                animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
                 className="block"
               >
-                <DecryptingText shouldDecrypt={shouldAnimate} delay={200}>
+                <DecryptingText shouldDecrypt={shouldAnimate} delay={100}>
                   Gabriel
                 </DecryptingText>
               </motion.span>
@@ -316,20 +316,20 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
 
             {/* Role line */}
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 15 }}
+              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: 0.35, delay: 0.15, ease: "easeOut" }}
               className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-4 md:mb-8"
             >
               <span
-                className={`font-body text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground transition-all duration-300 ease-out sm:min-w-[8rem] md:min-w-[10rem] sm:text-right ${
+                className={`font-body text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground transition-all duration-200 ease-out sm:min-w-[8rem] md:min-w-[10rem] sm:text-right ${
                   isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
                 }`}
               >
                 {GREETINGS[greetingIndex].role}
               </span>
               <span className="font-display text-xl sm:text-2xl lg:text-3xl">
-                <DecryptingText shouldDecrypt={shouldAnimate} delay={400}>
+                <DecryptingText shouldDecrypt={shouldAnimate} delay={200}>
                   Data Scientist
                 </DecryptingText>
               </span>
@@ -337,12 +337,12 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
 
             {/* Subtitle */}
             <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 15 }}
+              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: 0.35, delay: 0.2, ease: "easeOut" }}
               className="font-body text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mb-6 md:mb-10 leading-relaxed"
             >
-              <DecryptingText shouldDecrypt={shouldAnimate} delay={700}>
+              <DecryptingText shouldDecrypt={shouldAnimate} delay={350}>
                 I approach analytics with an architectural focus, transforming complex
                 challenges into scalable solutions that go beyond visualizations.
               </DecryptingText>
@@ -350,9 +350,9 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
 
             {/* CTA Buttons */}
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 15 }}
+              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: 0.35, delay: 0.25, ease: "easeOut" }}
               className="flex flex-col sm:flex-row flex-wrap gap-3"
             >
               {/* Get in Touch with hover menu */}
@@ -451,15 +451,15 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
 
             {/* Stats */}
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 15 }}
+              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: 0.35, delay: 0.3, ease: "easeOut" }}
               className="grid grid-cols-3 gap-4 sm:gap-6 mt-10 md:mt-16 pt-6 border-t border-foreground/20 max-w-md"
             >
               {STATS.map((stat, index) => (
                 <div key={stat.label}>
                   <div className="font-display text-2xl sm:text-3xl md:text-4xl">
-                    <DecryptingText shouldDecrypt={shouldAnimate} delay={1100 + index * 100}>
+                    <DecryptingText shouldDecrypt={shouldAnimate} delay={500 + index * 60}>
                       {stat.value}
                     </DecryptingText>
                   </div>
@@ -473,9 +473,9 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
 
           {/* Right side - Rhombus Video Player */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={shouldAnimate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.6, delay: 0.7, ease: "easeOut" }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={shouldAnimate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.4, delay: 0.35, ease: "easeOut" }}
             className="flex flex-1 items-center justify-center mt-8 lg:mt-0"
           >
             <RhombusVideoPlayer
