@@ -1,5 +1,8 @@
 import { SectionNumber } from "./ui/SectionNumber";
 import SectionTitle from "./ui/SectionTitle";
+import SectionSubtitle from "./ui/SectionSubtitle";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import type { ComponentType } from "react";
 import type { LucideProps } from "lucide-react";
 import {
@@ -53,6 +56,23 @@ const SOFT_SKILLS = [
   "Attention to Detail",
 ];
 
+const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  
+  return (
+    <motion.h2
+      ref={ref}
+      initial={{ opacity: 0, y: 12 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+      transition={{ duration: 0.5, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className={className}
+    >
+      {children}
+    </motion.h2>
+  );
+};
+
 const SkillsSection = () => {
   return (
     <section id="skills" className="py-16 md:py-32 relative grid-pattern">
@@ -72,9 +92,9 @@ const SkillsSection = () => {
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-24">
               {/* Skills grid */}
               <div>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-display mb-8 md:mb-12">
+                <AnimatedHeading className="text-2xl md:text-3xl lg:text-4xl font-display mb-8 md:mb-12">
                   Core Competencies
-                </h2>
+                </AnimatedHeading>
                 <div className="grid grid-cols-2 gap-px bg-foreground/20">
                   {SKILLS.map((skill) => {
                     const Icon = skill.icon || Code;
@@ -99,9 +119,9 @@ const SkillsSection = () => {
 
               {/* Tools grid */}
               <div>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-display mb-8 md:mb-12">
+                <AnimatedHeading className="text-2xl md:text-3xl lg:text-4xl font-display mb-8 md:mb-12" delay={0.1}>
                   Tools & Technologies
-                </h2>
+                </AnimatedHeading>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                   {TOOLS.map((tool) => {
                     const Icon = tool.icon || Code;
@@ -125,9 +145,9 @@ const SkillsSection = () => {
 
               {/* Soft Skills */}
               <div className="lg:col-span-2 mt-6 md:mt-12">
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-display mb-8 md:mb-12">
+                <AnimatedHeading className="text-2xl md:text-3xl lg:text-4xl font-display mb-8 md:mb-12" delay={0.15}>
                   Soft Skills
-                </h2>
+                </AnimatedHeading>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-4">
                   {SOFT_SKILLS.map((skill) => (
                     <div
