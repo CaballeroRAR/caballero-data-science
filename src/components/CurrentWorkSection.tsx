@@ -330,8 +330,8 @@ const CurrentWorkSection = () => {
                 </DialogContent>
               </Dialog>
 
-              {/* Content Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
+              {/* Content Grid - Top Row */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* Project Info */}
                 <div className="p-4 md:p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-foreground/10">
                   <p className="font-body text-xs md:text-sm text-foreground/80 leading-relaxed mb-4 md:mb-6">
@@ -365,7 +365,7 @@ const CurrentWorkSection = () => {
                 </div>
 
                 {/* Commit Timeline */}
-                <div className="p-4 md:p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-foreground/10">
+                <div className="p-4 md:p-6 lg:p-8 border-b border-foreground/10">
                   <div className="flex items-center gap-2 mb-3 md:mb-4">
                     <GitCommit className="w-3 md:w-4 h-3 md:h-4 text-foreground/60" />
                     <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest">
@@ -420,45 +420,45 @@ const CurrentWorkSection = () => {
                     <p className="text-foreground/50 text-xs font-mono">No commits found</p>
                   )}
                 </div>
+              </div>
 
-                {/* README Preview */}
-                <div className="p-4 md:p-6 lg:p-8">
-                  <div className="flex items-center gap-2 mb-4 md:mb-5">
-                    <FileText className="w-3 md:w-4 h-3 md:h-4 text-foreground/60" />
-                    <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest">
-                      Documentation
-                    </h4>
-                  </div>
+              {/* Documentation - Full Width */}
+              <div className="p-4 md:p-6 lg:p-8">
+                <div className="flex items-center gap-2 mb-4 md:mb-5">
+                  <FileText className="w-3 md:w-4 h-3 md:h-4 text-foreground/60" />
+                  <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest">
+                    Documentation
+                  </h4>
+                </div>
 
-                  <div className="max-h-72 md:max-h-96 overflow-y-auto pr-3 scrollbar-thin scrollbar-thumb-foreground/20 scrollbar-track-transparent">
-                    {isLoading ? (
-                      <div className="flex items-center justify-center py-8 md:py-12">
-                        <Loader2 className="w-5 md:w-6 h-5 md:h-6 animate-spin text-foreground/40" />
-                      </div>
-                    ) : error ? (
-                      <p className="text-foreground/50 text-sm font-mono">{error}</p>
-                    ) : readme ? (
-                      <div className="
-                        prose prose-sm prose-invert max-w-none
-                        prose-headings:font-display prose-headings:text-foreground prose-headings:font-medium
-                        prose-h1:text-lg prose-h1:md:text-xl prose-h1:mb-4 prose-h1:pb-2 prose-h1:border-b prose-h1:border-foreground/10
-                        prose-h2:text-base prose-h2:md:text-lg prose-h2:mt-6 prose-h2:mb-3
-                        prose-h3:text-sm prose-h3:md:text-base prose-h3:mt-4 prose-h3:mb-2
-                        prose-p:text-xs prose-p:md:text-sm prose-p:text-foreground/70 prose-p:leading-relaxed prose-p:mb-3
-                        prose-li:text-xs prose-li:md:text-sm prose-li:text-foreground/70 prose-li:leading-relaxed prose-li:my-1
-                        prose-ul:my-3 prose-ul:pl-4 prose-ol:my-3 prose-ol:pl-4
-                        prose-code:text-[10px] prose-code:md:text-xs prose-code:bg-foreground/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono
-                        prose-pre:bg-foreground/5 prose-pre:border prose-pre:border-foreground/10 prose-pre:rounded prose-pre:p-3 prose-pre:my-4
-                        prose-a:text-foreground/80 prose-a:underline prose-a:underline-offset-2 hover:prose-a:text-foreground
-                        prose-strong:text-foreground prose-strong:font-semibold
-                        prose-blockquote:border-l-2 prose-blockquote:border-foreground/30 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-foreground/60
-                        prose-table:text-xs prose-th:text-left prose-th:font-mono prose-th:text-foreground/60 prose-th:pb-2 prose-td:py-1.5
-                        prose-hr:border-foreground/10 prose-hr:my-6
-                      ">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{readme}</ReactMarkdown>
-                      </div>
-                    ) : null}
-                  </div>
+                <div className="max-h-[28rem] md:max-h-[36rem] overflow-y-auto pr-3 scrollbar-thin scrollbar-thumb-foreground/20 scrollbar-track-transparent">
+                  {isLoading ? (
+                    <div className="flex items-center justify-center py-8 md:py-12">
+                      <Loader2 className="w-5 md:w-6 h-5 md:h-6 animate-spin text-foreground/40" />
+                    </div>
+                  ) : error ? (
+                    <p className="text-foreground/50 text-sm font-mono">{error}</p>
+                  ) : readme ? (
+                    <div className="
+                      prose prose-sm md:prose-base prose-invert max-w-none
+                      prose-headings:font-display prose-headings:text-foreground prose-headings:font-medium
+                      prose-h1:text-xl prose-h1:md:text-2xl prose-h1:mb-4 prose-h1:pb-3 prose-h1:border-b prose-h1:border-foreground/10
+                      prose-h2:text-lg prose-h2:md:text-xl prose-h2:mt-8 prose-h2:mb-4
+                      prose-h3:text-base prose-h3:md:text-lg prose-h3:mt-6 prose-h3:mb-3
+                      prose-p:text-sm prose-p:md:text-base prose-p:text-foreground/75 prose-p:leading-relaxed prose-p:mb-4
+                      prose-li:text-sm prose-li:md:text-base prose-li:text-foreground/75 prose-li:leading-relaxed prose-li:my-1.5
+                      prose-ul:my-4 prose-ul:pl-5 prose-ol:my-4 prose-ol:pl-5
+                      prose-code:text-xs prose-code:md:text-sm prose-code:bg-foreground/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono
+                      prose-pre:bg-foreground/5 prose-pre:border prose-pre:border-foreground/10 prose-pre:rounded-md prose-pre:p-4 prose-pre:my-5
+                      prose-a:text-foreground/80 prose-a:underline prose-a:underline-offset-2 hover:prose-a:text-foreground
+                      prose-strong:text-foreground prose-strong:font-semibold
+                      prose-blockquote:border-l-2 prose-blockquote:border-foreground/30 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-foreground/60
+                      prose-table:text-sm prose-th:text-left prose-th:font-mono prose-th:text-foreground/60 prose-th:pb-2 prose-td:py-2
+                      prose-hr:border-foreground/10 prose-hr:my-8
+                    ">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{readme}</ReactMarkdown>
+                    </div>
+                  ) : null}
                 </div>
               </div>
 
