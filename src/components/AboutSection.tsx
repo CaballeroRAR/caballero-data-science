@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import profilePhoto from "@/assets/profile-photo.png";
 import { SectionNumber } from "./ui/SectionNumber";
 import DataBinsAnimation from "./ui/DataBinsAnimation";
@@ -20,9 +21,25 @@ const EXPERTISE_TAGS = [
   "Business Intelligence",
 ];
 
+const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  
+  return (
+    <motion.h2
+      ref={ref}
+      initial={{ opacity: 0, y: 12 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+      transition={{ duration: 0.5, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className={className}
+    >
+      {children}
+    </motion.h2>
+  );
+};
+
 const AboutSection = () => {
   const [isHovered, setIsHovered] = useState(false);
-
   return (
     <section id="about" className="py-16 md:py-32 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
@@ -127,11 +144,11 @@ const AboutSection = () => {
                   <div className="flex-1 h-px bg-foreground/20" />
                 </div>
 
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-display mb-6 md:mb-8 leading-tight">
+                <AnimatedHeading className="text-3xl md:text-4xl lg:text-5xl font-display mb-6 md:mb-8 leading-tight">
                   Data Scientist
                   <br />
                   Based in Mexico
-                </h2>
+                </AnimatedHeading>
 
                 <div className="space-y-4 md:space-y-6 font-body text-sm md:text-base text-muted-foreground leading-relaxed">
                   <p>

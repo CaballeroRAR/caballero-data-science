@@ -1,6 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { SectionNumber } from "./ui/SectionNumber";
 import SectionTitle from "./ui/SectionTitle";
+import SectionSubtitle from "./ui/SectionSubtitle";
 import {
   GitBranch,
   ExternalLink,
@@ -17,6 +19,23 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+
+const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  
+  return (
+    <motion.h2
+      ref={ref}
+      initial={{ opacity: 0, y: 12 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+      transition={{ duration: 0.5, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className={className}
+    >
+      {children}
+    </motion.h2>
+  );
+};
 import galleryImg1 from "@/assets/img/WORK_GALLERY_IMG/cleaning-pipeline-diagram.svg";
 import galleryImg2 from "@/assets/img/WORK_GALLERY_IMG/image_2026-01-22_23-12-32.png";
 import galleryImg3 from "@/assets/img/WORK_GALLERY_IMG/image_2026-01-22_23-12-45.png";
@@ -169,12 +188,17 @@ const CurrentWorkSection = () => {
               <div className="p-4 md:p-6 lg:p-8 border-b border-foreground/10">
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                   <div>
-                    <h2 className="font-display text-2xl md:text-3xl lg:text-4xl mb-2">
+                    <AnimatedHeading className="font-display text-2xl md:text-3xl lg:text-4xl mb-2">
                       {PROJECT_INFO.title}
-                    </h2>
-                    <p className="font-mono text-[10px] md:text-xs text-foreground/60 uppercase tracking-wider">
+                    </AnimatedHeading>
+                    <motion.p 
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.1 }}
+                      className="font-mono text-[10px] md:text-xs text-foreground/60 uppercase tracking-wider"
+                    >
                       {PROJECT_INFO.subtitle}
-                    </p>
+                    </motion.p>
                   </div>
                   <a
                     href={REPO_URL}
@@ -192,9 +216,9 @@ const CurrentWorkSection = () => {
               {/* Preview Gallery Section */}
               <div className="p-4 md:p-6 lg:p-8 border-b border-foreground/10">
                 <div className="flex items-center justify-between mb-3 md:mb-4">
-                  <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest">
+                  <SectionSubtitle delay={0.05}>
                     Latest Preview
-                  </h4>
+                  </SectionSubtitle>
                   {GALLERY_IMAGES.length > 1 && (
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-[9px] text-foreground/40">
@@ -340,9 +364,9 @@ const CurrentWorkSection = () => {
 
                   {/* Technologies */}
                   <div className="mb-4 md:mb-6">
-                    <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest mb-2 md:mb-3">
+                    <SectionSubtitle delay={0.05} className="mb-2 md:mb-3">
                       Technologies
-                    </h4>
+                    </SectionSubtitle>
                     <div className="flex flex-wrap gap-1.5 md:gap-2">
                       {PROJECT_INFO.technologies.map((tech) => (
                         <span
@@ -366,12 +390,9 @@ const CurrentWorkSection = () => {
 
                 {/* Commit Timeline */}
                 <div className="p-4 md:p-6 lg:p-8 border-b border-foreground/10">
-                  <div className="flex items-center gap-2 mb-3 md:mb-4">
-                    <GitCommit className="w-3 md:w-4 h-3 md:h-4 text-foreground/60" />
-                    <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest">
-                      Recent Commits
-                    </h4>
-                  </div>
+                  <SectionSubtitle icon={GitCommit} delay={0.1} className="mb-3 md:mb-4">
+                    Recent Commits
+                  </SectionSubtitle>
 
                   {isLoadingCommits ? (
                     <div className="flex items-center justify-center py-6 md:py-8">
@@ -424,12 +445,9 @@ const CurrentWorkSection = () => {
 
               {/* Documentation - Full Width */}
               <div className="p-4 md:p-6 lg:p-8">
-                <div className="flex items-center gap-2 mb-4 md:mb-5">
-                  <FileText className="w-3 md:w-4 h-3 md:h-4 text-foreground/60" />
-                  <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest">
-                    Documentation
-                  </h4>
-                </div>
+                <SectionSubtitle icon={FileText} delay={0.15} className="mb-4 md:mb-5">
+                  Documentation
+                </SectionSubtitle>
 
                 <div className="max-h-[28rem] md:max-h-[36rem] overflow-y-auto pr-3 scrollbar-thin scrollbar-thumb-foreground/20 scrollbar-track-transparent">
                   {isLoading ? (
