@@ -18,8 +18,8 @@ const Index = () => {
   // Trigger content animations after welcome screen fades out
   const handleWelcomeComplete = () => {
     setShowWelcome(false);
-    // Small delay to let the fade-out complete before triggering hero animations
-    setTimeout(() => setContentReady(true), 300);
+    // Faster handoff to hero animations
+    setTimeout(() => setContentReady(true), 150);
   };
 
   return (
@@ -33,7 +33,7 @@ const Index = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: showWelcome ? 0 : 1 }}
-        transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         className="min-h-screen bg-background text-foreground"
       >
         <Header />

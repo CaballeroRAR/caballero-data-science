@@ -1,7 +1,27 @@
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { SectionNumber } from "./ui/SectionNumber";
 import SectionTitle from "./ui/SectionTitle";
+import SectionSubtitle from "./ui/SectionSubtitle";
 import CVDownloadDialog from "./CVDownloadDialog";
+
+const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  
+  return (
+    <motion.h2
+      ref={ref}
+      initial={{ opacity: 0, y: 12 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+      transition={{ duration: 0.5, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className={className}
+    >
+      {children}
+    </motion.h2>
+  );
+};
 
 const SOCIAL_LINKS = [
   { name: "LinkedIn", url: "https://www.linkedin.com/in/datacaballero" },
@@ -28,13 +48,13 @@ const ContactSection = () => {
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-24">
               {/* Left - CTA */}
               <div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display mb-6 md:mb-8 leading-tight">
+                <AnimatedHeading className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display mb-6 md:mb-8 leading-tight">
                   Let's Find
                   <br />
                   Something
                   <br />
                   <span className="text-muted-foreground">Together</span>
-                </h2>
+                </AnimatedHeading>
                 <p className="font-body text-sm md:text-base lg:text-lg text-muted-foreground max-w-md mb-6 md:mb-8">
                   Whether you need regression modeling for process optimization, forecasting
                   solutions for demand planning, or data-driven insights to support
@@ -53,9 +73,9 @@ const ContactSection = () => {
                 <div className="space-y-6 md:space-y-8">
                   {/* Email */}
                   <div className="group">
-                    <div className="font-mono text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider mb-1 md:mb-2">
+                    <SectionSubtitle delay={0.1} className="mb-1 md:mb-2">
                       Email
-                    </div>
+                    </SectionSubtitle>
                     <a
                       href="mailto:caballero.data.scientist@gmail.com"
                       className="font-body text-sm md:text-base lg:text-lg hover:text-muted-foreground transition-colors duration-200 break-all"
@@ -66,9 +86,9 @@ const ContactSection = () => {
 
                   {/* Location */}
                   <div>
-                    <div className="font-mono text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider mb-1 md:mb-2">
+                    <SectionSubtitle delay={0.15} className="mb-1 md:mb-2">
                       Based In
-                    </div>
+                    </SectionSubtitle>
                     <div className="font-body text-sm md:text-base lg:text-lg">
                       Mexico City, Mexico
                     </div>
@@ -79,9 +99,9 @@ const ContactSection = () => {
 
                   {/* Social links */}
                   <div>
-                    <div className="font-mono text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider mb-3 md:mb-4">
+                    <SectionSubtitle delay={0.2} className="mb-3 md:mb-4">
                       Connect
-                    </div>
+                    </SectionSubtitle>
                     <div className="flex flex-wrap gap-2 md:gap-4">
                       {SOCIAL_LINKS.map((social) => (
                         <a
