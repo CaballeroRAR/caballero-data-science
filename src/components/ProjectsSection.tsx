@@ -13,6 +13,10 @@ import salaryEDAImg from "@/assets/img/eda-salary-analysis.png";
 import meanSalaryPerAge from "@/assets/img/mean-salary-per-age.png";
 import distributionImg from "@/assets/img/distribution-of-assets.png";
 import kmeansImg from "@/assets/img/cluster-with-elbow-method.png";
+import cleaningDiagramImg from "@/assets/img/cleaning-pipeline-diagram.svg";
+import preview3dImg from "@/assets/img/WORK_GALLERY_IMG/3d_preview.png";
+import clusterMeansImg from "@/assets/img/WORK_GALLERY_IMG/cluster_means_comparison.png";
+import pcaVisualizationImg from "@/assets/img/WORK_GALLERY_IMG/image_2026-01-22_23-12-45.png";
 
 interface GalleryItem {
   id: number;
@@ -154,6 +158,42 @@ const projects: Project[] = [
       },
     ],
   },
+  {
+    id: 4,
+    title: "Customer Segmentation (KMeans)",
+    category: "Machine Learning (Unsupervised)",
+    description:
+      "End-to-end customer segmentation pipeline using RFM analysis and K-Means clustering to identify high-value wholesaler segments and optimize marketing strategies.",
+    skills: ["Python", "Scikit-learn", "RFM Analysis", "K-Means Clustering", "PCA", "Data Visualization"],
+    link: "https://github.com/CaballeroRAR/ds_projects_collabs/tree/main/1-cluster_retail_uci",
+    year: "2025",
+    gallery: [
+      {
+        id: 1,
+        placeholder: "Cleaning Pipeline",
+        modalText: "Modular cleaning pipeline ensuring data quality and reproducibility.",
+        image: cleaningDiagramImg,
+      },
+      {
+        id: 2,
+        placeholder: "3D Cluster Preview",
+        modalText: "3D visualization of RFM clusters before clustering (Recency, Frequency, Monetary).",
+        image: preview3dImg,
+      },
+      {
+        id: 3,
+        placeholder: "Cluster Comparison",
+        modalText: "Comparison of features across different customer segments (after clustering).",
+        image: clusterMeansImg,
+      },
+      {
+        id: 4,
+        placeholder: "PCA Visualization",
+        modalText: "Distribution analysis of RFM features within clusters.",
+        image: pcaVisualizationImg,
+      },
+    ],
+  },
 ];
 
 const ProjectsSection = () => {
@@ -228,13 +268,12 @@ const ProjectsSection = () => {
 
                     {/* Description - hidden on mobile, shown when expanded */}
                     <div className="hidden lg:block lg:col-span-4">
-                    <div
-                      className={`font-body text-sm text-foreground/70 transition-opacity duration-300 ${
-                        activeProject === project.id ? "opacity-100" : "opacity-60"
-                      }`}
-                    >
-                      {project.description}
-                    </div>
+                      <div
+                        className={`font-body text-sm text-foreground/70 transition-opacity duration-300 ${activeProject === project.id ? "opacity-100" : "opacity-60"
+                          }`}
+                      >
+                        {project.description}
+                      </div>
                     </div>
 
                     {/* Year */}
@@ -245,11 +284,10 @@ const ProjectsSection = () => {
 
                   {/* Expanded content */}
                   <div
-                    className={`overflow-hidden transition-all duration-500 ${
-                      activeProject === project.id
-                        ? "max-h-[500px] opacity-100 mt-4 md:mt-6"
-                        : "max-h-0 opacity-0"
-                    }`}
+                    className={`overflow-hidden transition-all duration-500 ${activeProject === project.id
+                      ? "max-h-[500px] opacity-100 mt-4 md:mt-6"
+                      : "max-h-0 opacity-0"
+                      }`}
                   >
                     {/* Mobile description */}
                     <p className="lg:hidden font-body text-sm text-foreground/70 mb-4">
