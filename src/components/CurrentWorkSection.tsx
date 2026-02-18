@@ -20,6 +20,11 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+// Project Preview Images
+import pcaComparisonImg from "@/assets/img/WORK_GALLERY_IMG/pca-comparison.png";
+import segmentDriftImg from "@/assets/img/WORK_GALLERY_IMG/segment-drift.png";
+import clusterDistributionImg from "@/assets/img/WORK_GALLERY_IMG/cluster-distribution.png";
+
 const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
@@ -38,6 +43,9 @@ const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: Re
 };
 // Gallery images - add more images here as needed
 const GALLERY_IMAGES: { src: string; alt: string }[] = [
+  { src: pcaComparisonImg, alt: "PCA Cluster Comparison" },
+  { src: segmentDriftImg, alt: "Segment Drift Analysis" },
+  { src: clusterDistributionImg, alt: "Cluster Distribution Statistics" },
 ];
 
 const AUTOPLAY_INTERVAL = 4000; // 4 seconds
@@ -270,8 +278,8 @@ const CurrentWorkSection = () => {
                               key={index}
                               onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(index); }}
                               className={`w-1.5 h-1.5 transition-all duration-300 ${index === currentImageIndex
-                                  ? "bg-foreground w-4"
-                                  : "bg-foreground/30 hover:bg-foreground/50"
+                                ? "bg-foreground w-4"
+                                : "bg-foreground/30 hover:bg-foreground/50"
                                 }`}
                               aria-label={`Go to image ${index + 1}`}
                             />
@@ -399,8 +407,8 @@ const CurrentWorkSection = () => {
                             <div className="flex gap-2 md:gap-3 relative">
                               <div
                                 className={`w-[9px] md:w-[11px] h-[9px] md:h-[11px] rounded-full border-2 flex-shrink-0 mt-1 z-10 transition-colors ${index === 0
-                                    ? "bg-green-500 border-green-500"
-                                    : "bg-background border-foreground/30 group-hover:border-foreground/60"
+                                  ? "bg-green-500 border-green-500"
+                                  : "bg-background border-foreground/30 group-hover:border-foreground/60"
                                   }`}
                               />
                               <div className="flex-1 min-w-0">
