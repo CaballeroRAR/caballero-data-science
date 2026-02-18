@@ -23,7 +23,7 @@ import remarkGfm from "remark-gfm";
 const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  
+
   return (
     <motion.h2
       ref={ref}
@@ -36,45 +36,32 @@ const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: Re
     </motion.h2>
   );
 };
-import galleryImg1 from "@/assets/img/WORK_GALLERY_IMG/cleaning-pipeline-diagram.svg";
-import galleryImg2 from "@/assets/img/WORK_GALLERY_IMG/image_2026-01-22_23-12-32.png";
-import galleryImg3 from "@/assets/img/WORK_GALLERY_IMG/image_2026-01-22_23-12-45.png";
-import galleryImg4 from "@/assets/img/WORK_GALLERY_IMG/cluster_means_comparison.png";
-import galleryImg5 from "@/assets/img/WORK_GALLERY_IMG/3d_preview.png";
 // Gallery images - add more images here as needed
-const GALLERY_IMAGES = [
-  { src: galleryImg1, alt: "Cleaning Pipeline Diagram" },
-  { src: galleryImg2, alt: "Project Preview 2" },
-  { src: galleryImg3, alt: "Project Preview 3" },
-  { src: galleryImg4, alt: "Cluster Means Comparison" },
-  { src: galleryImg5, alt: "Distribution of RFM Data before Clustering" },
+const GALLERY_IMAGES: { src: string; alt: string }[] = [
 ];
 
 const AUTOPLAY_INTERVAL = 4000; // 4 seconds
 
-const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs";
+const REPO_URL = "https://github.com/CaballeroRAR/ds_projects/tree/main/1_ml-pipeline-migration-bigquery";
 const README_RAW_URL =
-  "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/1-cluster_retail_uci/README.md";
+  "https://raw.githubusercontent.com/CaballeroRAR/ds_projects/main/1_ml-pipeline-migration-bigquery/README.md";
 const COMMITS_API_URL =
-  "https://api.github.com/repos/CaballeroRAR/ds_projects_collabs/commits?per_page=7";
+  "https://api.github.com/repos/CaballeroRAR/ds_projects/commits?path=1_ml-pipeline-migration-bigquery&per_page=7";
 
 const PROJECT_INFO = {
-  title: "Customer Clustering for Retail Insights",
-  subtitle: "Collaborative Unsupervised Learning Project",
+  title: "ML Pipeline Migration to BigQuery",
+  subtitle: "Cloud Native Data Warehousing & ML",
   description:
-    "Collaborative data science project applying RFM analysis and clustering algorithms (K-Means, DBSCAN) to UCI Online Retail transactional data. Identifies actionable customer segments to drive targeted marketing and retention strategies.",
+    "End-to-end migration of a machine learning pipeline to Google Cloud Platform. Leverages BigQuery ML for scalable training and SQL-based feature engineering, transitioning from local processing to a cloud-native architecture.",
   status: "In Progress",
-  collaborators: 2,
+  collaborators: 1,
   technologies: [
+    "Google Cloud Platform",
+    "BigQuery ML",
+    "SQL",
+    "ETL",
     "Python",
-    "Pandas",
-    "NumPy",
-    "Scikit-learn",
-    "K-Means",
-    "DBSCAN",
-    "PCA",
-    "Matplotlib",
-    "Seaborn",
+    "Cloud Migration",
   ],
 };
 
@@ -125,7 +112,7 @@ const CurrentWorkSection = () => {
   // Autoplay effect
   useEffect(() => {
     if (isPaused || GALLERY_IMAGES.length <= 1) return;
-    
+
     const interval = setInterval(goToNext, AUTOPLAY_INTERVAL);
     return () => clearInterval(interval);
   }, [isPaused, goToNext]);
@@ -191,7 +178,7 @@ const CurrentWorkSection = () => {
                     <AnimatedHeading className="font-display text-2xl md:text-3xl lg:text-4xl mb-2">
                       {PROJECT_INFO.title}
                     </AnimatedHeading>
-                    <motion.p 
+                    <motion.p
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.1 }}
@@ -227,7 +214,7 @@ const CurrentWorkSection = () => {
                     </div>
                   )}
                 </div>
-                <div 
+                <div
                   className="relative aspect-video bg-surface-elevated border border-dashed border-foreground/20 flex items-center justify-center overflow-hidden"
                   onMouseEnter={() => setIsPaused(true)}
                   onMouseLeave={() => setIsPaused(false)}
@@ -282,11 +269,10 @@ const CurrentWorkSection = () => {
                             <button
                               key={index}
                               onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(index); }}
-                              className={`w-1.5 h-1.5 transition-all duration-300 ${
-                                index === currentImageIndex 
-                                  ? "bg-foreground w-4" 
+                              className={`w-1.5 h-1.5 transition-all duration-300 ${index === currentImageIndex
+                                  ? "bg-foreground w-4"
                                   : "bg-foreground/30 hover:bg-foreground/50"
-                              }`}
+                                }`}
                               aria-label={`Go to image ${index + 1}`}
                             />
                           ))}
@@ -296,9 +282,9 @@ const CurrentWorkSection = () => {
                       {/* Autoplay progress bar */}
                       {GALLERY_IMAGES.length > 1 && !isPaused && (
                         <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground/10">
-                          <div 
+                          <div
                             className="h-full bg-foreground/40 animate-[progress_4s_linear_infinite]"
-                            style={{ 
+                            style={{
                               animation: `progress ${AUTOPLAY_INTERVAL}ms linear infinite`,
                             }}
                           />
@@ -412,11 +398,10 @@ const CurrentWorkSection = () => {
                           >
                             <div className="flex gap-2 md:gap-3 relative">
                               <div
-                                className={`w-[9px] md:w-[11px] h-[9px] md:h-[11px] rounded-full border-2 flex-shrink-0 mt-1 z-10 transition-colors ${
-                                  index === 0
+                                className={`w-[9px] md:w-[11px] h-[9px] md:h-[11px] rounded-full border-2 flex-shrink-0 mt-1 z-10 transition-colors ${index === 0
                                     ? "bg-green-500 border-green-500"
                                     : "bg-background border-foreground/30 group-hover:border-foreground/60"
-                                }`}
+                                  }`}
                               />
                               <div className="flex-1 min-w-0">
                                 <p className="font-mono text-[10px] md:text-xs text-foreground/80 leading-relaxed line-clamp-2 group-hover:text-foreground transition-colors">
