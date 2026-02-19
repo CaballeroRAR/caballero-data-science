@@ -42,12 +42,12 @@ const CVDownloadDialog = () => {
         setVerified(true);
         // Trigger download based on language
         const cvUrl = language === "english" 
-          ? "/cv/CV_English.pdf" 
-          : "/cv/CV_Spanish.pdf";
+          ? "/cv/Data_Scientist_Gabriel_Caballero_CV_en_NO-PHONE.pdf" 
+          : "/cv/Data_Scientist_Gabriel_Caballero_CV_es_NO-PHONE.pdf";
         
         const link = document.createElement("a");
         link.href = cvUrl;
-        link.download = language === "english" ? "CV_English.pdf" : "CV_Spanish.pdf";
+        link.download = language === "english" ? "Data_Scientist_Gabriel_Caballero_CV_en_NO-PHONE.pdf" : "Data_Scientist_Gabriel_Caballero_CV_es_NO-PHONE.pdf";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
