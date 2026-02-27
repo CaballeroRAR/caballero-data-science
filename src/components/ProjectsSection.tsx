@@ -186,19 +186,8 @@ const projects: Project[] = [
         placeholder: "Cluster Comparison",
         modalText: "Comparison of features across different customer segments (after clustering).",
         image: clusterMeansImg,
-      },
-      {
-        id: 4,
-        placeholder: "PCA Visualization",
-        modalText: "Distribution analysis of RFM features within clusters.",
-        image: pcaComparisonImg,
-      },
-      {
-        id: 5,
-        placeholder: "Segment Drift Analysis",
-        modalText: "Analysis of cluster stability based on RFM tracking.",
-        image: segmentDriftImg,
-      },
+      }
+
     ],
   },
   {
@@ -215,7 +204,19 @@ const projects: Project[] = [
         id: 1,
         placeholder: "Architecture Diagram",
         modalText: "End-to-End GCP pipeline using BigQuery and Vertex AI.",
-        image: cleaningDiagramImg, // Assuming we want a placeholder image here for now
+        image: cleaningDiagramImg,
+      },
+      {
+        id: 2,
+        placeholder: "PCA Visualization",
+        modalText: "Distribution analysis of RFM features within clusters.",
+        image: pcaComparisonImg,
+      },
+      {
+        id: 3,
+        placeholder: "Segment Drift Analysis",
+        modalText: "Analysis of cluster stability based on RFM tracking.",
+        image: segmentDriftImg,
       },
     ],
   },
