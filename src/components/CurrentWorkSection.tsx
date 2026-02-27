@@ -20,10 +20,8 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-// Project Preview Images
-import pcaComparisonImg from "@/assets/img/WORK_GALLERY_IMG/pca-comparison.png";
-import segmentDriftImg from "@/assets/img/WORK_GALLERY_IMG/segment-drift.png";
-import clusterDistributionImg from "@/assets/img/WORK_GALLERY_IMG/cluster-distribution.png";
+
+import astroturfingPipelineImg from "@/assets/img/WORK_GALLERY_IMG/astroturfing-pipeline.png";
 
 const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const ref = useRef(null);
@@ -41,35 +39,33 @@ const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: Re
     </motion.h2>
   );
 };
-// Gallery images - add more images here as needed
 const GALLERY_IMAGES: { src: string; alt: string }[] = [
-  { src: pcaComparisonImg, alt: "PCA Cluster Comparison" },
-  { src: segmentDriftImg, alt: "Segment Drift Analysis" },
-  { src: clusterDistributionImg, alt: "Cluster Distribution Statistics" },
+  { src: astroturfingPipelineImg, alt: "Astroturfing Pipeline Architecture" },
+
 ];
 
 const AUTOPLAY_INTERVAL = 4000; // 4 seconds
 
-const REPO_URL = "https://github.com/CaballeroRAR/ds_projects/tree/main/1_ml-pipeline-migration-bigquery";
+const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs/tree/main/2-nlp-astroturfing-report";
 const README_RAW_URL =
-  "https://raw.githubusercontent.com/CaballeroRAR/ds_projects/main/1_ml-pipeline-migration-bigquery/README.md";
+  "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/2-nlp-astroturfing-report/README.md";
 const COMMITS_API_URL =
-  "https://api.github.com/repos/CaballeroRAR/ds_projects/commits?path=1_ml-pipeline-migration-bigquery&per_page=7";
+  "https://api.github.com/repos/CaballeroRAR/ds_projects_collabs/commits?path=2-nlp-astroturfing-report&per_page=7";
 
 const PROJECT_INFO = {
-  title: "ML Pipeline Migration to BigQuery",
-  subtitle: "Cloud Native Data Warehousing & ML",
+  title: "Reddit Astroturfing NLP Analysis",
+  subtitle: "Data Pipeline for Astroturfing Detection",
   description:
-    "End-to-end migration of a machine learning pipeline to Google Cloud Platform. Leverages BigQuery ML for scalable training and SQL-based feature engineering, transitioning from local processing to a cloud-native architecture.",
+    "An end-to-end pipeline designed to scrape, enrich, and ingest Reddit comments to analyze potential astroturfing (coordinated inauthentic behavior) campaigns. Features local scraping to bypass API limits, data consolidation, flattening, and automated ingestion into Google Cloud BigQuery for future NLP modeling.",
   status: "In Progress",
   collaborators: 1,
   technologies: [
-    "Google Cloud Platform",
-    "BigQuery ML",
-    "SQL",
-    "ETL",
     "Python",
-    "Cloud Migration",
+    "Google Cloud Platform",
+    "BigQuery",
+    "Data Engineering",
+    "Pandas",
+    "NLP",
   ],
 };
 
@@ -161,7 +157,7 @@ const CurrentWorkSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         <div className="lg:grid lg:grid-cols-[10rem_minmax(0,1fr)] lg:gap-12">
           <div className="hidden lg:flex justify-end pt-8">
-            <SectionNumber number="03.5" className="text-muted/80" />
+            <SectionNumber number="04.0" className="text-muted/80" />
           </div>
 
           <div>
