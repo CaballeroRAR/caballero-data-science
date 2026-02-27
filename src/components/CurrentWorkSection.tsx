@@ -157,7 +157,7 @@ const CurrentWorkSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         <div className="lg:grid lg:grid-cols-[10rem_minmax(0,1fr)] lg:gap-12">
           <div className="hidden lg:flex justify-end pt-8">
-            <SectionNumber number="04.0" className="text-muted/80" />
+            <SectionNumber number="3.5" className="text-muted/80" />
           </div>
 
           <div>

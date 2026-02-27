@@ -14,9 +14,10 @@ import meanSalaryPerAge from "@/assets/img/mean-salary-per-age.png";
 import distributionImg from "@/assets/img/distribution-of-assets.png";
 import kmeansImg from "@/assets/img/cluster-with-elbow-method.png";
 import cleaningDiagramImg from "@/assets/img/cleaning-pipeline-diagram.svg";
-import preview3dImg from "@/assets/img/WORK_GALLERY_IMG/3d_preview.png";
-import clusterMeansImg from "@/assets/img/WORK_GALLERY_IMG/cluster_means_comparison.png";
-import pcaVisualizationImg from "@/assets/img/WORK_GALLERY_IMG/image_2026-01-22_23-12-45.png";
+import clusterDistributionImg from "@/assets/img/cluster-distribution.png";
+import clusterMeansImg from "@/assets/img/cluster_means_comparison.png";
+import pcaComparisonImg from "@/assets/img/pca-comparison.png";
+import segmentDriftImg from "@/assets/img/segment-drift.png";
 
 interface GalleryItem {
   id: number;
@@ -176,9 +177,9 @@ const projects: Project[] = [
       },
       {
         id: 2,
-        placeholder: "3D Cluster Preview",
-        modalText: "3D visualization of RFM clusters before clustering (Recency, Frequency, Monetary).",
-        image: preview3dImg,
+        placeholder: "Cluster Distribution",
+        modalText: "Analysis of segment sizes and volume distribution.",
+        image: clusterDistributionImg,
       },
       {
         id: 3,
@@ -190,7 +191,31 @@ const projects: Project[] = [
         id: 4,
         placeholder: "PCA Visualization",
         modalText: "Distribution analysis of RFM features within clusters.",
-        image: pcaVisualizationImg,
+        image: pcaComparisonImg,
+      },
+      {
+        id: 5,
+        placeholder: "Segment Drift Analysis",
+        modalText: "Analysis of cluster stability based on RFM tracking.",
+        image: segmentDriftImg,
+      },
+    ],
+  },
+  {
+    id: 5,
+    title: "ML Pipeline Migration to BigQuery",
+    category: "Cloud Native Data Warehousing & ML",
+    description:
+      "End-to-end migration of a machine learning pipeline to Google Cloud Platform. Leverages BigQuery ML for scalable training and SQL-based feature engineering, transitioning from local processing to a cloud-native architecture.",
+    skills: ["Google Cloud Platform", "BigQuery ML", "SQL", "ETL", "Python", "Cloud Migration"],
+    link: "https://github.com/CaballeroRAR/ds_projects/tree/main/1_ml-pipeline-migration-bigquery",
+    year: "2026",
+    gallery: [
+      {
+        id: 1,
+        placeholder: "Architecture Diagram",
+        modalText: "End-to-End GCP pipeline using BigQuery and Vertex AI.",
+        image: cleaningDiagramImg, // Assuming we want a placeholder image here for now
       },
     ],
   },
