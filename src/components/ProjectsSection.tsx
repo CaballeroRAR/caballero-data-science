@@ -257,7 +257,7 @@ const ProjectsSection = () => {
           <div>
             {/* Section header */}
             <div className="flex items-center gap-4 mb-10 md:mb-16">
-              <SectionTitle>Selected Work</SectionTitle>
+              <SectionTitle sectionId="projects">Selected Work</SectionTitle>
               <div className="flex-1 h-px bg-foreground/20" />
               <span className="font-mono text-xs text-foreground/60">
                 {projects.length} PROJECTS

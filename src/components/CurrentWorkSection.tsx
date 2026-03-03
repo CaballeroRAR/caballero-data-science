@@ -169,7 +169,7 @@ const CurrentWorkSection = () => {
           <div>
             {/* Section header */}
             <div className="flex items-center gap-4 mb-10 md:mb-16">
-              <SectionTitle>Current Work</SectionTitle>
+              <SectionTitle sectionId="current-work">Current Work</SectionTitle>
               <div className="flex-1 h-px bg-foreground/20" />
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />

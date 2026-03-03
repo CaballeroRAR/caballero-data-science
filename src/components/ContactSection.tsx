@@ -9,7 +9,7 @@ import CVDownloadDialog from "./CVDownloadDialog";
 const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  
+
   return (
     <motion.h2
       ref={ref}
@@ -41,7 +41,7 @@ const ContactSection = () => {
           <div>
             {/* Section header */}
             <div className="flex items-center gap-4 mb-10 md:mb-16">
-              <SectionTitle>Contact</SectionTitle>
+              <SectionTitle sectionId="contact">Contact</SectionTitle>
               <div className="flex-1 h-px bg-foreground/20" />
             </div>
 

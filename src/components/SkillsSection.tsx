@@ -91,7 +91,7 @@ const SkillsSection = () => {
           <div>
             {/* Section header */}
             <div className="flex items-center gap-4 mb-10 md:mb-16">
-              <SectionTitle>Technical Expertise</SectionTitle>
+              <SectionTitle sectionId="skills">Technical Expertise</SectionTitle>
               <div className="flex-1 h-px bg-foreground/20" />
             </div>
 

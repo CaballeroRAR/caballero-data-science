@@ -24,7 +24,7 @@ const EXPERTISE_TAGS = [
 const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  
+
   return (
     <motion.h2
       ref={ref}
@@ -61,9 +61,8 @@ const AboutSection = () => {
                 >
                   {/* Default: Abstract geometric visualization */}
                   <div
-                    className={`absolute inset-0 transition-opacity duration-500 ${
-                      isHovered ? "opacity-0" : "opacity-100"
-                    }`}
+                    className={`absolute inset-0 transition-opacity duration-500 ${isHovered ? "opacity-0" : "opacity-100"
+                      }`}
                   >
                     <div className="absolute inset-0 grid-pattern-dense opacity-50 animate-pulse" />
                     <div className="absolute inset-6 md:inset-8 border border-foreground/30" />
@@ -111,9 +110,8 @@ const AboutSection = () => {
 
                   {/* Hover: Profile picture */}
                   <div
-                    className={`absolute inset-0 transition-opacity duration-500 ${
-                      isHovered ? "opacity-100" : "opacity-0"
-                    }`}
+                    className={`absolute inset-0 transition-opacity duration-500 ${isHovered ? "opacity-100" : "opacity-0"
+                      }`}
                   >
                     <img
                       src={profilePhoto}
@@ -140,7 +138,7 @@ const AboutSection = () => {
               {/* Right column - Content */}
               <div className="lg:pt-16">
                 <div className="flex items-center gap-4 mb-4 md:mb-6">
-                  <SectionTitle>About</SectionTitle>
+                  <SectionTitle sectionId="about">About Method</SectionTitle>
                   <div className="flex-1 h-px bg-foreground/20" />
                 </div>
 
