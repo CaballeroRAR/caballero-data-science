@@ -32,6 +32,8 @@ const SKILLS = [
   { name: "Power BI", category: "Visualization", icon: ChartColumn },
   { name: "APIs", category: "Integration", icon: PlugZap },
   { name: "GitHub", category: "Tools", icon: GitBranch },
+  { name: "Pandas", category: "Library", icon: Code },
+  { name: "Statsmodels", category: "Library", icon: ChartLine },
 ] as const;
 
 const TOOLS = [
@@ -41,6 +43,10 @@ const TOOLS = [
   { name: "Seaborn", icon: ChartLine },
   { name: "Jupyter Notebook", icon: NotebookText },
   { name: "Power BI", icon: ChartColumn },
+  { name: "Matplotlib", icon: ChartLine },
+  { name: "BigQuery", icon: Database },
+  { name: "Medallion Arch.", icon: Database },
+  { name: "Loguru", icon: Terminal },
 ] as const;
 
 const SOFT_SKILLS = [
@@ -59,7 +65,7 @@ const SOFT_SKILLS = [
 const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  
+
   return (
     <motion.h2
       ref={ref}
