@@ -22,6 +22,10 @@ import remarkGfm from "remark-gfm";
 
 
 import astroturfingPipelineImg from "@/assets/img/WORK_GALLERY_IMG/astroturfing-pipeline.png";
+import commentDensityMapImg from "@/assets/img/WORK_GALLERY_IMG/comment-density-map.png";
+import commentVsAuthorTrustImg from "@/assets/img/WORK_GALLERY_IMG/comment-vs-author-trust.png";
+import narrativeVolumeImg from "@/assets/img/WORK_GALLERY_IMG/coordinated-narrative-volume-over-time.png";
+import wordmapImg from "@/assets/img/WORK_GALLERY_IMG/wordmap.png";
 
 const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const ref = useRef(null);
@@ -40,8 +44,10 @@ const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: Re
   );
 };
 const GALLERY_IMAGES: { src: string; alt: string }[] = [
-  { src: astroturfingPipelineImg, alt: "Astroturfing Pipeline Architecture" },
-
+  { src: commentDensityMapImg, alt: "Comment Density Map" },
+  { src: commentVsAuthorTrustImg, alt: "Comment vs Author Trust" },
+  { src: narrativeVolumeImg, alt: "Coordinated Narrative Volume Over Time" },
+  { src: wordmapImg, alt: "Wordmap" },
 ];
 
 const AUTOPLAY_INTERVAL = 4000; // 4 seconds
