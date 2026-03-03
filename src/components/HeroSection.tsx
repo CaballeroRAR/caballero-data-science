@@ -11,7 +11,7 @@ const GLITCH_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345
 // Example: "https://www.youtube.com/embed/VIDEO_ID"
 // Leave empty or null if no video available
 // ==========================================
-const YOUTUBE_EMBED_URL: string | null = null;
+const YOUTUBE_EMBED_URL: string | null = "https://www.youtube.com/embed/uo8xMV8--dQ";
 
 interface HeroSectionProps {
   animateContent?: boolean;
@@ -110,9 +110,8 @@ const DecryptingText = ({
         {children}
       </span>
       <span
-        className={`absolute inset-0 transition-colors duration-200 ${
-          !isComplete ? "text-primary/70" : ""
-        }`}
+        className={`absolute inset-0 transition-colors duration-200 ${!isComplete ? "text-primary/70" : ""
+          }`}
         aria-live="polite"
       >
         {displayText}
@@ -149,17 +148,15 @@ const RhombusVideoPlayer = ({
   onCollapse: () => void;
 }) => (
   <div
-    className={`relative transition-all duration-500 ease-out ${
-      isExpanded
-        ? "w-[280px] sm:w-[400px] xl:w-[500px] h-[158px] sm:h-[225px] xl:h-[281px] rotate-0"
-        : "w-24 sm:w-32 lg:w-40 xl:w-48 h-24 sm:h-32 lg:h-40 xl:h-48 rotate-45 cursor-pointer hover:scale-105"
-    }`}
+    className={`relative transition-all duration-500 ease-out ${isExpanded
+      ? "w-[280px] sm:w-[400px] xl:w-[500px] h-[158px] sm:h-[225px] xl:h-[281px] rotate-0"
+      : "w-24 sm:w-32 lg:w-40 xl:w-48 h-24 sm:h-32 lg:h-40 xl:h-48 rotate-45 cursor-pointer hover:scale-105"
+      }`}
     onClick={() => hasVideo && !isExpanded && onExpand()}
   >
     <div
-      className={`absolute inset-0 border-2 border-foreground/30 bg-background/80 backdrop-blur-sm transition-all duration-500 ${
-        isExpanded ? "rounded-lg" : ""
-      }`}
+      className={`absolute inset-0 border-2 border-foreground/30 bg-background/80 backdrop-blur-sm transition-all duration-500 ${isExpanded ? "rounded-lg" : ""
+        }`}
     >
       {isExpanded ? (
         <>
@@ -238,7 +235,7 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
 
   useEffect(() => {
     if (!shouldAnimate) return;
-    
+
     const interval = setInterval(() => {
       setIsAnimating(true);
       setTimeout(() => {
@@ -257,23 +254,23 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
   return (
     <section className="min-h-screen relative flex items-center grid-pattern overflow-hidden pt-16 md:pt-0">
       {/* Geometric decorations - hidden on mobile */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, rotate: 45 }}
         animate={shouldAnimate ? { opacity: 1, rotate: 45 } : { opacity: 0, rotate: 45 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="hidden md:block absolute top-20 right-10 w-40 h-40 border border-foreground/20" 
+        className="hidden md:block absolute top-20 right-10 w-40 h-40 border border-foreground/20"
       />
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={shouldAnimate ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.5, delay: 0.25 }}
-        className="hidden md:block absolute bottom-40 left-10 w-24 h-24 border border-foreground/20" 
+        className="hidden md:block absolute bottom-40 left-10 w-24 h-24 border border-foreground/20"
       />
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scaleY: 0 }}
         animate={shouldAnimate ? { opacity: 1, scaleY: 1 } : { opacity: 0, scaleY: 0 }}
         transition={{ duration: 0.4, delay: 0.2 }}
-        className="hidden md:block absolute top-1/3 right-1/4 w-px h-40 bg-foreground/20 origin-top" 
+        className="hidden md:block absolute top-1/3 right-1/4 w-px h-40 bg-foreground/20 origin-top"
       />
 
       {/* Section number - desktop only */}
@@ -288,21 +285,20 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
           <div className="max-w-3xl flex-1">
             {/* Main headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display leading-[1.1] mb-4 md:mb-8">
-              <motion.span 
+              <motion.span
                 initial={{ opacity: 0, y: 15 }}
                 animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                 transition={{ duration: 0.35, delay: 0.05, ease: "easeOut" }}
                 className="block text-muted-foreground mb-1 md:mb-2"
               >
                 <span
-                  className={`inline-block transition-all duration-200 ease-out ${
-                    isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
-                  }`}
+                  className={`inline-block transition-all duration-200 ease-out ${isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
+                    }`}
                 >
                   {GREETINGS[greetingIndex].intro}
                 </span>
               </motion.span>
-              <motion.span 
+              <motion.span
                 initial={{ opacity: 0, y: 20 }}
                 animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
@@ -315,16 +311,15 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
             </h1>
 
             {/* Role line */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={{ duration: 0.35, delay: 0.15, ease: "easeOut" }}
               className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-4 md:mb-8"
             >
               <span
-                className={`font-body text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground transition-all duration-200 ease-out sm:min-w-[8rem] md:min-w-[10rem] sm:text-right ${
-                  isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
-                }`}
+                className={`font-body text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground transition-all duration-200 ease-out sm:min-w-[8rem] md:min-w-[10rem] sm:text-right ${isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
+                  }`}
               >
                 {GREETINGS[greetingIndex].role}
               </span>
@@ -336,7 +331,7 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
             </motion.div>
 
             {/* Subtitle */}
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 15 }}
               animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={{ duration: 0.35, delay: 0.2, ease: "easeOut" }}
@@ -349,7 +344,7 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
             </motion.p>
 
             {/* CTA Buttons */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={{ duration: 0.35, delay: 0.25, ease: "easeOut" }}
@@ -450,7 +445,7 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
             </motion.div>
 
             {/* Stats */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={{ duration: 0.35, delay: 0.3, ease: "easeOut" }}
@@ -472,7 +467,7 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
           </div>
 
           {/* Right side - Rhombus Video Player */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={shouldAnimate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4, delay: 0.35, ease: "easeOut" }}
@@ -493,9 +488,8 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
 
       {/* Scroll indicator - desktop */}
       <div
-        className={`absolute bottom-8 left-6 font-mono text-xs text-muted-foreground hidden md:flex items-center gap-3 transition-opacity duration-500 ${
-          showScrollHint ? "opacity-100" : "opacity-60"
-        }`}
+        className={`absolute bottom-8 left-6 font-mono text-xs text-muted-foreground hidden md:flex items-center gap-3 transition-opacity duration-500 ${showScrollHint ? "opacity-100" : "opacity-60"
+          }`}
       >
         <span className="animate-blink">SCROLL TO EXPLORE</span>
         <span className="inline-block w-4 h-px bg-foreground animate-blink" />
