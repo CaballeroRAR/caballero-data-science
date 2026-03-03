@@ -171,7 +171,8 @@ const RhombusVideoPlayer = ({
           </button>
           {hasVideo ? (
             <iframe
-              src={`${YOUTUBE_EMBED_URL}?autoplay=1`}
+              src={`${YOUTUBE_EMBED_URL}?autoplay=1&mute=1`}
+              title="Video CV"
               className="w-full h-full rounded-lg"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
