@@ -11,7 +11,7 @@ const GLITCH_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345
 // Example: "https://www.youtube.com/embed/VIDEO_ID"
 // Leave empty or null if no video available
 // ==========================================
-const YOUTUBE_EMBED_URL: string | null = "https://youtube.com/shorts/uo8xMV8--dQ?feature=share";
+const YOUTUBE_EMBED_URL: string | null = "https://www.youtube.com/embed/uo8xMV8--dQ";
 
 interface HeroSectionProps {
   animateContent?: boolean;
