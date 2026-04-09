@@ -18,9 +18,9 @@ import clusterDistributionImg from "@/assets/img/cluster-distribution.png";
 import clusterMeansImg from "@/assets/img/cluster_means_comparison.png";
 import pcaComparisonImg from "@/assets/img/pca-comparison.png";
 import segmentDriftImg from "@/assets/img/segment-drift.png";
-// import btcDashboardImg from "@/assets/img/btc-dashboard.png";
-// import btcXAIImg from "@/assets/img/btc-xai.png";
-// import btcModelImg from "@/assets/img/btc-model.png";
+import btcDashboardImg from "@/assets/img/btc-dashboard.png";
+import btcXAIImg from "@/assets/img/btc-xai.png";
+import btcModelImg from "@/assets/img/btc-model.png";
 
 interface GalleryItem {
   id: number;
@@ -223,7 +223,6 @@ const projects: Project[] = [
       },
     ],
   },
-/*
   {
     id: 6,
     title: "Bitcoin Predictor: XAI & MLOps",
@@ -263,7 +262,6 @@ const projects: Project[] = [
       },
     ],
   },
-*/
 ];
 
 const ProjectsSection = () => {
