@@ -18,6 +18,9 @@ import clusterDistributionImg from "@/assets/img/cluster-distribution.png";
 import clusterMeansImg from "@/assets/img/cluster_means_comparison.png";
 import pcaComparisonImg from "@/assets/img/pca-comparison.png";
 import segmentDriftImg from "@/assets/img/segment-drift.png";
+import btcDashboardImg from "@/assets/img/btc-dashboard.png";
+import btcXAIImg from "@/assets/img/btc-xai.png";
+import btcModelImg from "@/assets/img/btc-model.png";
 
 interface GalleryItem {
   id: number;
@@ -217,6 +220,45 @@ const projects: Project[] = [
         placeholder: "Segment Drift Analysis",
         modalText: "Analysis of cluster stability based on RFM tracking.",
         image: segmentDriftImg,
+      },
+    ],
+  },
+  {
+    id: 6,
+    title: "Bitcoin Predictor: XAI & MLOps",
+    category: "Deep Learning & Explainable AI",
+    description:
+      "Advanced forecasting system featuring a stacked LSTM engine and Explainable AI (XAI) for signal attribution. Implements a 50-iteration Monte Carlo uncertainty model and automated GCP orchestration (Vertex AI/Cloud Run).",
+    skills: ["Python", "TensorFlow", "Keras", "GCP", "Streamlit", "XAI", "MLOps", "Vertex AI"],
+    link: "https://github.com/CaballeroRAR/btc-predictor",
+    year: "2026",
+    gallery: [
+      {
+        id: 1,
+        placeholder: "Live Dashboard",
+        modalText: (
+          <>
+            Real-time market analysis:
+            <ul className="list-disc list-inside text-left mt-2 space-y-1">
+              <li>High-frequency data ingestion from 12 macro signals</li>
+              <li>0.5-sigma high-confidence execution channels</li>
+              <li>Investment Journal with real-time ROI tracking</li>
+            </ul>
+          </>
+        ),
+        image: btcDashboardImg,
+      },
+      {
+        id: 2,
+        placeholder: "XAI: Signal Attribution",
+        modalText: "Explainable AI engine using Feature Ablation to isolate the USD impact of Macro vs. Psychological market forces.",
+        image: btcXAIImg,
+      },
+      {
+        id: 3,
+        placeholder: "Prediction Model",
+        modalText: "Monte Carlo Dropout simulation (50 iterations) used to quantify statistical uncertainty in volatile markets.",
+        image: btcModelImg,
       },
     ],
   },
