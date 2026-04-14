@@ -21,11 +21,10 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 
-import astroturfingPipelineImg from "@/assets/img/WORK_GALLERY_IMG/astroturfing-pipeline.png";
-import commentDensityMapImg from "@/assets/img/WORK_GALLERY_IMG/comment-density-map.png";
-import commentVsAuthorTrustImg from "@/assets/img/WORK_GALLERY_IMG/comment-vs-author-trust.png";
-import narrativeVolumeImg from "@/assets/img/WORK_GALLERY_IMG/coordinated-narrative-volume-over-time.png";
-import wordmapImg from "@/assets/img/WORK_GALLERY_IMG/wordmap.png";
+import btcHud1 from "@/assets/img/WORK_GALLERY_IMG/btc-hud-preview-1.png";
+import btcHud2 from "@/assets/img/WORK_GALLERY_IMG/btc-hud-preview-2.png";
+import btcHud3 from "@/assets/img/WORK_GALLERY_IMG/btc-hud-preview-3.png";
+import btcHud4 from "@/assets/img/WORK_GALLERY_IMG/btc-hud-preview-4.png";
 
 const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const ref = useRef(null);
@@ -44,34 +43,36 @@ const AnimatedHeading = ({ children, className = "", delay = 0 }: { children: Re
   );
 };
 const GALLERY_IMAGES: { src: string; alt: string }[] = [
-  { src: commentDensityMapImg, alt: "Comment Density Map" },
-  { src: commentVsAuthorTrustImg, alt: "Comment vs Author Trust" },
-  { src: narrativeVolumeImg, alt: "Coordinated Narrative Volume Over Time" },
-  { src: wordmapImg, alt: "Wordmap" },
+  { src: btcHud1, alt: "Bitcoin HUD - Live Dashboard" },
+  { src: btcHud2, alt: "Bitcoin HUD - Signal Analysis" },
+  { src: btcHud3, alt: "Bitcoin HUD - Prediction Engine" },
+  { src: btcHud4, alt: "Bitcoin HUD - Neural Reactivity" },
 ];
 
 const AUTOPLAY_INTERVAL = 4000; // 4 seconds
 
-const REPO_URL = "https://github.com/CaballeroRAR/ds_projects_collabs/tree/main/2-nlp-astroturfing-report";
+const REPO_URL = "https://github.com/CaballeroRAR/btc-predictor";
 const README_RAW_URL =
-  "https://raw.githubusercontent.com/CaballeroRAR/ds_projects_collabs/main/2-nlp-astroturfing-report/README.md";
+  "https://raw.githubusercontent.com/CaballeroRAR/btc-predictor/main/README.md";
 const COMMITS_API_URL =
-  "https://api.github.com/repos/CaballeroRAR/ds_projects_collabs/commits?path=2-nlp-astroturfing-report&per_page=7";
+  "https://api.github.com/repos/CaballeroRAR/btc-predictor/commits?per_page=7";
 
 const PROJECT_INFO = {
-  title: "Reddit Astroturfing NLP Analysis",
-  subtitle: "Data Pipeline for Astroturfing Detection",
+  title: "Industrial Bitcoin Forecasting HUD",
+  subtitle: "Neural Intelligence & Production MLOps",
   description:
-    "An end-to-end pipeline designed to scrape, enrich, and ingest Reddit comments to analyze potential astroturfing (coordinated inauthentic behavior) campaigns. Features local scraping to bypass API limits, data consolidation, flattening, and automated ingestion into Google Cloud BigQuery for future NLP modeling.",
+    "A high-precision Bitcoin price projection engine built on a stacked LSTM architecture with Monte Carlo Dropout uncertainty estimation. Decoupled, three-tier serverless environment in GCP including Vertex AI, Cloud Run, and Firestore for real-time market grounding and drift calibration.",
   status: "In Progress",
   collaborators: 1,
   technologies: [
     "Python",
+    "TensorFlow",
     "Google Cloud Platform",
-    "BigQuery",
-    "Data Engineering",
-    "Pandas",
-    "NLP",
+    "Vertex AI",
+    "Cloud Run",
+    "Firestore",
+    "Streamlit",
+    "MLOps",
   ],
 };
 
