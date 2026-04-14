@@ -43,23 +43,23 @@ interface Project {
 const projects: Project[] = [
   {
     id: 6,
-    title: "Bitcoin Predictor: XAI & MLOps",
+    title: "Industrial Bitcoin Forecasting HUD",
     category: "Deep Learning & Explainable AI",
     description:
-      "Advanced forecasting system featuring a stacked LSTM engine and Explainable AI (XAI) for signal attribution. Implements a 50-iteration Monte Carlo uncertainty model and automated GCP orchestration (Vertex AI/Cloud Run).",
-    skills: ["Python", "TensorFlow", "Keras", "GCP", "Streamlit", "XAI", "MLOps", "Vertex AI"],
+      "High-precision Bitcoin price projection engine using a stacked LSTM architecture with Monte Carlo Dropout uncertainty estimation. Synthesizes multi-source data (VADER Sentiment, Google Trends, Macro-Ratios) into a grounded 30-day forecast trajectory.",
+    skills: ["Python", "TensorFlow", "Keras", "GCP", "Streamlit", "XAI", "MLOps", "Vertex AI", "Cloud Firestore", "VADER Sentiment", "GCS", "Data Orchestration"],
     link: "https://github.com/CaballeroRAR/btc-predictor",
     year: "2026",
     gallery: [
       {
         id: 1,
-        placeholder: "Live Dashboard",
+        placeholder: "Neural HUD: Live Interface",
         modalText: (
           <>
             Real-time market analysis:
             <ul className="list-disc list-inside text-left mt-2 space-y-1">
-              <li>High-frequency data ingestion from 12 macro signals</li>
-              <li>0.5-sigma high-confidence execution channels</li>
+              <li>Pulse Injection for reacting to intraday breakouts</li>
+              <li>Neural Grounding for seamless trajectory anchoring</li>
               <li>Investment Journal with real-time ROI tracking</li>
             </ul>
           </>
@@ -68,14 +68,14 @@ const projects: Project[] = [
       },
       {
         id: 2,
-        placeholder: "XAI: Signal Attribution",
-        modalText: "Explainable AI engine using Feature Ablation to isolate the USD impact of Macro vs. Psychological market forces.",
+        placeholder: "Signal Attribution & Reactivity",
+        modalText: "Explainable AI engine tracking signal provenance across Firestore collections. Monitors Neural Bias and Scaling Invariants to isolate the impact of Macro vs. Psychological market forces.",
         image: btcXAIImg,
       },
       {
         id: 3,
-        placeholder: "Prediction Model",
-        modalText: "Monte Carlo Dropout simulation (50 iterations) used to quantify statistical uncertainty in volatile markets.",
+        placeholder: "Confidence Tunnel Modeling",
+        modalText: "Monte Carlo Dropout simulation (50 iterations) used to quantify statistical uncertainty. Tracks longitudinal drift calibration and neural persistence through custom GCS artifact recovery.",
         image: btcModelImg,
       },
     ],
