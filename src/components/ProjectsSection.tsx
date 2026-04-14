@@ -42,42 +42,138 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: 1,
-    title: "A/B Testing, UI Change",
-    category: "Statistical Analysis",
+    id: 6,
+    title: "Bitcoin Predictor: XAI & MLOps",
+    category: "Deep Learning & Explainable AI",
     description:
-      "Designed a hypothesis test with tailored α=0.10 for a low-risk UI experiment, prioritizing sensitivity over false positive risk. The test revealed a dramatic conversion increase from 19.9% to over 61%.",
-    skills: ["Python", "Statsmodels", "Jupyter Notebook", "Statistical Testing", "Power Analysis"],
-    link: "https://lnkd.in/gpcmjuuW",
+      "Advanced forecasting system featuring a stacked LSTM engine and Explainable AI (XAI) for signal attribution. Implements a 50-iteration Monte Carlo uncertainty model and automated GCP orchestration (Vertex AI/Cloud Run).",
+    skills: ["Python", "TensorFlow", "Keras", "GCP", "Streamlit", "XAI", "MLOps", "Vertex AI"],
+    link: "https://github.com/CaballeroRAR/btc-predictor",
+    year: "2026",
+    gallery: [
+      {
+        id: 1,
+        placeholder: "Live Dashboard",
+        modalText: (
+          <>
+            Real-time market analysis:
+            <ul className="list-disc list-inside text-left mt-2 space-y-1">
+              <li>High-frequency data ingestion from 12 macro signals</li>
+              <li>0.5-sigma high-confidence execution channels</li>
+              <li>Investment Journal with real-time ROI tracking</li>
+            </ul>
+          </>
+        ),
+        image: btcDashboardImg,
+      },
+      {
+        id: 2,
+        placeholder: "XAI: Signal Attribution",
+        modalText: "Explainable AI engine using Feature Ablation to isolate the USD impact of Macro vs. Psychological market forces.",
+        image: btcXAIImg,
+      },
+      {
+        id: 3,
+        placeholder: "Prediction Model",
+        modalText: "Monte Carlo Dropout simulation (50 iterations) used to quantify statistical uncertainty in volatile markets.",
+        image: btcModelImg,
+      },
+    ],
+  },
+  {
+    id: 5,
+    title: "ML Pipeline Migration to BigQuery",
+    category: "Cloud Native Data Warehousing & ML",
+    description:
+      "End-to-end migration of a machine learning pipeline to Google Cloud Platform. Leverages BigQuery ML for scalable training and SQL-based feature engineering, transitioning from local processing to a cloud-native architecture.",
+    skills: ["Google Cloud Platform", "BigQuery ML", "SQL", "ETL", "Python", "Cloud Migration"],
+    link: "https://github.com/CaballeroRAR/ds_projects/tree/main/1_ml-pipeline-migration-bigquery",
+    year: "2026",
+    gallery: [
+      {
+        id: 1,
+        placeholder: "Architecture Diagram",
+        modalText: "End-to-End GCP pipeline using BigQuery and Vertex AI.",
+        image: cleaningDiagramImg,
+      },
+      {
+        id: 2,
+        placeholder: "PCA Visualization",
+        modalText: "Distribution analysis of RFM features within clusters.",
+        image: pcaComparisonImg,
+      },
+      {
+        id: 3,
+        placeholder: "Segment Drift Analysis",
+        modalText: "Analysis of cluster stability based on RFM tracking.",
+        image: segmentDriftImg,
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "Customer Segmentation (KMeans)",
+    category: "Machine Learning (Unsupervised)",
+    description:
+      "End-to-end customer segmentation pipeline using RFM analysis and K-Means clustering to identify high-value wholesaler segments and optimize marketing strategies.",
+    skills: ["Python", "Scikit-learn", "RFM Analysis", "K-Means Clustering", "PCA", "Data Visualization"],
+    link: "https://github.com/CaballeroRAR/ds_projects_collabs/tree/main/1-cluster_retail_uci",
     year: "2025",
     gallery: [
       {
         id: 1,
-        placeholder: "Business Rationale",
-        modalText: (
-          <>
-            To evaluate this low-risk UI change:
-            <ul className="list-disc list-inside text-left mt-2 space-y-1">
-              <li>Minor UI button tweak (low implementation cost)</li>
-              <li>Primary Risk: Missing a real improvement &gt; Cost of false positive</li>
-              <li>Current: 19.9% conversion rate</li>
-            </ul>
-          </>
-        ),
-        image: businessContextImg,
+        placeholder: "Cleaning Pipeline",
+        modalText: "Modular cleaning pipeline ensuring data quality and reproducibility.",
+        image: cleaningDiagramImg,
       },
       {
         id: 2,
-        placeholder: "Conversion Stats",
-        modalText:
-          "Control: 19.9% conversion, Treatment: 61%+ — statistically significant improvement.",
-        image: conversionStatImg,
+        placeholder: "Cluster Distribution",
+        modalText: "Analysis of segment sizes and volume distribution.",
+        image: clusterDistributionImg,
       },
       {
         id: 3,
-        placeholder: "Groups Visualization",
-        modalText: "Visual comparison of control vs treatment conversion rates.",
-        image: hyperparameterImg,
+        placeholder: "Cluster Comparison",
+        modalText: "Comparison of features across different customer segments (after clustering).",
+        image: clusterMeansImg,
+      }
+
+    ],
+  },
+  {
+    id: 3,
+    title: "Employee Salary Analysis",
+    category: "Statistical Analysis",
+    description:
+      "Exploratory analysis on compensation patterns to quantify impact of experience, education, and role on salary structures for HR strategy.",
+    skills: ["EDA", "Data Visualization", "Statistical Analysis", "KMeans Clustering", "PCA"],
+    link: "https://lnkd.in/eaUVU9yg",
+    year: "2025",
+    gallery: [
+      {
+        id: 1,
+        placeholder: "EDA Overview",
+        modalText: "First glance at the dataset.",
+        image: salaryEDAImg,
+      },
+      {
+        id: 2,
+        placeholder: "Salary by Age",
+        modalText: "Distribution of salaries per age, describing data skewness.",
+        image: meanSalaryPerAge,
+      },
+      {
+        id: 3,
+        placeholder: "Distribution",
+        modalText: "Employee distribution across departments and salary impact.",
+        image: distributionImg,
+      },
+      {
+        id: 4,
+        placeholder: "KMeans + PCA",
+        modalText: "KMeans Clustering visualization using PCA.",
+        image: kmeansImg,
       },
     ],
   },
@@ -127,138 +223,42 @@ const projects: Project[] = [
     ],
   },
   {
-    id: 3,
-    title: "Employee Salary Analysis",
+    id: 1,
+    title: "A/B Testing, UI Change",
     category: "Statistical Analysis",
     description:
-      "Exploratory analysis on compensation patterns to quantify impact of experience, education, and role on salary structures for HR strategy.",
-    skills: ["EDA", "Data Visualization", "Statistical Analysis", "KMeans Clustering", "PCA"],
-    link: "https://lnkd.in/eaUVU9yg",
+      "Designed a hypothesis test with tailored α=0.10 for a low-risk UI experiment, prioritizing sensitivity over false positive risk. The test revealed a dramatic conversion increase from 19.9% to over 61%.",
+    skills: ["Python", "Statsmodels", "Jupyter Notebook", "Statistical Testing", "Power Analysis"],
+    link: "https://lnkd.in/gpcmjuuW",
     year: "2025",
     gallery: [
       {
         id: 1,
-        placeholder: "EDA Overview",
-        modalText: "First glance at the dataset.",
-        image: salaryEDAImg,
-      },
-      {
-        id: 2,
-        placeholder: "Salary by Age",
-        modalText: "Distribution of salaries per age, describing data skewness.",
-        image: meanSalaryPerAge,
-      },
-      {
-        id: 3,
-        placeholder: "Distribution",
-        modalText: "Employee distribution across departments and salary impact.",
-        image: distributionImg,
-      },
-      {
-        id: 4,
-        placeholder: "KMeans + PCA",
-        modalText: "KMeans Clustering visualization using PCA.",
-        image: kmeansImg,
-      },
-    ],
-  },
-  {
-    id: 4,
-    title: "Customer Segmentation (KMeans)",
-    category: "Machine Learning (Unsupervised)",
-    description:
-      "End-to-end customer segmentation pipeline using RFM analysis and K-Means clustering to identify high-value wholesaler segments and optimize marketing strategies.",
-    skills: ["Python", "Scikit-learn", "RFM Analysis", "K-Means Clustering", "PCA", "Data Visualization"],
-    link: "https://github.com/CaballeroRAR/ds_projects_collabs/tree/main/1-cluster_retail_uci",
-    year: "2025",
-    gallery: [
-      {
-        id: 1,
-        placeholder: "Cleaning Pipeline",
-        modalText: "Modular cleaning pipeline ensuring data quality and reproducibility.",
-        image: cleaningDiagramImg,
-      },
-      {
-        id: 2,
-        placeholder: "Cluster Distribution",
-        modalText: "Analysis of segment sizes and volume distribution.",
-        image: clusterDistributionImg,
-      },
-      {
-        id: 3,
-        placeholder: "Cluster Comparison",
-        modalText: "Comparison of features across different customer segments (after clustering).",
-        image: clusterMeansImg,
-      }
-
-    ],
-  },
-  {
-    id: 5,
-    title: "ML Pipeline Migration to BigQuery",
-    category: "Cloud Native Data Warehousing & ML",
-    description:
-      "End-to-end migration of a machine learning pipeline to Google Cloud Platform. Leverages BigQuery ML for scalable training and SQL-based feature engineering, transitioning from local processing to a cloud-native architecture.",
-    skills: ["Google Cloud Platform", "BigQuery ML", "SQL", "ETL", "Python", "Cloud Migration"],
-    link: "https://github.com/CaballeroRAR/ds_projects/tree/main/1_ml-pipeline-migration-bigquery",
-    year: "2026",
-    gallery: [
-      {
-        id: 1,
-        placeholder: "Architecture Diagram",
-        modalText: "End-to-End GCP pipeline using BigQuery and Vertex AI.",
-        image: cleaningDiagramImg,
-      },
-      {
-        id: 2,
-        placeholder: "PCA Visualization",
-        modalText: "Distribution analysis of RFM features within clusters.",
-        image: pcaComparisonImg,
-      },
-      {
-        id: 3,
-        placeholder: "Segment Drift Analysis",
-        modalText: "Analysis of cluster stability based on RFM tracking.",
-        image: segmentDriftImg,
-      },
-    ],
-  },
-  {
-    id: 6,
-    title: "Bitcoin Predictor: XAI & MLOps",
-    category: "Deep Learning & Explainable AI",
-    description:
-      "Advanced forecasting system featuring a stacked LSTM engine and Explainable AI (XAI) for signal attribution. Implements a 50-iteration Monte Carlo uncertainty model and automated GCP orchestration (Vertex AI/Cloud Run).",
-    skills: ["Python", "TensorFlow", "Keras", "GCP", "Streamlit", "XAI", "MLOps", "Vertex AI"],
-    link: "https://github.com/CaballeroRAR/btc-predictor",
-    year: "2026",
-    gallery: [
-      {
-        id: 1,
-        placeholder: "Live Dashboard",
+        placeholder: "Business Rationale",
         modalText: (
           <>
-            Real-time market analysis:
+            To evaluate this low-risk UI change:
             <ul className="list-disc list-inside text-left mt-2 space-y-1">
-              <li>High-frequency data ingestion from 12 macro signals</li>
-              <li>0.5-sigma high-confidence execution channels</li>
-              <li>Investment Journal with real-time ROI tracking</li>
+              <li>Minor UI button tweak (low implementation cost)</li>
+              <li>Primary Risk: Missing a real improvement &gt; Cost of false positive</li>
+              <li>Current: 19.9% conversion rate</li>
             </ul>
           </>
         ),
-        image: btcDashboardImg,
+        image: businessContextImg,
       },
       {
         id: 2,
-        placeholder: "XAI: Signal Attribution",
-        modalText: "Explainable AI engine using Feature Ablation to isolate the USD impact of Macro vs. Psychological market forces.",
-        image: btcXAIImg,
+        placeholder: "Conversion Stats",
+        modalText:
+          "Control: 19.9% conversion, Treatment: 61%+ — statistically significant improvement.",
+        image: conversionStatImg,
       },
       {
         id: 3,
-        placeholder: "Prediction Model",
-        modalText: "Monte Carlo Dropout simulation (50 iterations) used to quantify statistical uncertainty in volatile markets.",
-        image: btcModelImg,
+        placeholder: "Groups Visualization",
+        modalText: "Visual comparison of control vs treatment conversion rates.",
+        image: hyperparameterImg,
       },
     ],
   },
