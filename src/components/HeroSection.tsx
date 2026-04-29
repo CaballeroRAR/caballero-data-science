@@ -253,7 +253,7 @@ const HeroSection = ({ animateContent = true }: HeroSectionProps) => {
   };
 
   return (
-    <section className="min-h-screen relative flex items-center grid-pattern overflow-hidden pt-16 md:pt-0">
+    <section className="min-h-screen relative flex items-center grid-pattern cyber-scanlines overflow-hidden pt-16 md:pt-0">
       {/* Geometric decorations - hidden on mobile */}
       <motion.div
         initial={{ opacity: 0, rotate: 45 }}

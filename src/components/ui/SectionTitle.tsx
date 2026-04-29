@@ -31,9 +31,14 @@ const SectionTitle = ({ children, className = "", sectionId }: SectionTitleProps
       initial={{ opacity: 0, x: -20 }}
       animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
       transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-      className={`font-mono text-xs text-muted-foreground tracking-widest uppercase flex items-center gap-2 ${className}`}
+      className={`font-mono text-xs text-primary tracking-widest uppercase flex items-center gap-2 ${className}`}
     >
-      {children}
+      <span className="text-secondary animate-pulse-subtle font-bold">[</span>
+      <span>{children}</span>
+      <span className="text-secondary animate-pulse-subtle font-bold">]</span>
+      <span className="text-foreground/30 font-mono text-[9px] ml-2 tracking-normal">
+        ACCESS_LEVEL_GRANTED
+      </span>
       {sectionId && (
         <button
           onClick={handleShare}

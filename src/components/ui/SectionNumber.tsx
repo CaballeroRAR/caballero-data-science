@@ -63,7 +63,7 @@ export const SectionNumber = ({ number, className = "" }: SectionNumberProps) =>
   return (
     <div 
       ref={elementRef} 
-      className={`font-mono text-8xl hidden lg:block select-none ${className}`}
+      className={`font-mono text-8xl hidden lg:block select-none text-primary/30 ${className}`}
       aria-hidden="true"
     >
       {display}
