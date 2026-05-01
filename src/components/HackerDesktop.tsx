@@ -462,24 +462,24 @@ export default function HackerDesktop() {
         isLarge: true,
         content: (
           <div className="font-mono text-sm text-foreground/80 p-6 space-y-4 h-full overflow-y-auto leading-relaxed select-text">
-            <p className="text-cyan-400 font-bold">&gt; INITIALIZING DATA_SCIENTIST_PROFILE...</p>
-            <div className="border border-white/20 p-4 bg-white/5 space-y-3">
-              <h3 className="text-white font-bold text-lg border-b border-white/20 pb-2 flex items-center gap-2">
-                <span className="w-2 h-2 bg-white rounded-full" /> GABRIEL CABALLERO
+            <p className="text-cyan-400 font-bold tracking-widest text-[10px] uppercase">&gt; INITIALIZING DATA_SCIENTIST_PROFILE...</p>
+            <div className="border border-white/10 p-6 bg-white/[0.02] space-y-4">
+              <h3 className="text-white font-bold text-xl border-b border-white/10 pb-3 flex items-center gap-2 tracking-tight">
+                <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" /> GABRIEL CABALLERO
               </h3>
-              <p className="text-[25px] leading-relaxed text-white">
+              <p className="text-3xl font-bold leading-tight text-white tracking-tighter">
                 Data Scientist <br />
-                <span className="text-lg text-white/70">Based in Mexico</span>
+                <span className="text-xl text-white/50 font-medium">Based in Mexico</span>
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm pt-2 text-white/80 border-t border-white/10 mt-2">
-                <div><span className="text-white/40">[ARCHITECT EXP]:</span> 8+ YEARS</div>
-                <div><span className="text-white/40">[DS / MLOPS EXP]:</span> 1+ YEARS</div>
-                <div><span className="text-white/40">[AGE]:</span> 29</div>
-                <div><span className="text-white/40">[NATIONALITY]:</span> MEXICAN</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-6 text-xs pt-4 text-white/70 border-t border-white/10 mt-4 font-mono">
+                <div className="flex justify-between border-b border-white/5 pb-1"><span className="text-white/30">[ARCHITECT EXP]:</span> <span className="text-white/90">8+ YEARS</span></div>
+                <div className="flex justify-between border-b border-white/5 pb-1"><span className="text-white/30">[DS / MLOPS EXP]:</span> <span className="text-white/90">1+ YEARS</span></div>
+                <div className="flex justify-between border-b border-white/5 pb-1"><span className="text-white/30">[AGE]:</span> <span className="text-white/90">29</span></div>
+                <div className="flex justify-between border-b border-white/5 pb-1"><span className="text-white/30">[NATIONALITY]:</span> <span className="text-white/90">MEXICAN</span></div>
               </div>
             </div>
 
-            <div className="space-y-4 text-base text-white/90 leading-relaxed border border-white/10 p-4 bg-black/30">
+            <div className="space-y-6 text-[15px] text-white/80 leading-relaxed border border-white/10 p-6 bg-black/40 backdrop-blur-md">
               <p>
                 Transforming raw data into strategic value through predictive modeling, time series analysis, and Google Cloud ETL pipelines. I utilize a robust stack including Python (Pandas, NumPy, Scikit-learn, Statsmodels, TensorFlow), SQL, and Power BI to build scalable analytics and machine learning solutions.
               </p>
@@ -487,7 +487,7 @@ export default function HackerDesktop() {
                 Known for combining analytical rigor with clear communication, I autonomously navigate complex challenges in hybrid settings. My work is driven by a passion for innovation and continuous learning.
               </p>
               <p>
-                This portfolio embodies that drive. Web dev isn't my core skill, but every line here reflects hands-on learning and iteration—check the live evolution on GitHub <a href="https://github.com/CaballeroRAR/caballero-data-science" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline">here</a>.
+                This portfolio embodies that drive. Web dev isn't my core skill, but every line here reflects hands-on learning and iteration—check the live evolution on GitHub <a href="https://github.com/CaballeroRAR/caballero-data-science" target="_blank" rel="noreferrer" className="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/30 underline-offset-4 transition-colors">here</a>.
               </p>
             </div>
 
@@ -674,12 +674,12 @@ export default function HackerDesktop() {
             <p className="text-cyan-400 font-bold text-lg">&gt; ESTABLISHING CHANNEL...</p>
             
             <div className="space-y-4">
-              <h2 className="text-xl md:text-2xl text-white font-bold">Let's Find Something Together</h2>
-              <p className="text-white/80 text-sm md:text-base">
+              <h2 className="text-2xl md:text-3xl text-white font-bold tracking-tight">Let's Find Something Together</h2>
+              <p className="text-white/70 text-sm md:text-base leading-relaxed">
                 Whether you need regression modeling for process optimization, forecasting solutions for demand planning, or data-driven insights to support decision-making. I'd love to discuss how I can help.
               </p>
-              <p className="text-white/60 text-xs md:text-sm">
-                Open to consulting engagements, advisory roles, and select full-time opportunities.
+              <p className="text-white/40 text-xs md:text-sm italic font-mono">
+                // Open to consulting engagements, advisory roles, and select full-time opportunities.
               </p>
             </div>
 

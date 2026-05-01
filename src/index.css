@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,44 +6,44 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%;
-    --foreground: 0 0% 100%;
+    --background: 0 0% 4%; /* #0a0a0a - Deep charcoal */
+    --foreground: 210 40% 98%; /* #f8fafc - Off-white high legibility */
 
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 7%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 0 0% 100%; /* White */
+    --primary: 180 100% 50%; /* Electric Cyan for primary actions */
     --primary-foreground: 0 0% 0%;
 
-    --secondary: 0 100% 50%; /* Warning Tactical Red */
+    --secondary: 0 100% 60%; /* Tactical Red refined */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 215 25% 27%; /* Slate gray for secondary elements */
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 0 0% 20%;
+    --accent: 0 0% 15%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 100% 40%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 100%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
+    --ring: 180 100% 50%;
 
     --radius: 0px;
 
     --grid-line: 0 0% 10%;
-    --grid-line-strong: 0 0% 20%;
-    --surface-elevated: 0 0% 5%;
-    --text-subtle: 0 0% 60%;
+    --grid-line-strong: 0 0% 18%;
+    --surface-elevated: 0 0% 8%;
+    --text-subtle: 215 15% 55%;
 
-    --font-display: 'Archivo Black', sans-serif;
+    --font-display: 'Geist', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
-    --font-body: 'Inter', sans-serif;
+    --font-body: 'Geist', sans-serif;
   }
 
   .dark {
