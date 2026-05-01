@@ -429,6 +429,99 @@ function ProfileContent() {
   );
 }
 
+function DecryptedText({ text, interval = 3000 }: { text: string; interval?: number }) {
+  const [displayText, setDisplayText] = useState(text);
+  const [isDecrypting, setIsDecrypting] = useState(false);
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+
+  useEffect(() => {
+    const originalText = text;
+    let iterations = 0;
+    
+    const decryptInterval = setInterval(() => {
+      setDisplayText(prev => 
+        prev.split("").map((char, index) => {
+          if (index < iterations) return originalText[index];
+          return chars[Math.floor(Math.random() * chars.length)];
+        }).join("")
+      );
+
+      if (iterations >= originalText.length) {
+        clearInterval(decryptInterval);
+      }
+      iterations += 1/5;
+    }, 30);
+
+    return () => clearInterval(decryptInterval);
+  }, [text]);
+
+  return (
+    <span className="text-white">
+      {displayText}
+    </span>
+  );
+}
+
+function Typewriter({ text, delay = 0, speed = 15, onComplete }: { text: string; delay?: number; speed?: number; onComplete?: () => void }) {
+  const [displayText, setDisplayText] = useState("");
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setStarted(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!started) return;
+    let i = 0;
+    const timer = setInterval(() => {
+      setDisplayText(text.substring(0, i));
+      i++;
+      if (i > text.length) {
+        clearInterval(timer);
+        onComplete?.();
+      }
+    }, speed);
+    return () => clearInterval(timer);
+  }, [started, text, speed, onComplete]);
+
+  return <span>{displayText}</span>;
+}
+
+function StaggeredReveal({ children, delay = 0, stagger = 0.1 }: { children: React.ReactNode; delay?: number; stagger?: number }) {
+  return (
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            delayChildren: delay / 1000,
+            staggerChildren: stagger
+          }
+        }
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function RevealItem({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 5 },
+        visible: { opacity: 1, y: 0 }
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export default function HackerDesktop() {
   const [booting, setBooting] = useState(true);
   const [bootProgress, setBootProgress] = useState(0);
@@ -462,45 +555,65 @@ export default function HackerDesktop() {
         isLarge: true,
         content: (
           <div className="font-mono text-sm text-foreground/80 p-6 space-y-4 h-full overflow-y-auto leading-relaxed select-text">
-            <p className="text-cyan-400 font-bold tracking-widest text-[10px] uppercase">&gt; INITIALIZING DATA_SCIENTIST_PROFILE...</p>
-            <div className="border border-white/10 p-6 bg-white/[0.02] space-y-4">
-              <h3 className="text-white font-bold text-xl border-b border-white/10 pb-3 flex items-center gap-2 tracking-tight">
-                <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" /> GABRIEL CABALLERO
-              </h3>
-              <p className="text-3xl font-bold leading-tight text-white tracking-tighter">
-                Data Scientist <br />
-                <span className="text-xl text-white/50 font-medium">Based in Mexico</span>
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-6 text-xs pt-4 text-white/70 border-t border-white/10 mt-4 font-mono">
-                <div className="flex justify-between border-b border-white/5 pb-1"><span className="text-white/30">[ARCHITECT EXP]:</span> <span className="text-white/90">8+ YEARS</span></div>
-                <div className="flex justify-between border-b border-white/5 pb-1"><span className="text-white/30">[DS / MLOPS EXP]:</span> <span className="text-white/90">1+ YEARS</span></div>
-                <div className="flex justify-between border-b border-white/5 pb-1"><span className="text-white/30">[AGE]:</span> <span className="text-white/90">29</span></div>
-                <div className="flex justify-between border-b border-white/5 pb-1"><span className="text-white/30">[NATIONALITY]:</span> <span className="text-white/90">MEXICAN</span></div>
-              </div>
-            </div>
+            <StaggeredReveal delay={100}>
+              <RevealItem>
+                <div className="border border-white/10 p-6 bg-white/[0.02] space-y-4">
+                  <h3 className="text-white font-bold text-xl border-b border-white/10 pb-3 flex items-center gap-2 tracking-tight">
+                    <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" /> GABRIEL CABALLERO
+                  </h3>
+                  <p className="text-3xl font-bold leading-tight text-white tracking-tighter">
+                    <DecryptedText text="Data Scientist | MLOps" /> <br />
+                    <span className="text-xl text-white/50 font-medium">Based in Mexico</span>
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-12 text-sm pt-4 text-white/70 border-t border-white/10 mt-4 font-mono">
+                    <div className="flex items-center gap-3"><span className="text-white/50 min-w-[140px] uppercase tracking-tighter">[ARCHITECT EXP]:</span> <span className="text-cyan-400 font-bold">8+ YEARS</span></div>
+                    <div className="flex items-center gap-3"><span className="text-white/50 min-w-[140px] uppercase tracking-tighter">[DS / MLOPS EXP]:</span> <span className="text-cyan-400 font-bold">1+ YEARS</span></div>
+                    <div className="flex items-center gap-3"><span className="text-white/50 min-w-[140px] uppercase tracking-tighter">[AGE]:</span> <span className="text-white/90">29</span></div>
+                    <div className="flex items-center gap-3"><span className="text-white/50 min-w-[140px] uppercase tracking-tighter">[NATIONALITY]:</span> <span className="text-white/90">MEXICAN</span></div>
+                  </div>
+                </div>
+              </RevealItem>
 
-            <div className="space-y-6 text-[15px] text-white/80 leading-relaxed border border-white/10 p-6 bg-black/40 backdrop-blur-md">
-              <p>
-                Transforming raw data into strategic value through predictive modeling, time series analysis, and Google Cloud ETL pipelines. I utilize a robust stack including Python (Pandas, NumPy, Scikit-learn, Statsmodels, TensorFlow), SQL, and Power BI to build scalable analytics and machine learning solutions.
-              </p>
-              <p>
-                Known for combining analytical rigor with clear communication, I autonomously navigate complex challenges in hybrid settings. My work is driven by a passion for innovation and continuous learning.
-              </p>
-              <p>
-                This portfolio embodies that drive. Web dev isn't my core skill, but every line here reflects hands-on learning and iteration—check the live evolution on GitHub <a href="https://github.com/CaballeroRAR/caballero-data-science" target="_blank" rel="noreferrer" className="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/30 underline-offset-4 transition-colors">here</a>.
-              </p>
-            </div>
+              <RevealItem>
+                <div className="space-y-4 text-[17px] text-white/80 leading-relaxed border border-white/10 p-6 bg-black/40 backdrop-blur-md mt-4">
+                  <p>
+                    <Typewriter 
+                      text="Transforming raw data into strategic value through predictive modeling, time series analysis, and Google Cloud ETL pipelines. I utilize a robust stack including Python (Pandas, NumPy, Scikit-learn, Statsmodels, TensorFlow), SQL, and Power BI to build scalable analytics and machine learning solutions." 
+                      delay={600}
+                      speed={5}
+                    />
+                  </p>
+                  <p>
+                    <Typewriter 
+                      text="Known for combining analytical rigor with clear communication, I autonomously navigate complex challenges in hybrid settings. My work is driven by a passion for innovation and continuous learning." 
+                      delay={1800}
+                      speed={5}
+                    />
+                  </p>
+                  <p>
+                    <Typewriter 
+                      text="This portfolio embodies that drive. Web dev isn't my core skill, but every line here reflects hands-on learning and iteration—check the live evolution on GitHub"
+                      delay={3000}
+                      speed={5}
+                    />
+                    {" "}<a href="https://github.com/CaballeroRAR/caballero-data-science" target="_blank" rel="noreferrer" className="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/30 underline-offset-4 transition-colors">here</a>.
+                  </p>
+                </div>
+              </RevealItem>
 
-            <div className="pt-2">
-              <span className="text-white/40 text-xs block mb-2 uppercase tracking-widest">[CORE_EXPERTISE]</span>
-              <div className="flex flex-wrap gap-2">
-                {["Python", "SQL", "Machine Learning", "Power BI", "Google Cloud", "TensorFlow", "ETL", "Data Pipelines", "Time Series", "Predictive Modeling", "Pandas", "Scikit-learn", "Business Intelligence"].map((tag) => (
-                  <span key={tag} className="text-xs px-2.5 py-1 border border-white/20 bg-white/5 text-white/70 hover:bg-cyan-400/10 hover:border-cyan-400 hover:text-cyan-400 transition-all duration-200 cursor-default">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+              <RevealItem>
+                <div className="pt-4 mt-4">
+                  <span className="text-white/40 text-[11px] block mb-3 uppercase tracking-widest">[CORE_EXPERTISE]</span>
+                  <div className="flex flex-wrap gap-2.5">
+                    {["Python", "SQL", "Machine Learning", "Power BI", "Google Cloud", "TensorFlow", "ETL", "Data Pipelines", "Time Series", "Predictive Modeling", "Pandas", "Scikit-learn", "Business Intelligence"].map((tag) => (
+                      <span key={tag} className="text-sm px-3.5 py-1.5 border border-white/20 bg-white/5 text-white/70 hover:bg-cyan-400/10 hover:border-cyan-400 hover:text-cyan-400 transition-all duration-200 cursor-default font-mono">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </RevealItem>
+            </StaggeredReveal>
           </div>
         ),
       },
@@ -671,40 +784,52 @@ export default function HackerDesktop() {
         isOpen: false,
         content: (
           <div className="font-mono text-base text-foreground/80 p-6 space-y-6 h-full overflow-y-auto leading-relaxed select-text">
-            <p className="text-cyan-400 font-bold text-lg">&gt; ESTABLISHING CHANNEL...</p>
-            
-            <div className="space-y-4">
-              <h2 className="text-2xl md:text-3xl text-white font-bold tracking-tight">Let's Find Something Together</h2>
-              <p className="text-white/70 text-sm md:text-base leading-relaxed">
-                Whether you need regression modeling for process optimization, forecasting solutions for demand planning, or data-driven insights to support decision-making. I'd love to discuss how I can help.
-              </p>
-              <p className="text-white/40 text-xs md:text-sm italic font-mono">
-                // Open to consulting engagements, advisory roles, and select full-time opportunities.
-              </p>
-            </div>
+            <StaggeredReveal delay={100}>
+              <RevealItem>
+                <p className="text-cyan-400 font-bold text-lg">&gt; ESTABLISHING CHANNEL...</p>
+              </RevealItem>
+              
+              <RevealItem>
+                <div className="space-y-4">
+                  <h2 className="text-2xl md:text-3xl text-white font-bold tracking-tight">
+                    <Typewriter text="Let's Find Something Together" delay={400} speed={20} />
+                  </h2>
+                  <p className="text-white/70 text-sm md:text-base leading-relaxed">
+                    <Typewriter text="Whether you need regression modeling for process optimization, forecasting solutions for demand planning, or data-driven insights to support decision-making. I'd love to discuss how I can help." delay={1000} speed={10} />
+                  </p>
+                  <p className="text-white/40 text-xs md:text-sm italic font-mono">
+                    <Typewriter text="// Open to consulting engagements, advisory roles, and select full-time opportunities." delay={2500} speed={10} />
+                  </p>
+                </div>
+              </RevealItem>
 
-            <div className="space-y-4 text-sm mt-6 max-w-xl mx-auto">
-              <div className="border border-white/10 p-3 hover:bg-white/5 transition-colors flex items-center justify-between">
-                <span className="font-bold">EMAIL:</span>
-                <a href="mailto:caballero.data.scientist@gmail.com" className="text-cyan-400 hover:underline text-xs md:text-sm">caballero.data.scientist@gmail.com</a>
-              </div>
-              <div className="border border-white/10 p-3 hover:bg-white/5 transition-colors flex items-center justify-between">
-                <span className="font-bold">LINKEDIN:</span>
-                <a href="https://linkedin.com/in/datacaballero" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline text-xs md:text-sm">linkedin.com/in/datacaballero</a>
-              </div>
-              <div className="border border-white/10 p-3 hover:bg-white/5 transition-colors flex items-center justify-between">
-                <span className="font-bold">GITHUB:</span>
-                <a href="https://github.com/CaballeroRAR" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline text-xs md:text-sm">github.com/CaballeroRAR</a>
-              </div>
-              <div className="border border-white/10 p-3 hover:bg-white/5 transition-colors flex items-center justify-between">
-                <span className="font-bold">KAGGLE:</span>
-                <a href="https://www.kaggle.com/datacaballero" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline text-xs md:text-sm">kaggle.com/datacaballero</a>
-              </div>
-            </div>
+              <RevealItem>
+                <div className="space-y-4 text-sm mt-6 max-w-xl mx-auto">
+                  <div className="border border-white/10 p-3 hover:bg-white/5 transition-colors flex items-center justify-between">
+                    <span className="font-bold">EMAIL:</span>
+                    <a href="mailto:caballero.data.scientist@gmail.com" className="text-cyan-400 hover:underline text-xs md:text-sm">caballero.data.scientist@gmail.com</a>
+                  </div>
+                  <div className="border border-white/10 p-3 hover:bg-white/5 transition-colors flex items-center justify-between">
+                    <span className="font-bold">LINKEDIN:</span>
+                    <a href="https://linkedin.com/in/datacaballero" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline text-xs md:text-sm">linkedin.com/in/datacaballero</a>
+                  </div>
+                  <div className="border border-white/10 p-3 hover:bg-white/5 transition-colors flex items-center justify-between">
+                    <span className="font-bold">GITHUB:</span>
+                    <a href="https://github.com/CaballeroRAR" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline text-xs md:text-sm">github.com/CaballeroRAR</a>
+                  </div>
+                  <div className="border border-white/10 p-3 hover:bg-white/5 transition-colors flex items-center justify-between">
+                    <span className="font-bold">KAGGLE:</span>
+                    <a href="https://www.kaggle.com/datacaballero" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline text-xs md:text-sm">kaggle.com/datacaballero</a>
+                  </div>
+                </div>
+              </RevealItem>
 
-            <div className="pt-6 border-t border-white/10 flex justify-center">
-              <CVDownloadDialog />
-            </div>
+              <RevealItem>
+                <div className="pt-6 border-t border-white/10 flex justify-center">
+                  <CVDownloadDialog />
+                </div>
+              </RevealItem>
+            </StaggeredReveal>
           </div>
         ),
       },
@@ -843,7 +968,7 @@ export default function HackerDesktop() {
       {openCount === 0 && <TensorGraph />}
 
       {/* OS Windows Rendering */}
-      <div className={`absolute bottom-20 left-0 right-0 top-24 pointer-events-none flex p-4 ${openCount >= 2 ? "flex-row items-center justify-center gap-6 max-w-[95vw] mx-auto" : "items-center justify-center"}`}>
+      <div className={`absolute bottom-16 left-0 right-0 top-20 pointer-events-none flex p-4 ${openCount >= 2 ? "flex-row items-center justify-center gap-6 max-w-[95vw] mx-auto" : "items-center justify-center"}`}>
         <AnimatePresence>
           {windows.map(
             (win) =>
@@ -859,7 +984,7 @@ export default function HackerDesktop() {
                       : win.id === "profile"
                         ? "w-96 h-[512px] absolute bottom-10 right-10"
                         : win.isLarge 
-                          ? "w-full max-w-[85vw] h-[70vh]" 
+                          ? "w-full max-w-[75vw] h-[78vh]" 
                           : "w-full max-w-[70vw] h-[60vh]"
                   }`}
                 >
