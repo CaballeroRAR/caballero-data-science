@@ -15,7 +15,7 @@
     --popover: 0 0% 7%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 180 100% 50%; /* Electric Cyan for primary actions */
+    --primary: 0 0% 100%; /* Pure White for primary frames and actions */
     --primary-foreground: 0 0% 0%;
 
     --secondary: 0 100% 60%; /* Tactical Red refined */

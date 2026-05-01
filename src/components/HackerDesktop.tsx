@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, Folder, Shield, User, Award, ExternalLink, X, Cpu, BadgeCheck, Phone, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import CVDownloadDialog from "./CVDownloadDialog";
-import DigitalRipple from "./DigitalRipple";
+import AnimatedGrid from "./AnimatedGrid";
+// import DigitalRipple from "./DigitalRipple";
 
 import profilePhoto from "@/assets/profile-photo.png";
 
@@ -32,11 +33,9 @@ import btcHud3 from "@/assets/img/WORK_GALLERY_IMG/btc-hud-preview-3.png";
 import btcHud4 from "@/assets/img/WORK_GALLERY_IMG/btc-hud-preview-4.png";
 
 interface WindowState {
-  id: string;
-  title: string;
-  isOpen: boolean;
-  content: React.ReactNode;
   isLarge?: boolean;
+  zIndex?: number;
+  position?: { x: number; y: number };
 }
 
 interface GalleryItem {
@@ -554,20 +553,20 @@ export default function HackerDesktop() {
         isOpen: true,
         isLarge: true,
         content: (
-          <div className="font-mono text-sm text-foreground/80 p-6 space-y-4 h-full overflow-y-auto leading-relaxed select-text">
+          <div className="font-mono text-sm text-foreground/80 p-4 space-y-3 h-full overflow-y-auto leading-relaxed select-text">
             <StaggeredReveal delay={100}>
               <RevealItem>
-                <div className="border border-white/10 p-6 bg-white/[0.02] space-y-4">
-                  <h3 className="text-white font-bold text-xl border-b border-white/10 pb-3 flex items-center gap-2 tracking-tight">
+                <div className="border border-white/10 p-4 bg-white/[0.02] space-y-3">
+                  <h3 className="text-white font-bold text-xl border-b border-white/10 pb-2 flex items-center gap-2 tracking-tight">
                     <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" /> GABRIEL CABALLERO
                   </h3>
-                  <p className="text-3xl font-bold leading-tight text-white tracking-tighter">
+                  <p className="text-2xl font-bold leading-tight text-white tracking-tighter">
                     <DecryptedText text="Data Scientist | MLOps" /> <br />
-                    <span className="text-xl text-white/50 font-medium">Based in Mexico</span>
+                    <span className="text-lg text-white/50 font-medium">Based in Mexico</span>
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-12 text-sm pt-4 text-white/70 border-t border-white/10 mt-4 font-mono">
-                    <div className="flex items-center gap-3"><span className="text-white/50 min-w-[140px] uppercase tracking-tighter">[ARCHITECT EXP]:</span> <span className="text-cyan-400 font-bold">8+ YEARS</span></div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-12 text-sm pt-3 text-white/70 border-t border-white/10 mt-3 font-mono">
                     <div className="flex items-center gap-3"><span className="text-white/50 min-w-[140px] uppercase tracking-tighter">[DS / MLOPS EXP]:</span> <span className="text-cyan-400 font-bold">1+ YEARS</span></div>
+                    <div className="flex items-center gap-3"><span className="text-white/50 min-w-[140px] uppercase tracking-tighter">[ARCHITECT EXP]:</span> <span className="text-cyan-400 font-bold">8+ YEARS</span></div>
                     <div className="flex items-center gap-3"><span className="text-white/50 min-w-[140px] uppercase tracking-tighter">[AGE]:</span> <span className="text-white/90">29</span></div>
                     <div className="flex items-center gap-3"><span className="text-white/50 min-w-[140px] uppercase tracking-tighter">[NATIONALITY]:</span> <span className="text-white/90">MEXICAN</span></div>
                   </div>
@@ -575,25 +574,25 @@ export default function HackerDesktop() {
               </RevealItem>
 
               <RevealItem>
-                <div className="space-y-4 text-[17px] text-white/80 leading-relaxed border border-white/10 p-6 bg-black/40 backdrop-blur-md mt-4">
+                <div className="space-y-3 text-[16px] text-white/80 leading-relaxed border border-white/10 p-4 bg-black/40 backdrop-blur-md mt-3">
                   <p>
                     <Typewriter 
-                      text="Transforming raw data into strategic value through predictive modeling, time series analysis, and Google Cloud ETL pipelines. I utilize a robust stack including Python (Pandas, NumPy, Scikit-learn, Statsmodels, TensorFlow), SQL, and Power BI to build scalable analytics and machine learning solutions." 
+                      text="From construction sites and budget meetings to cloud-native pipelines and production ML — I got into data the long way, and it shaped how I think. I build end-to-end data science solutions that go from messy raw data to insights that actually get used: customer segmentation, time series forecasting, NLP pipelines, and GCP-based ETL built on BigQuery ML and medallion architecture. My stack spans Python, SQL, scikit-learn, TensorFlow, Kedro, and Polars, structured for reproducibility and scale." 
                       delay={600}
                       speed={5}
                     />
                   </p>
                   <p>
                     <Typewriter 
-                      text="Known for combining analytical rigor with clear communication, I autonomously navigate complex challenges in hybrid settings. My work is driven by a passion for innovation and continuous learning." 
-                      delay={1800}
+                      text="I ask the right question first: does this problem need ML, or is a well-structured pipeline and a good SQL query enough? That diagnostic thinking shapes everything I build." 
+                      delay={2400}
                       speed={5}
                     />
                   </p>
                   <p>
                     <Typewriter 
-                      text="This portfolio embodies that drive. Web dev isn't my core skill, but every line here reflects hands-on learning and iteration—check the live evolution on GitHub"
-                      delay={3000}
+                      text="This portfolio embodies that drive. Web dev isn't my core skill, but every line here reflects hands-on learning and iteration — check the live evolution on GitHub"
+                      delay={4000}
                       speed={5}
                     />
                     {" "}<a href="https://github.com/CaballeroRAR/caballero-data-science" target="_blank" rel="noreferrer" className="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/30 underline-offset-4 transition-colors">here</a>.
@@ -825,7 +824,7 @@ export default function HackerDesktop() {
               </RevealItem>
 
               <RevealItem>
-                <div className="pt-6 border-t border-white/10 flex justify-center">
+                <div className="flex justify-center">
                   <CVDownloadDialog />
                 </div>
               </RevealItem>
@@ -849,9 +848,35 @@ export default function HackerDesktop() {
   }, []);
 
   const toggleWindow = (id: string) => {
-    setWindows((prev) =>
-      prev.map((win) => (win.id === id ? { ...win, isOpen: !win.isOpen } : win))
-    );
+    setWindows((prev) => {
+      const maxZ = Math.max(...prev.map(w => w.zIndex || 0), 0);
+      const openWindowsCount = prev.filter(w => w.isOpen).length;
+      const cascadeOffset = 20; // px
+      
+      return prev.map((win) => {
+        if (win.id === id) {
+          const isOpening = !win.isOpen;
+          return { 
+            ...win, 
+            isOpen: isOpening, 
+            zIndex: isOpening ? maxZ + 1 : win.zIndex,
+            position: isOpening && win.id !== "profile" && win.id !== "about" 
+              ? { x: openWindowsCount * cascadeOffset, y: openWindowsCount * cascadeOffset }
+              : win.position || { x: 0, y: 0 }
+          };
+        }
+        return win;
+      });
+    });
+  };
+
+  const bringToFront = (id: string) => {
+    setWindows((prev) => {
+      const maxZ = Math.max(...prev.map(w => w.zIndex || 0), 0);
+      const win = prev.find(w => w.id === id);
+      if (win && win.zIndex === maxZ) return prev;
+      return prev.map(w => w.id === id ? { ...w, zIndex: maxZ + 1 } : w);
+    });
   };
 
   const openCount = windows.filter((w) => w.isOpen && w.id !== "profile").length;
@@ -889,8 +914,8 @@ export default function HackerDesktop() {
 
 
   return (
-    <div className="min-h-screen bg-black text-primary font-mono relative overflow-hidden cyber-scanlines flex flex-col select-none">
-      <DigitalRipple />
+    <div className="min-h-screen bg-[#050505] text-primary font-mono relative overflow-hidden cyber-scanlines flex flex-col select-none">
+      <AnimatedGrid />
       {/* Desktop Grid Area */}
       <div className="p-4 flex flex-wrap items-center justify-center gap-6 max-w-5xl mx-auto z-50 relative bg-black/60 border border-white/5 backdrop-blur-sm mt-4">
         <button
@@ -968,7 +993,7 @@ export default function HackerDesktop() {
       {openCount === 0 && <TensorGraph />}
 
       {/* OS Windows Rendering */}
-      <div className={`absolute bottom-16 left-0 right-0 top-20 pointer-events-none flex p-4 ${openCount >= 2 ? "flex-row items-center justify-center gap-6 max-w-[95vw] mx-auto" : "items-center justify-center"}`}>
+      <div className="absolute bottom-16 left-0 right-0 top-20 pointer-events-none flex items-center justify-center p-4">
         <AnimatePresence>
           {windows.map(
             (win) =>
@@ -978,14 +1003,17 @@ export default function HackerDesktop() {
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.9, opacity: 0 }}
-                  className={`bg-black border border-primary p-1 pointer-events-auto shadow-2xl relative flex flex-col ${
-                    openCount >= 2 
-                      ? "flex-1 h-[65vh] max-w-none" 
-                      : win.id === "profile"
-                        ? "w-96 h-[512px] absolute bottom-10 right-10"
-                        : win.isLarge 
-                          ? "w-full max-w-[75vw] h-[78vh]" 
-                          : "w-full max-w-[70vw] h-[60vh]"
+                  onMouseDown={() => bringToFront(win.id)}
+                  style={{ 
+                    zIndex: win.zIndex || 1,
+                    transform: win.position ? `translate(${win.position.x}px, ${win.position.y}px)` : 'none'
+                  }}
+                  className={`bg-black border border-primary p-1 pointer-events-auto shadow-2xl absolute flex flex-col ${
+                    win.id === "profile"
+                      ? "w-96 h-[512px] bottom-10 right-10"
+                      : win.isLarge 
+                        ? "w-full max-w-[75vw] h-[78vh] left-10" 
+                        : "w-full max-w-[70vw] h-[60vh]"
                   }`}
                 >
                   <div className="flex items-center justify-between bg-primary text-black px-3 py-1 text-xs font-bold select-none">
