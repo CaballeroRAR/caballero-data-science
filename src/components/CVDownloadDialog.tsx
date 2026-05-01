@@ -59,9 +59,10 @@ const CVDownloadDialog = () => {
           setVerified(false);
         }, 1500);
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error("Download error:", err);
-      setError(err.message || "Failed to verify email. Please try again.");
+      const errorMessage = err instanceof Error ? err.message : "Failed to verify email. Please try again.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

@@ -32,11 +32,10 @@ export const SectionNumber = ({ number, className = "" }: SectionNumberProps) =>
       return;
     }
 
-    let timeoutId: any;
-    let intervalId: any;
+    let intervalId: NodeJS.Timeout;
     let currentIndex = 0;
 
-    timeoutId = setTimeout(() => {
+    const timeoutId: NodeJS.Timeout = setTimeout(() => {
       intervalId = setInterval(() => {
         if (currentIndex < number.length) {
           currentIndex++;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, Folder, Shield, User, Award, ExternalLink, X, Cpu, BadgeCheck, Phone, ChevronLeft, ChevronRight } from "lucide-react";
+import { Terminal, Folder, Shield, User, Award, ExternalLink, X, Cpu, BadgeCheck, Phone, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import CVDownloadDialog from "./CVDownloadDialog";
 import DigitalRipple from "./DigitalRipple";
 
@@ -37,6 +37,30 @@ interface WindowState {
   isOpen: boolean;
   content: React.ReactNode;
   isLarge?: boolean;
+}
+
+interface GalleryItem {
+  id: number;
+  text: string;
+  image: string;
+}
+
+interface Project {
+  id: number;
+  title: string;
+  category: string;
+  year: string;
+  description: string;
+  skills: string[];
+  demoUrl?: string;
+  githubUrl?: string;
+  gallery: GalleryItem[];
+}
+
+declare global {
+  interface Window {
+    expandHackerImage?: (src: string) => void;
+  }
 }
 
 const projectsData = [
@@ -293,7 +317,7 @@ function LiveInferenceContent() {
               src={liveImages[liveImgIndex]} 
               alt="Telemetry View" 
               className="max-w-full max-h-full object-contain opacity-90 cursor-pointer hover:opacity-100 transition-opacity"
-              onClick={() => (window as any).expandHackerImage?.(liveImages[liveImgIndex])}
+              onClick={() => window.expandHackerImage?.(liveImages[liveImgIndex])}
             />
             <div className="absolute inset-0 pointer-events-none cyber-scanlines opacity-25" />
             <button 
@@ -354,17 +378,68 @@ function LiveInferenceContent() {
   );
 }
 
+function ProfileContent() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/IBwpqhPF5rs";
+
+  return (
+    <div className="relative w-full h-full bg-black flex items-center justify-center overflow-hidden group">
+      {!isPlaying ? (
+        <>
+          <div className="absolute inset-0 pointer-events-none bg-neutral-950/20 mix-blend-color-burn z-10" />
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_20%,rgba(0,0,0,0.8)_80%)] z-20" />
+          <div className="absolute inset-0 pointer-events-none cyber-scanlines z-30 opacity-80" />
+          <img
+            src={profilePhoto}
+            alt="Workspace stream"
+            className="w-full h-full object-cover grayscale-[40%] contrast-125 opacity-70 transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 flex flex-col items-center justify-end pb-12 z-40">
+            <button 
+              onClick={() => setIsPlaying(true)}
+              className="w-16 h-16 bg-cyan-400/20 border border-cyan-400/40 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-cyan-400/40 hover:scale-110 transition-all duration-300 group/play"
+            >
+              <Play className="w-8 h-8 text-cyan-400 fill-cyan-400/20 group-hover/play:fill-cyan-400 transition-all" />
+            </button>
+            <span className="mt-4 font-mono text-[10px] text-cyan-400 tracking-[0.2em] uppercase animate-pulse">Initialize_Stream.exe</span>
+          </div>
+          <div className="absolute top-3 left-3 text-[10px] font-mono text-white/70 bg-black/70 px-2 py-0.5 border border-white/10 z-40 flex items-center gap-1.5">
+            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" /> LIVE_FEED
+          </div>
+        </>
+      ) : (
+        <div className="w-full h-full relative z-50">
+          <iframe
+            src={`${YOUTUBE_EMBED_URL}?autoplay=1`}
+            title="Old Webpage Video"
+            className="w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+          <button 
+            onClick={() => setIsPlaying(false)}
+            className="absolute top-3 right-3 z-[60] bg-black/60 border border-white/20 p-1.5 text-white hover:border-red-500 hover:text-red-500 transition-colors backdrop-blur-md"
+            title="Stop Stream"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function HackerDesktop() {
   const [booting, setBooting] = useState(true);
   const [bootProgress, setBootProgress] = useState(0);
-  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   const [expandedImg, setExpandedImg] = useState<string | null>(null);
 
   const [windows, setWindows] = useState<WindowState[]>([]);
 
   useEffect(() => {
-    (window as any).expandHackerImage = (src: string) => {
+    window.expandHackerImage = (src: string) => {
       setExpandedImg(src);
     };
 
@@ -433,21 +508,7 @@ export default function HackerDesktop() {
         id: "profile",
         title: "live_feed.cam",
         isOpen: true,
-        content: (
-          <div className="relative w-full h-full bg-black flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 pointer-events-none bg-neutral-950/20 mix-blend-color-burn z-10" />
-            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_20%,rgba(0,0,0,0.8)_80%)] z-20" />
-            <div className="absolute inset-0 pointer-events-none cyber-scanlines z-30 opacity-80" />
-            <img
-              src={profilePhoto}
-              alt="Workspace stream"
-              className="w-full h-full object-cover grayscale-[40%] contrast-125 opacity-70"
-            />
-            <div className="absolute top-3 left-3 text-[10px] font-mono text-white/70 bg-black/70 px-2 py-0.5 border border-white/10 z-40 flex items-center gap-1.5">
-              <span className="w-2 h-2 bg-red-500 rounded-full" /> REC
-            </div>
-          </div>
-        ),
+        content: <ProfileContent />,
       },
       {
         id: "projects",
