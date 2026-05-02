@@ -71,7 +71,7 @@ const projectsData = [
     description: "High-precision Bitcoin price projection engine using a stacked LSTM architecture with Monte Carlo Dropout uncertainty estimation. Synthesizes multi-source data (VADER Sentiment, Google Trends, Macro-Ratios) into a grounded 30-day forecast trajectory.",
     skills: ["Python", "TensorFlow", "Keras", "GCP", "Streamlit", "XAI", "MLOps"],
     demoUrl: "https://btc-dashboard-213564252081.us-central1.run.app",
-    githubUrl: "https://github.com/CaballeroRAR/btc-prediction",
+    githubUrl: "https://github.com/CaballeroRAR/btc-predictor",
     gallery: [
       { id: 1, text: "Real-time market analysis: Pulse Injection for reacting to intraday breakouts.", image: btcDashboardImg },
       { id: 2, text: "Explainable AI engine tracking signal provenance across Firestore collections.", image: btcXAIImg },
@@ -86,6 +86,7 @@ const projectsData = [
     description: "End-to-end migration of a machine learning pipeline to Google Cloud Platform. Leverages BigQuery ML for scalable training and SQL-based feature engineering, transitioning from local processing to a cloud-native architecture.",
     skills: ["Google Cloud Platform", "BigQuery ML", "SQL", "ETL", "Python"],
     demoUrl: "https://prometheus-frontend-kc2uauqyrq-uc.a.run.app/",
+    githubUrl: "https://github.com/CaballeroRAR/ds_projects/tree/main/1_ml-pipeline-migration-bigquery",
     gallery: [
       { id: 1, text: "End-to-End GCP pipeline using BigQuery and Vertex AI.", image: cleaningDiagramImg },
       { id: 2, text: "Distribution analysis of RFM features within clusters.", image: pcaComparisonImg },
@@ -98,6 +99,7 @@ const projectsData = [
     category: "Machine Learning (Unsupervised)",
     year: "2025",
     description: "End-to-end customer segmentation pipeline using RFM analysis and K-Means clustering to identify high-value wholesaler segments and optimize marketing strategies.",
+    githubUrl: "https://github.com/CaballeroRAR/ds_projects_collabs/tree/main/1-cluster_retail_uci",
     skills: ["Python", "Scikit-learn", "RFM Analysis", "K-Means", "PCA"],
     gallery: [
       { id: 1, text: "Modular cleaning pipeline ensuring data quality and reproducibility.", image: cleaningDiagramImg },
@@ -111,6 +113,7 @@ const projectsData = [
     category: "Statistical Analysis",
     year: "2025",
     description: "Exploratory analysis on compensation patterns to quantify impact of experience, education, and role on salary structures for HR strategy.",
+    githubUrl: "https://lnkd.in/eaUVU9yg",
     skills: ["EDA", "Data Visualization", "Statistical Analysis", "KMeans", "PCA"],
     gallery: [
       { id: 1, text: "First glance at the dataset structures.", image: salaryEDAImg },
@@ -124,6 +127,7 @@ const projectsData = [
     category: "Machine Learning",
     year: "2025",
     description: "End-to-end regression pipeline to predict gold recovery rates and optimize industrial flotation processes. Identifies optimal parameters for reagent concentration and particle size.",
+    githubUrl: "https://lnkd.in/eZMdm3_V",
     skills: ["Regression Modeling", "Feature Engineering", "Ensemble Methods", "Random Forest"],
     gallery: [
       { id: 1, text: "Cleaned multi-stage process data calculating metallurgical recovery rates.", image: goldrecoveryEDAImg },
@@ -137,6 +141,7 @@ const projectsData = [
     category: "Statistical Analysis",
     year: "2025",
     description: "Designed a hypothesis test with tailored alpha=0.10 for a low-risk UI experiment, prioritizing sensitivity over false positive risk. The test revealed a dramatic conversion increase from 19.9% to over 61%.",
+    githubUrl: "https://lnkd.in/gpcmjuuW",
     skills: ["Python", "Statsmodels", "Jupyter Notebook", "Statistical Testing"],
     gallery: [
       { id: 1, text: "Evaluating implementation risk variables against sensitive conversion rates.", image: businessContextImg },
@@ -589,13 +594,25 @@ export default function HackerDesktop() {
                       speed={5}
                     />
                   </p>
-                  <p>
+                  <p className="relative">
                     <Typewriter 
                       text="This portfolio embodies that drive. Web dev isn't my core skill, but every line here reflects hands-on learning and iteration — check the live evolution on GitHub"
                       delay={4000}
                       speed={5}
+                      onComplete={() => {
+                        const target = document.getElementById("github-link-placeholder");
+                        if (target) target.style.opacity = "1";
+                      }}
                     />
-                    {" "}<a href="https://github.com/CaballeroRAR/caballero-data-science" target="_blank" rel="noreferrer" className="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/30 underline-offset-4 transition-colors">here</a>.
+                    <a 
+                      id="github-link-placeholder"
+                      href="https://github.com/CaballeroRAR/caballero-data-science" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/30 underline-offset-4 transition-colors ml-1 opacity-0 pointer-events-auto relative z-[100]"
+                    >
+                      here
+                    </a>.
                   </p>
                 </div>
               </RevealItem>
