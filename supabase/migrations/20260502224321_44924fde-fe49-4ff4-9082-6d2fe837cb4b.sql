@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Anyone can log CV downloads" ON public.cv_download_logs;
