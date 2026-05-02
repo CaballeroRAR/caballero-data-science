@@ -909,21 +909,47 @@ export default function HackerDesktop() {
   };
 
   if (booting) {
+    const barWidth = 20;
+    const filledCount = Math.floor((bootProgress / 100) * barWidth);
+    const emptyCount = barWidth - filledCount;
+    const asciiBar = `[${"=".repeat(filledCount)}${">"}${" ".repeat(Math.max(0, emptyCount - 1))}]`;
+
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center font-mono text-white p-6 cyber-scanlines">
-        <div className="w-full max-w-md space-y-4">
-          <div className="space-y-1 text-xs">
-            <p className="text-white/40">GABRIEL_CABALLERO OS V.2026</p>
-            <p className="text-white/40">INITIALIZING SECURE PROTOCOLS...</p>
-            <p className="text-white animate-pulse">&gt; DECRYPTING CORE INFRASTRUCTURE</p>
+      <div className="min-h-screen bg-[#121414] flex flex-col items-center justify-center font-mono p-6 cyber-scanlines">
+        <div className="w-full max-w-lg space-y-6">
+          <div className="space-y-2 text-sm border-l-2 border-highlight pl-4">
+            <p className="text-white/40 tracking-widest text-[10px]">GABRIEL_CABALLERO // CORE_KERNEL_v2.026</p>
+            <div className="flex justify-between items-end">
+              <div className="space-y-1">
+                <p className="text-highlight animate-pulse font-bold tracking-tighter uppercase text-lg">
+                  &gt; Initializing_Terminal
+                </p>
+                <p className="text-white/30 text-[9px] uppercase">Mounting encrypted_assets...</p>
+              </div>
+              <span className="text-highlight font-bold text-xl tabular-nums">{bootProgress}%</span>
+            </div>
           </div>
-          <div className="w-full h-1 bg-white/10 relative">
-            <div 
-              className="absolute left-0 top-0 bottom-0 bg-white transition-all duration-200"
-              style={{ width: `${bootProgress}%` }}
-            />
+          
+          <div className="bg-black/40 border border-white/10 p-6 space-y-4 backdrop-blur-sm">
+            <div className="text-highlight font-mono text-lg tracking-[0.2em] flex justify-center">
+              {asciiBar}
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4 text-[9px] text-white/40 uppercase font-mono border-t border-white/5 pt-4">
+              <div className="space-y-1">
+                <p className={bootProgress > 20 ? "text-highlight/60" : ""}>[OK] Memory_Check</p>
+                <p className={bootProgress > 40 ? "text-highlight/60" : ""}>[OK] Network_Handshake</p>
+              </div>
+              <div className="space-y-1">
+                <p className={bootProgress > 60 ? "text-highlight/60" : ""}>[OK] Decrypting_UI</p>
+                <p className={bootProgress > 80 ? "text-highlight/60" : ""}>[OK] Establishing_Uplink</p>
+              </div>
+            </div>
           </div>
-          <span className="text-[10px] text-white/40 block text-right">{bootProgress}%</span>
+          
+          <div className="text-[8px] text-white/20 text-center uppercase tracking-[0.5em] animate-pulse">
+            Secure_Access_Protocol_Active
+          </div>
         </div>
       </div>
     );
@@ -934,75 +960,56 @@ export default function HackerDesktop() {
     <div className="min-h-screen bg-[#050505] text-highlight font-mono relative overflow-hidden cyber-scanlines flex flex-col select-none">
       <AnimatedGrid />
       {/* Desktop Grid Area */}
-      <div className="p-4 flex flex-wrap items-center justify-center gap-6 max-w-5xl mx-auto z-50 relative bg-black/60 border border-white/5 backdrop-blur-sm mt-4">
+      <div className="p-2 flex flex-wrap items-center justify-center gap-3 max-w-5xl mx-auto z-[100] relative bg-black/80 border-b border-primary/20 backdrop-blur-md w-full">
         <button
           onClick={() => {
             toggleWindow("about");
             setWindows(prev => prev.map(w => w.id === "profile" ? { ...w, isOpen: true } : w));
           }}
-          className="flex flex-col items-center gap-1 p-2 border border-white/10 bg-black/40 hover:border-highlight/40 hover:bg-highlight/10 group transition-all w-24"
+          className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2"
         >
-          <pre className="text-xs leading-[1.1] font-mono text-white group-hover:text-highlight h-8 flex items-center justify-center">
-{` [O] 
-/---\\`}
-          </pre>
-          <span className="text-xs tracking-widest uppercase text-foreground">ABOUT.sh</span>
+          <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[01]</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">ABOUT.sh</span>
         </button>
 
         <button
           onClick={() => toggleWindow("projects")}
-          className="flex flex-col items-center gap-1 p-2 border border-white/10 bg-black/40 hover:border-highlight/40 hover:bg-highlight/10 group transition-all w-24"
+          className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2"
         >
-          <pre className="text-xs leading-[1.1] font-mono text-white group-hover:text-highlight h-8 flex items-center justify-center">
-{`/---/
-|___|`}
-          </pre>
-          <span className="text-xs tracking-widest uppercase text-foreground">PROJECTS</span>
+          <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[02]</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">PROJECTS.db</span>
         </button>
 
         <button
           onClick={() => toggleWindow("current_work")}
-          className="flex flex-col items-center gap-1 p-2 border border-white/10 bg-black/40 hover:border-highlight/40 hover:bg-highlight/10 group transition-all w-24"
+          className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2"
         >
-          <pre className="text-xs leading-[1.1] font-mono text-white group-hover:text-highlight h-8 flex items-center justify-center">
-{` -+- 
--+-+-
- -+- `}
-          </pre>
-          <span className="text-xs tracking-widest uppercase text-foreground">LIVE_INF</span>
+          <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[03]</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">LIVE_INF.exe</span>
         </button>
 
         <button
           onClick={() => toggleWindow("skills")}
-          className="flex flex-col items-center gap-1 p-2 border border-white/10 bg-black/40 hover:border-highlight/40 hover:bg-highlight/10 group transition-all w-24"
+          className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2"
         >
-          <pre className="text-xs leading-[1.1] font-mono text-white group-hover:text-highlight h-8 flex items-center justify-center">
-{`  >_ 
-[___]`}
-          </pre>
-          <span className="text-xs tracking-widest uppercase text-foreground">SKILLS</span>
+          <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[04]</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">SKILLS.log</span>
         </button>
 
         <button
           onClick={() => toggleWindow("certifications")}
-          className="flex flex-col items-center gap-1 p-2 border border-white/10 bg-black/40 hover:border-highlight/40 hover:bg-highlight/10 group transition-all w-24"
+          className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2"
         >
-          <pre className="text-xs leading-[1.1] font-mono text-white group-hover:text-highlight h-8 flex items-center justify-center">
-{` [*] 
-/___\\`}
-          </pre>
-          <span className="text-xs tracking-widest uppercase text-foreground">CERTS</span>
+          <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[05]</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">CERTS.pem</span>
         </button>
 
         <button
           onClick={() => toggleWindow("contact")}
-          className="flex flex-col items-center gap-1 p-2 border border-white/10 bg-black/40 hover:border-highlight/40 hover:bg-highlight/10 group transition-all w-24"
+          className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2"
         >
-          <pre className="text-xs leading-[1.1] font-mono text-white group-hover:text-highlight h-8 flex items-center justify-center">
-{` (o) 
-~---~`}
-          </pre>
-          <span className="text-xs tracking-widest uppercase text-foreground">CONTACT</span>
+          <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[06]</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">CONTACT.bin</span>
         </button>
       </div>
 
