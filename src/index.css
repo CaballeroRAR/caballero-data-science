@@ -6,40 +6,43 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4%; /* #0a0a0a - Deep charcoal */
-    --foreground: 210 40% 98%; /* #f8fafc - Off-white high legibility */
+    --background: 180 6% 8%; /* #121414 */
+    --foreground: 0 0% 82%; /* #D1D1D1 */
 
-    --card: 0 0% 7%;
-    --card-foreground: 210 40% 98%;
+    --card: 180 6% 10%;
+    --card-foreground: 0 0% 82%;
 
-    --popover: 0 0% 7%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 180 6% 10%;
+    --popover-foreground: 0 0% 82%;
 
-    --primary: 0 0% 100%; /* Pure White for primary frames and actions */
-    --primary-foreground: 0 0% 0%;
+    --primary: 132 8% 63%; /* #9BA89D - Sage */
+    --primary-foreground: 156 10% 19%; /* #2C3531 - Dark Contrast */
 
-    --secondary: 0 100% 60%; /* Tactical Red refined */
+    --secondary: 132 8% 45%; /* Darker Sage */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 215 25% 27%; /* Slate gray for secondary elements */
-    --muted-foreground: 215 20% 65%;
+    --muted: 180 5% 20%;
+    --muted-foreground: 180 5% 60%;
 
-    --accent: 0 0% 15%;
+    --accent: 180 6% 15%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 100% 40%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 12%;
-    --input: 0 0% 12%;
-    --ring: 180 100% 50%;
+    --border: 180 6% 15%;
+    --input: 180 6% 15%;
+    --ring: 132 8% 63%;
+
+    --accent-green: 142 70% 45%; /* Matrix Green */
+    --accent-green-foreground: 142 80% 5%;
 
     --radius: 0px;
 
-    --grid-line: 0 0% 10%;
-    --grid-line-strong: 0 0% 18%;
-    --surface-elevated: 0 0% 8%;
-    --text-subtle: 215 15% 55%;
+    --grid-line: 180 8% 13%; /* #1E2323 */
+    --grid-line-strong: 180 8% 20%;
+    --surface-elevated: 180 6% 10%;
+    --text-subtle: 180 5% 55%;
 
     --font-display: 'Geist', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
@@ -47,38 +50,38 @@
   }
 
   .dark {
-    --background: 0 0% 2%;
-    --foreground: 0 0% 100%;
+    --background: 180 6% 6%;
+    --foreground: 0 0% 90%;
 
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
+    --card: 180 6% 8%;
+    --card-foreground: 0 0% 90%;
 
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 180 6% 8%;
+    --popover-foreground: 0 0% 90%;
 
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 132 8% 63%;
+    --primary-foreground: 156 10% 19%;
 
-    --secondary: 0 100% 50%;
+    --secondary: 132 8% 40%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 180 5% 15%;
+    --muted-foreground: 180 5% 55%;
 
-    --accent: 0 0% 20%;
+    --accent: 180 6% 18%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 100% 40%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 180 100% 50%;
+    --border: 180 6% 18%;
+    --input: 180 6% 18%;
+    --ring: 132 8% 63%;
 
-    --grid-line: 0 0% 12%;
-    --grid-line-strong: 0 0% 25%;
-    --surface-elevated: 0 0% 5%;
-    --text-subtle: 0 0% 60%;
+    --grid-line: 180 8% 10%;
+    --grid-line-strong: 180 8% 18%;
+    --surface-elevated: 180 6% 8%;
+    --text-subtle: 180 5% 55%;
   }
 }
 

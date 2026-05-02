@@ -68,6 +68,11 @@ export default {
         text: {
           subtle: "hsl(var(--text-subtle))",
         },
+        highlight: "hsl(var(--accent-green))",
+        terminal: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
       },
       fontFamily: {
         display: ["var(--font-display)", "sans-serif"],

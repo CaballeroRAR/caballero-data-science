@@ -35,7 +35,7 @@ const AnimatedGrid: React.FC = () => {
       ctx.clearRect(0, 0, width, height);
       
       // Background base
-      ctx.fillStyle = "#050505";
+      ctx.fillStyle = "#121414";
       ctx.fillRect(0, 0, width, height);
 
       const t = time * 0.001; // Current time in seconds
@@ -59,7 +59,7 @@ const AnimatedGrid: React.FC = () => {
           const pulse = Math.sin(x * 0.01 + y * 0.01 + t) * 0.05;
           opacity += pulse;
 
-          ctx.strokeStyle = `rgba(34, 211, 238, ${Math.max(0, opacity)})`; // Cyan color
+          ctx.strokeStyle = `rgba(34, 197, 94, ${Math.max(0, opacity)})`; // Matrix Green #22c55e
           ctx.lineWidth = 0.5;
           
           // Draw small intersection dots
@@ -93,7 +93,7 @@ const AnimatedGrid: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ background: "#050505" }}
+      style={{ background: "#121414" }}
     />
   );
 };
