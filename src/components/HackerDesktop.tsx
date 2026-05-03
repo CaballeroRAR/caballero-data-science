@@ -318,6 +318,34 @@ export default function HackerDesktop() {
             <div className="space-y-3">
               <div className="p-3 border border-white/10 bg-white/5 hover:border-highlight/40 transition-all">
                 <div className="flex justify-between items-start flex-wrap gap-2 mb-1">
+                  <span className="font-bold text-white text-sm">Gestión de Proyectos y Fundamentos de metodología Agile</span>
+                  <span className="text-[10px] text-highlight border border-highlight/30 px-2 py-0.5 bg-highlight/10">2026</span>
+                </div>
+                <span className="text-[10px] text-white/40 block mb-2 uppercase tracking-widest">[ISSUER: SANTANDER OPEN ACADEMY]</span>
+                <p className="text-xs text-white/70 leading-relaxed mb-3">Fundamentos y masterclass. Fundamentos de la agilidad. Entender la agilidad a través de Scrum. Combinar Agile con design thinking y Lean Startup para generar innovación. Cuestiones éticas y responsabilidad en el diseño y desarrollo de productos. Objetivos de aprendizaje: Aprender los fundamentos de la gestión de proyectos por metodología Agile. Enfocar de manera práctica y con ejemplos los fundamentos de Scrum y entender qué es, qué no es, qué hacer y qué no hacer.</p>
+                <div className="flex flex-wrap gap-1">
+                  {["Agile", "Scrum", "Project Management", "Design Thinking", "Lean Startup"].map(s => (
+                    <span key={s} className="text-[9px] px-1.5 py-0.5 border border-white/10 bg-black/40 text-white/50">{s}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-3 border border-white/10 bg-white/5 hover:border-highlight/40 transition-all">
+                <div className="flex justify-between items-start flex-wrap gap-2 mb-1">
+                  <span className="font-bold text-white text-sm">Power BI Intermediate: Data Analysis and Modeling</span>
+                  <span className="text-[10px] text-highlight border border-highlight/30 px-2 py-0.5 bg-highlight/10">2026</span>
+                </div>
+                <span className="text-[10px] text-white/40 block mb-2 uppercase tracking-widest">[ISSUER: SANTANDER OPEN ACADEMY]</span>
+                <p className="text-xs text-white/70 leading-relaxed mb-3">Build and publish optimized data models using DAX and Power BI Services, learning to create relationships, star schemas, measures and calculated columns, and to keep cloud reports updated to facilitate access and collaboration. Deepen the use of advanced visualizations to represent complex data using custom charts, time hierarchies, geographical maps, gauges, and dynamic interactions, thereby improving visual analysis capability. Master intermediate data transformation techniques with Power Query, including merging and appending queries, creating custom and conditional columns, as well as efficiently importing data from multiple sources and formats.</p>
+                <div className="flex flex-wrap gap-1">
+                  {["Power BI", "DAX", "Power Query", "Data Modeling", "Data Visualization"].map(s => (
+                    <span key={s} className="text-[9px] px-1.5 py-0.5 border border-white/10 bg-black/40 text-white/50">{s}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-3 border border-white/10 bg-white/5 hover:border-highlight/40 transition-all">
+                <div className="flex justify-between items-start flex-wrap gap-2 mb-1">
                   <span className="font-bold text-white text-sm">ETL Processing on Google Cloud Using Dataflow and BigQuery</span>
                   <span className="text-[10px] text-highlight border border-highlight/30 px-2 py-0.5 bg-highlight/10">2025</span>
                 </div>
