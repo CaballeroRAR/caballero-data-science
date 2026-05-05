@@ -22,6 +22,10 @@ import btcHud1 from "@/assets/img/WORK_GALLERY_IMG/btc-hud-preview-1.png";
 import btcHud2 from "@/assets/img/WORK_GALLERY_IMG/btc-hud-preview-2.png";
 import btcHud3 from "@/assets/img/WORK_GALLERY_IMG/btc-hud-preview-3.png";
 import btcHud4 from "@/assets/img/WORK_GALLERY_IMG/btc-hud-preview-4.png";
+import astroturfingPipelineImg from "@/assets/img/WORK_GALLERY_IMG/astroturfing-pipeline.png";
+import commentDensityMapImg from "@/assets/img/WORK_GALLERY_IMG/comment-density-map.png";
+import narrativeVolumeImg from "@/assets/img/WORK_GALLERY_IMG/coordinated-narrative-volume-over-time.png";
+
 
 export interface GalleryItem {
   id: number;
@@ -43,6 +47,21 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
+    id: 7,
+    title: "Reddit Astroturfing NLP Analysis",
+    category: "NLP & Data Engineering",
+    year: "2026",
+    description: "End-to-end pipeline designed to scrape, enrich, and ingest Reddit comments to analyze potential astroturfing campaigns. Features local scraping to bypass API limits, data consolidation, and automated ingestion into Google Cloud BigQuery for NLP modeling.",
+    skills: ["Python", "GCP", "BigQuery", "Data Engineering", "Pandas", "NLP"],
+    githubUrl: "https://github.com/CaballeroRAR/ds_projects_collabs/tree/main/2-nlp-astroturfing-report",
+    gallery: [
+      { id: 1, text: "Pipeline architecture showing local scraping and cloud ingestion layers.", image: astroturfingPipelineImg },
+      { id: 2, text: "Comment density map used to identify bursty, non-organic activity patterns.", image: commentDensityMapImg },
+      { id: 3, text: "Coordinated narrative volume analysis tracking signal synchronization across subreddits.", image: narrativeVolumeImg }
+    ]
+  },
+  {
+
     id: 6,
     title: "Industrial Bitcoin Forecasting HUD",
     category: "Deep Learning & XAI",
