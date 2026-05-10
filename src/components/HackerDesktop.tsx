@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, Folder, Shield, User, X } from "lucide-react";
+import { Terminal, Folder, Shield, User, X, Globe } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import CVDownloadDialog from "./CVDownloadDialog";
 import AnimatedGrid from "./AnimatedGrid";
 
@@ -115,14 +116,21 @@ function RevealItem({ children }: { children: React.ReactNode }) {
     </motion.div>
   );
 }
-
 export default function HackerDesktop() {
   const [booting, setBooting] = useState(true);
   const [bootProgress, setBootProgress] = useState(0);
   const [expandedImg, setExpandedImg] = useState<string | null>(null);
   const [windows, setWindows] = useState<WindowState[]>([]);
+  const { language, setLanguage, t } = useLanguage();
 
   const handleExpandImage = (src: string) => setExpandedImg(src);
+
+  const changeLanguage = (lang: 'en' | 'es') => {
+    if (language === lang) return;
+    setBooting(true);
+    setBootProgress(0);
+    setLanguage(lang);
+  };
 
   useEffect(() => {
     window.expandHackerImage = handleExpandImage;
@@ -146,11 +154,11 @@ export default function HackerDesktop() {
               <RevealItem>
                 <div className="border border-white/10 p-4 bg-white/[0.02] space-y-3">
                   <h3 className="text-white font-bold text-xl border-b border-white/10 pb-2 flex items-center gap-2 tracking-tight">
-                    <span className="w-2 h-2 bg-highlight rounded-full animate-pulse" /> GABRIEL CABALLERO
+                    <span className="w-2 h-2 bg-highlight rounded-full animate-pulse" /> {t('about.name')}
                   </h3>
                   <p className="text-2xl font-bold leading-tight text-white tracking-tighter">
-                    <DecryptedText text="Data Scientist | MLOps" /> <br />
-                    <span className="text-lg text-white/50 font-medium">Based in Mexico</span>
+                    <DecryptedText text={t('about.role')} /> <br />
+                    <span className="text-lg text-white/50 font-medium">{t('about.location')}</span>
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-12 text-sm pt-3 text-white/70 border-t border-white/10 mt-3 font-mono">
                     <div className="flex items-center gap-3"><span className="text-white/50 min-w-[140px] uppercase tracking-tighter">[DS / MLOPS EXP]:</span> <span className="text-highlight font-bold">1+ YEARS</span></div>
@@ -165,21 +173,21 @@ export default function HackerDesktop() {
                 <div className="space-y-3 text-[16px] text-white/80 leading-relaxed border border-white/10 p-4 bg-black/40 backdrop-blur-md mt-3">
                   <p>
                     <Typewriter 
-                      text="From construction sites and budget meetings to cloud-native pipelines and production ML — I got into data the long way, and it shaped how I think. I build end-to-end data science solutions that go from messy raw data to insights that actually get used: customer segmentation, time series forecasting, NLP pipelines, and GCP-based ETL built on BigQuery ML and medallion architecture. My stack spans Python, SQL, scikit-learn, TensorFlow, Kedro, and Polars, structured for reproducibility and scale." 
+                      text={t('about.description1')} 
                       delay={600}
                       speed={5}
                     />
                   </p>
                   <p>
                     <Typewriter 
-                      text="I ask the right question first: does this problem need ML, or is a well-structured pipeline and a good SQL query enough? That diagnostic thinking shapes everything I build." 
+                      text={t('about.description2')} 
                       delay={2400}
                       speed={5}
                     />
                   </p>
                   <p className="relative">
                     <Typewriter 
-                      text="This portfolio embodies that drive. Web dev isn't my core skill, but every line here reflects hands-on learning and iteration — check the live evolution on GitHub"
+                      text={t('about.description3')}
                       delay={4000}
                       speed={5}
                       onComplete={() => {
@@ -194,7 +202,7 @@ export default function HackerDesktop() {
                       rel="noreferrer" 
                       className="text-highlight hover:text-highlight/80 underline decoration-highlight/30 underline-offset-4 transition-colors ml-1 opacity-0 pointer-events-auto relative z-[100]"
                     >
-                      here
+                      {t('about.here')}
                     </a>.
                   </p>
                 </div>
@@ -225,7 +233,7 @@ export default function HackerDesktop() {
         isOpen: false,
         content: (
           <div className="font-mono text-sm text-foreground/80 p-6 space-y-4 h-full overflow-y-auto leading-relaxed select-text">
-            <p className="text-highlight font-bold">&gt; PARSING CAPABILITIES...</p>
+            <p className="text-highlight font-bold">&gt; {t('skills.parsing')}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-white/70">
               <div className="border border-white/10 p-3 bg-black/40 hover:border-highlight/40 transition-all">
                 <h5 className="text-white font-bold mb-3 border-b border-white/10 pb-1 flex items-center gap-1">
@@ -297,7 +305,7 @@ export default function HackerDesktop() {
                   <User className="w-3 h-3 text-highlight" /> SOFT SKILLS
                 </h5>
                 <div className="flex flex-wrap gap-1.5">
-                  {["Stakeholder Management", "Technical Leadership", "Agile Methodology", "Problem Solving", "Cross-functional Collaboration", "Innovation", "Proactivity", "Continuous Learning"].map(tag => (
+                  {t('skills.softSkills').map((tag: string) => (
                     <span key={tag} className="text-xs px-2.5 py-1 border border-white/20 bg-white/5 text-white/70 hover:bg-highlight/10 hover:border-highlight hover:text-highlight transition-all duration-200 cursor-default">
                       {tag}
                     </span>
@@ -314,77 +322,27 @@ export default function HackerDesktop() {
         isOpen: false,
         content: (
           <div className="font-mono text-sm text-foreground/80 p-6 space-y-4 h-full overflow-y-auto leading-relaxed select-text">
-            <p className="text-highlight font-bold">&gt; AUTHENTICATING DEGREES...</p>
+            <p className="text-highlight font-bold">&gt; {t('certifications.auth')}</p>
             <div className="space-y-3">
-              <div className="p-3 border border-white/10 bg-white/5 hover:border-highlight/40 transition-all">
-                <div className="flex justify-between items-start flex-wrap gap-2 mb-1">
-                  <span className="font-bold text-white text-sm">Gestión de Proyectos y Fundamentos de metodología Agile</span>
-                  <span className="text-[10px] text-highlight border border-highlight/30 px-2 py-0.5 bg-highlight/10">2026</span>
+              {t('certifications.certs').map((cert: any, idx: number) => (
+                <div key={idx} className="p-3 border border-white/10 bg-white/5 hover:border-highlight/40 transition-all">
+                  <div className="flex justify-between items-start flex-wrap gap-2 mb-1">
+                    <span className="font-bold text-white text-sm">{cert.title}</span>
+                    <span className="text-[10px] text-highlight border border-highlight/30 px-2 py-0.5 bg-highlight/10">{idx === 0 || idx === 1 ? '2026' : idx === 2 ? '2025' : idx === 3 ? '2023' : '2022'}</span>
+                  </div>
+                  <span className="text-[10px] text-white/40 block mb-2 uppercase tracking-widest">[ISSUER: {idx === 0 || idx === 1 ? 'SANTANDER OPEN ACADEMY' : idx === 2 ? 'GOOGLE CLOUD' : idx === 3 ? 'IBM' : 'COLUMBIA UNIVERSITY'}]</span>
+                  <p className="text-xs text-white/70 leading-relaxed mb-3">{cert.description}</p>
+                  <div className="flex flex-wrap gap-1">
+                    {(idx === 0 ? ["Agile", "Scrum", "Project Management", "Design Thinking", "Lean Startup"] : 
+                      idx === 1 ? ["Power BI", "DAX", "Power Query", "Data Modeling", "Data Visualization"] :
+                      idx === 2 ? ["Python", "GCP", "Dataflow", "BigQuery", "ETL"] :
+                      idx === 3 ? ["CRISP-DM", "Machine Learning", "Data Science Methodology", "Project Lifecycle"] :
+                      ["LEAN", "Project Management", "Construction Analytics", "Budgeting"]).map(s => (
+                      <span key={s} className="text-[9px] px-1.5 py-0.5 border border-white/10 bg-black/40 text-white/50">{s}</span>
+                    ))}
+                  </div>
                 </div>
-                <span className="text-[10px] text-white/40 block mb-2 uppercase tracking-widest">[ISSUER: SANTANDER OPEN ACADEMY]</span>
-                <p className="text-xs text-white/70 leading-relaxed mb-3">Fundamentos y masterclass. Fundamentos de la agilidad. Entender la agilidad a través de Scrum. Combinar Agile con design thinking y Lean Startup para generar innovación. Cuestiones éticas y responsabilidad en el diseño y desarrollo de productos. Objetivos de aprendizaje: Aprender los fundamentos de la gestión de proyectos por metodología Agile. Enfocar de manera práctica y con ejemplos los fundamentos de Scrum y entender qué es, qué no es, qué hacer y qué no hacer.</p>
-                <div className="flex flex-wrap gap-1">
-                  {["Agile", "Scrum", "Project Management", "Design Thinking", "Lean Startup"].map(s => (
-                    <span key={s} className="text-[9px] px-1.5 py-0.5 border border-white/10 bg-black/40 text-white/50">{s}</span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="p-3 border border-white/10 bg-white/5 hover:border-highlight/40 transition-all">
-                <div className="flex justify-between items-start flex-wrap gap-2 mb-1">
-                  <span className="font-bold text-white text-sm">Power BI Intermediate: Data Analysis and Modeling</span>
-                  <span className="text-[10px] text-highlight border border-highlight/30 px-2 py-0.5 bg-highlight/10">2026</span>
-                </div>
-                <span className="text-[10px] text-white/40 block mb-2 uppercase tracking-widest">[ISSUER: SANTANDER OPEN ACADEMY]</span>
-                <p className="text-xs text-white/70 leading-relaxed mb-3">Build and publish optimized data models using DAX and Power BI Services, learning to create relationships, star schemas, measures and calculated columns, and to keep cloud reports updated to facilitate access and collaboration. Deepen the use of advanced visualizations to represent complex data using custom charts, time hierarchies, geographical maps, gauges, and dynamic interactions, thereby improving visual analysis capability. Master intermediate data transformation techniques with Power Query, including merging and appending queries, creating custom and conditional columns, as well as efficiently importing data from multiple sources and formats.</p>
-                <div className="flex flex-wrap gap-1">
-                  {["Power BI", "DAX", "Power Query", "Data Modeling", "Data Visualization"].map(s => (
-                    <span key={s} className="text-[9px] px-1.5 py-0.5 border border-white/10 bg-black/40 text-white/50">{s}</span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="p-3 border border-white/10 bg-white/5 hover:border-highlight/40 transition-all">
-                <div className="flex justify-between items-start flex-wrap gap-2 mb-1">
-                  <span className="font-bold text-white text-sm">ETL Processing on Google Cloud Using Dataflow and BigQuery</span>
-                  <span className="text-[10px] text-highlight border border-highlight/30 px-2 py-0.5 bg-highlight/10">2025</span>
-                </div>
-                <span className="text-[10px] text-white/40 block mb-2 uppercase tracking-widest">[ISSUER: GOOGLE CLOUD]</span>
-                <p className="text-xs text-white/70 leading-relaxed mb-3">Built serverless data pipelines on Google Cloud Platform. Developed Python data pipelines to ingest, process, and load datasets into BigQuery using Dataflow.</p>
-                <div className="flex flex-wrap gap-1">
-                  {["Python", "GCP", "Dataflow", "BigQuery", "ETL"].map(s => (
-                    <span key={s} className="text-[9px] px-1.5 py-0.5 border border-white/10 bg-black/40 text-white/50">{s}</span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="p-3 border border-white/10 bg-white/5 hover:border-highlight/40 transition-all">
-                <div className="flex justify-between items-start flex-wrap gap-2 mb-1">
-                  <span className="font-bold text-white text-sm">Data Science Methodology</span>
-                  <span className="text-[10px] text-highlight border border-highlight/30 px-2 py-0.5 bg-highlight/10">2023</span>
-                </div>
-                <span className="text-[10px] text-white/40 block mb-2 uppercase tracking-widest">[ISSUER: IBM]</span>
-                <p className="text-xs text-white/70 leading-relaxed mb-3">Mastered the CRISP-DM framework. Application of the end-to-end CRISP-DM methodology used to structure ML projects from business problem to deployment.</p>
-                <div className="flex flex-wrap gap-1">
-                  {["CRISP-DM", "Machine Learning", "Data Science Methodology", "Project Lifecycle"].map(s => (
-                    <span key={s} className="text-[9px] px-1.5 py-0.5 border border-white/10 bg-black/40 text-white/50">{s}</span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="p-3 border border-white/10 bg-white/5 hover:border-highlight/40 transition-all">
-                <div className="flex justify-between items-start flex-wrap gap-2 mb-1">
-                  <span className="font-bold text-white text-sm">Construction Project Management</span>
-                  <span className="text-[10px] text-highlight border border-highlight/30 px-2 py-0.5 bg-highlight/10">2022</span>
-                </div>
-                <span className="text-[10px] text-white/40 block mb-2 uppercase tracking-widest">[ISSUER: COLUMBIA UNIVERSITY]</span>
-                <p className="text-xs text-white/70 leading-relaxed mb-3">Fundamentals of construction management, LEAN projects, and sustainability. Mastered management for construction industry, contract types, and project delivery methods.</p>
-                <div className="flex flex-wrap gap-1">
-                  {["LEAN", "Project Management", "Construction Analytics", "Budgeting"].map(s => (
-                    <span key={s} className="text-[9px] px-1.5 py-0.5 border border-white/10 bg-black/40 text-white/50">{s}</span>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         ),
@@ -403,13 +361,13 @@ export default function HackerDesktop() {
               <RevealItem>
                 <div className="space-y-4">
                   <h2 className="text-2xl md:text-3xl text-white font-bold tracking-tight">
-                    <Typewriter text="Let's Find Something Together" delay={400} speed={20} />
+                    <Typewriter text={t('contact.title')} delay={400} speed={20} />
                   </h2>
                   <p className="text-white/70 text-sm md:text-base leading-relaxed">
-                    <Typewriter text="Whether you need regression modeling for process optimization, forecasting solutions for demand planning, or data-driven insights to support decision-making. I'd love to discuss how I can help." delay={1000} speed={10} />
+                    <Typewriter text={t('contact.subtitle')} delay={1000} speed={10} />
                   </p>
                   <p className="text-white/40 text-xs md:text-sm italic font-mono">
-                    <Typewriter text="// Open to consulting engagements, advisory roles, and select full-time opportunities." delay={2500} speed={10} />
+                    <Typewriter text={t('contact.footer')} delay={2500} speed={10} />
                   </p>
                 </div>
               </RevealItem>
@@ -457,7 +415,7 @@ export default function HackerDesktop() {
       });
     }, 200);
     return () => clearInterval(timer);
-  }, []);
+  }, [booting]); // Re-run when booting state changes
 
   const toggleWindow = (id: string) => {
     setWindows((prev) => {
@@ -500,9 +458,33 @@ export default function HackerDesktop() {
   return (
     <div className="min-h-screen bg-[#050505] text-highlight font-mono relative overflow-hidden cyber-scanlines flex flex-col select-none">
       <AnimatedGrid />
+
+      {/* Language Toggle */}
+      <div className="absolute top-4 right-4 z-[200] flex gap-2">
+        <button
+          onClick={() => changeLanguage('en')}
+          className={`px-3 py-1 border text-[10px] tracking-widest transition-all ${
+            language === 'en' 
+              ? 'bg-highlight text-black border-highlight font-bold' 
+              : 'bg-black/60 text-white/60 border-white/20 hover:border-highlight hover:text-highlight'
+          }`}
+        >
+          [ENGLISH]
+        </button>
+        <button
+          onClick={() => changeLanguage('es')}
+          className={`px-3 py-1 border text-[10px] tracking-widest transition-all ${
+            language === 'es' 
+              ? 'bg-highlight text-black border-highlight font-bold' 
+              : 'bg-black/60 text-white/60 border-white/20 hover:border-highlight hover:text-highlight'
+          }`}
+        >
+          [ESPAÑOL]
+        </button>
+      </div>
       
       {/* Desktop Grid Area */}
-      <div className="p-2 flex flex-wrap items-center justify-center gap-3 max-w-5xl mx-auto z-[100] relative bg-black/80 border-b border-primary/20 backdrop-blur-md w-full">
+      <div className="p-2 flex items-center justify-center gap-3 max-w-[1200px] mx-auto z-[100] relative bg-black/80 border-b border-primary/20 backdrop-blur-md w-full px-4 overflow-x-auto whitespace-nowrap scrollbar-hide">
         <button
           onClick={() => {
             toggleWindow("about");
@@ -511,32 +493,32 @@ export default function HackerDesktop() {
           className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2"
         >
           <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[01]</span>
-          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">ABOUT.sh</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight font-bold"><span className="text-highlight">ABOUT</span><span className="font-normal text-foreground">.sh</span></span>
         </button>
 
         <button onClick={() => toggleWindow("projects")} className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2">
           <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[02]</span>
-          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">PROJECTS.db</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight font-bold"><span className="text-highlight">PROJECTS</span><span className="font-normal text-foreground">.db</span></span>
         </button>
 
         <button onClick={() => toggleWindow("current_work")} className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2">
           <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[03]</span>
-          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">LIVE_INF.exe</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight font-bold"><span className="text-highlight">LIVE_PROJECT</span><span className="font-normal text-foreground">.exe</span></span>
         </button>
 
         <button onClick={() => toggleWindow("skills")} className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2">
           <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[04]</span>
-          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">SKILLS.log</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight font-bold"><span className="text-highlight">SKILLS</span><span className="font-normal text-foreground">.log</span></span>
         </button>
 
         <button onClick={() => toggleWindow("certifications")} className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2">
           <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[05]</span>
-          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">CERTS.pem</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight font-bold"><span className="text-highlight">CERTIFICATIONS</span><span className="font-normal text-foreground">.pem</span></span>
         </button>
 
         <button onClick={() => toggleWindow("contact")} className="px-4 py-2 border border-white/5 bg-white/5 hover:border-highlight/40 hover:bg-highlight/10 group transition-all flex items-center gap-2">
           <span className="text-[10px] text-white/40 group-hover:text-highlight transition-colors">[06]</span>
-          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight">CONTACT.bin</span>
+          <span className="text-xs tracking-widest uppercase text-foreground group-hover:text-highlight font-bold"><span className="text-highlight">CONTACT</span><span className="font-normal text-foreground">.bin</span></span>
         </button>
       </div>
 

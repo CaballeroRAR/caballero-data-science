@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, ExternalLink, Folder } from "lucide-react";
 import { projectsData, Project } from "@/data/desktop-data";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProjectExplorerProps {
   onExpandImage: (src: string) => void;
@@ -9,6 +10,7 @@ interface ProjectExplorerProps {
 export default function ProjectExplorer({ onExpandImage }: ProjectExplorerProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  const { language } = useLanguage();
 
   const nextImage = () => {
     if (!selectedProject) return;
@@ -60,8 +62,8 @@ export default function ProjectExplorer({ onExpandImage }: ProjectExplorerProps)
           <div className="space-y-6 flex flex-col justify-between">
             <div className="space-y-4">
               <span className="text-sm text-highlight tracking-wider border border-highlight/30 px-2 py-0.5">{selectedProject.category}</span>
-              <h3 className="text-white font-bold text-2xl">{selectedProject.title} ({selectedProject.year})</h3>
-              <p className="text-base text-white/80 leading-relaxed">{selectedProject.description}</p>
+              <h3 className="text-white font-bold text-2xl">{selectedProject.title[language]} ({selectedProject.year})</h3>
+              <p className="text-base text-white/80 leading-relaxed">{selectedProject.description[language]}</p>
               {(selectedProject.demoUrl || selectedProject.githubUrl) && (
                 <div className="flex flex-wrap gap-4 pt-2">
                   {selectedProject.demoUrl && (
@@ -104,15 +106,15 @@ export default function ProjectExplorer({ onExpandImage }: ProjectExplorerProps)
             className="border border-white/20 p-2 bg-white/5 hover:bg-highlight/5 hover:border-highlight transition-colors flex flex-col gap-2 cursor-pointer group"
           >
             <div className="w-full h-32 overflow-hidden border border-white/10 bg-black relative">
-              <img src={proj.gallery[0].image} alt={proj.title} className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity duration-300" />
+              <img src={proj.gallery[0].image} alt={proj.title[language]} className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
             <div>
               <div className="flex justify-between text-[9px] text-white/40 mb-1">
                 <span>PROJECT_0{proj.id}</span>
                 <span>{proj.year}</span>
               </div>
-              <h4 className="text-white font-bold text-xs truncate group-hover:text-highlight">{proj.title}</h4>
-              <p className="text-[10px] text-white/60 mt-1 line-clamp-2">{proj.description}</p>
+              <h4 className="text-white font-bold text-xs truncate group-hover:text-highlight">{proj.title[language]}</h4>
+              <p className="text-[10px] text-white/60 mt-1 line-clamp-2">{proj.description[language]}</p>
             </div>
           </div>
         ))}

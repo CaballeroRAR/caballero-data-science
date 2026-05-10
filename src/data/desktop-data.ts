@@ -35,10 +35,10 @@ export interface GalleryItem {
 
 export interface Project {
   id: number;
-  title: string;
+  title: { en: string; es: string };
   category: string;
   year: string;
-  description: string;
+  description: { en: string; es: string };
   skills: string[];
   demoUrl?: string;
   githubUrl?: string;
@@ -48,10 +48,16 @@ export interface Project {
 export const projectsData: Project[] = [
   {
     id: 7,
-    title: "Reddit Astroturfing NLP Analysis",
+    title: {
+      en: "Reddit Astroturfing NLP Analysis",
+      es: "Análisis NLP de Astroturfing en Reddit"
+    },
     category: "NLP & Data Engineering",
     year: "2026",
-    description: "End-to-end pipeline designed to scrape, enrich, and ingest Reddit comments to analyze potential astroturfing campaigns. Features local scraping to bypass API limits, data consolidation, and automated ingestion into Google Cloud BigQuery for NLP modeling.",
+    description: {
+      en: "End-to-end pipeline designed to scrape, enrich, and ingest Reddit comments to analyze potential astroturfing campaigns. Features local scraping to bypass API limits, data consolidation, and automated ingestion into Google Cloud BigQuery for NLP modeling.",
+      es: "Pipeline de extremo a extremo diseñado para extraer, enriquecer e ingerir comentarios de Reddit para analizar posibles campañas de astroturfing. Cuenta con extracción local para evitar límites de API, consolidación de datos e ingesta automatizada en Google Cloud BigQuery para modelado NLP."
+    },
     skills: ["Python", "GCP", "BigQuery", "Data Engineering", "Pandas", "NLP"],
     githubUrl: "https://github.com/CaballeroRAR/ds_projects_collabs/tree/main/2-nlp-astroturfing-report",
     gallery: [
@@ -61,12 +67,17 @@ export const projectsData: Project[] = [
     ]
   },
   {
-
     id: 6,
-    title: "Industrial Bitcoin Forecasting HUD",
+    title: {
+      en: "Industrial Bitcoin Forecasting HUD",
+      es: "HUD de Pronóstico Industrial de Bitcoin"
+    },
     category: "Deep Learning & XAI",
     year: "2026",
-    description: "High-precision Bitcoin price projection engine using a stacked LSTM architecture with Monte Carlo Dropout uncertainty estimation. Synthesizes multi-source data (VADER Sentiment, Google Trends, Macro-Ratios) into a grounded 30-day forecast trajectory.",
+    description: {
+      en: "High-precision Bitcoin price projection engine using a stacked LSTM architecture with Monte Carlo Dropout uncertainty estimation. Synthesizes multi-source data (VADER Sentiment, Google Trends, Macro-Ratios) into a grounded 30-day forecast trajectory.",
+      es: "Motor de proyección de precios de Bitcoin de alta precisión que utiliza una arquitectura LSTM apilada con estimación de incertidumbre Monte Carlo Dropout. Sintetiza datos de múltiples fuentes (VADER Sentiment, Google Trends, Macro-Ratios) en una trayectoria de pronóstico de 30 días fundamentada."
+    },
     skills: ["Python", "TensorFlow", "Keras", "GCP", "Streamlit", "XAI", "MLOps"],
     demoUrl: "https://btc-dashboard-213564252081.us-central1.run.app",
     githubUrl: "https://github.com/CaballeroRAR/btc-predictor",
@@ -78,10 +89,16 @@ export const projectsData: Project[] = [
   },
   {
     id: 5,
-    title: "ML Pipeline Migration to BigQuery",
+    title: {
+      en: "ML Pipeline Migration to BigQuery",
+      es: "Migración de Pipeline de ML a BigQuery"
+    },
     category: "Cloud Native ML",
     year: "2026",
-    description: "End-to-end migration of a machine learning pipeline to Google Cloud Platform. Leverages BigQuery ML for scalable training and SQL-based feature engineering, transitioning from local processing to a cloud-native architecture.",
+    description: {
+      en: "End-to-end migration of a machine learning pipeline to Google Cloud Platform. Leverages BigQuery ML for scalable training and SQL-based feature engineering, transitioning from local processing to a cloud-native architecture.",
+      es: "Migración de extremo a extremo de un pipeline de aprendizaje automático a Google Cloud Platform. Aprovecha BigQuery ML para entrenamiento escalable e ingeniería de características basada en SQL, pasando del procesamiento local a una arquitectura nativa en la nube."
+    },
     skills: ["Google Cloud Platform", "BigQuery ML", "SQL", "ETL", "Python"],
     demoUrl: "https://prometheus-frontend-kc2uauqyrq-uc.a.run.app/",
     githubUrl: "https://github.com/CaballeroRAR/ds_projects/tree/main/1_ml-pipeline-migration-bigquery",
@@ -93,10 +110,16 @@ export const projectsData: Project[] = [
   },
   {
     id: 4,
-    title: "Customer Segmentation (KMeans)",
+    title: {
+      en: "Customer Segmentation (KMeans)",
+      es: "Segmentación de Clientes (KMeans)"
+    },
     category: "Machine Learning (Unsupervised)",
     year: "2025",
-    description: "End-to-end customer segmentation pipeline using RFM analysis and K-Means clustering to identify high-value wholesaler segments and optimize marketing strategies.",
+    description: {
+      en: "End-to-end customer segmentation pipeline using RFM analysis and K-Means clustering to identify high-value wholesaler segments and optimize marketing strategies.",
+      es: "Pipeline de segmentación de clientes de extremo a extremo que utiliza análisis RFM y clustering K-Means para identificar segmentos de mayoristas de alto valor y optimizar las estrategias de marketing."
+    },
     githubUrl: "https://github.com/CaballeroRAR/ds_projects_collabs/tree/main/1-cluster_retail_uci",
     skills: ["Python", "Scikit-learn", "RFM Analysis", "K-Means", "PCA"],
     gallery: [
@@ -107,10 +130,16 @@ export const projectsData: Project[] = [
   },
   {
     id: 3,
-    title: "Employee Salary Analysis",
+    title: {
+      en: "Employee Salary Analysis",
+      es: "Análisis de Salarios de Empleados"
+    },
     category: "Statistical Analysis",
     year: "2025",
-    description: "Exploratory analysis on compensation patterns to quantify impact of experience, education, and role on salary structures for HR strategy.",
+    description: {
+      en: "Exploratory analysis on compensation patterns to quantify impact of experience, education, and role on salary structures for HR strategy.",
+      es: "Análisis exploratorio sobre patrones de compensación para cuantificar el impacto de la experiencia, la educación y el rol en las estructuras salariales para la estrategia de RR.HH."
+    },
     githubUrl: "https://lnkd.in/eaUVU9yg",
     skills: ["EDA", "Data Visualization", "Statistical Analysis", "KMeans", "PCA"],
     gallery: [
@@ -121,10 +150,16 @@ export const projectsData: Project[] = [
   },
   {
     id: 2,
-    title: "Gold Recovery Prediction",
+    title: {
+      en: "Gold Recovery Prediction",
+      es: "Predicción de Recuperación de Oro"
+    },
     category: "Machine Learning",
     year: "2025",
-    description: "End-to-end regression pipeline to predict gold recovery rates and optimize industrial flotation processes. Identifies optimal parameters for reagent concentration and particle size.",
+    description: {
+      en: "End-to-end regression pipeline to predict gold recovery rates and optimize industrial flotation processes. Identifies optimal parameters for reagent concentration and particle size.",
+      es: "Pipeline de regresión de extremo a extremo para predecir las tasas de recuperación de oro y optimizar los procesos de flotación industrial. Identifica los parámetros óptimos para la concentración de reactivos y el tamaño de partícula."
+    },
     githubUrl: "https://lnkd.in/eZMdm3_V",
     skills: ["Regression Modeling", "Feature Engineering", "Ensemble Methods", "Random Forest"],
     gallery: [
@@ -135,10 +170,16 @@ export const projectsData: Project[] = [
   },
   {
     id: 1,
-    title: "A/B Testing, UI Change",
+    title: {
+      en: "A/B Testing, UI Change",
+      es: "A/B Testing, Cambio de UI"
+    },
     category: "Statistical Analysis",
     year: "2025",
-    description: "Designed a hypothesis test with tailored alpha=0.10 for a low-risk UI experiment, prioritizing sensitivity over false positive risk. The test revealed a dramatic conversion increase from 19.9% to over 61%.",
+    description: {
+      en: "Designed a hypothesis test with tailored alpha=0.10 for a low-risk UI experiment, prioritizing sensitivity over false positive risk. The test revealed a dramatic conversion increase from 19.9% to over 61%.",
+      es: "Diseñó una prueba de hipótesis con un alfa adaptado de 0.10 para un experimento de UI de bajo riesgo, priorizando la sensibilidad sobre el riesgo de falsos positivos. La prueba reveló un aumento dramático en la conversión de 19.9% a más del 61%."
+    },
     githubUrl: "https://lnkd.in/gpcmjuuW",
     skills: ["Python", "Statsmodels", "Jupyter Notebook", "Statistical Testing"],
     gallery: [

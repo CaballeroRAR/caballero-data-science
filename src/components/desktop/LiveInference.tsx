@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { liveInferenceImages } from "@/data/desktop-data";
+import { liveInferenceImages, projectsData } from "@/data/desktop-data";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface LiveInferenceProps {
   onExpandImage: (src: string) => void;
@@ -8,6 +9,9 @@ interface LiveInferenceProps {
 
 export default function LiveInference({ onExpandImage }: LiveInferenceProps) {
   const [liveImgIndex, setLiveImgIndex] = useState(0);
+  const { language } = useLanguage();
+  
+  const btcProject = projectsData.find(p => p.id === 6);
 
   const nextLiveImg = () => setLiveImgIndex((prev) => (prev + 1) % liveInferenceImages.length);
   const prevLiveImg = () => setLiveImgIndex((prev) => (prev - 1 + liveInferenceImages.length) % liveInferenceImages.length);
@@ -39,18 +43,18 @@ export default function LiveInference({ onExpandImage }: LiveInferenceProps) {
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
-          <span className="text-[10px] text-white/40 block text-center uppercase tracking-wider">FIG. 0{liveImgIndex + 1} - LIVE PROJECTIONS</span>
+          <span className="text-[10px] text-white/40 block text-center uppercase tracking-wider">FIG. 0{liveImgIndex + 1} - {language === 'es' ? 'PROYECCIONES EN VIVO' : 'LIVE PROJECTIONS'}</span>
         </div>
 
         <div className="space-y-4">
           <div className="border border-white/20 p-4 bg-white/5 space-y-3">
             <h3 className="text-white font-bold text-lg border-b border-white/20 pb-2 flex items-center justify-between flex-wrap gap-2">
-              <span>INDUSTRIAL BITCOIN FORECASTING HUD</span>
-              <span className="text-xs text-green-400 border border-green-400/30 px-2 py-0.5 bg-green-400/10">IN PROGRESS</span>
+              <span>{btcProject?.title[language]}</span>
+              <span className="text-xs text-green-400 border border-green-400/30 px-2 py-0.5 bg-green-400/10">{language === 'es' ? 'EN PROGRESO' : 'IN PROGRESS'}</span>
             </h3>
             <p className="text-xs text-white/40 uppercase tracking-widest">[NEURAL INTELLIGENCE & PRODUCTION MLOPS]</p>
             <p className="text-sm text-white/80 leading-relaxed pt-2">
-              A high-precision Bitcoin price projection engine built on a stacked LSTM architecture with Monte Carlo Dropout uncertainty estimation. Decoupled, three-tier serverless environment in GCP including Vertex AI, Cloud Run, and Firestore for real-time market grounding and drift calibration.
+              {btcProject?.description[language]}
             </p>
           </div>
 
